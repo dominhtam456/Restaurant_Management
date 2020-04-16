@@ -1,0 +1,38 @@
+
+<div class="row" >
+    <div class="col">
+      <div class="card shadow card-with-satistical ">
+        <div class="card-header bg-primary">
+          <h1 class="mb-0" style="color: white;">Nhà bếp</h1>
+        </div>
+
+    <div class="card border-top-0 border-right-0 border-left-0" ng-repeat="b in foodlist" >
+    <div class="card-header" >
+      <div class="float-left">
+            <div class="mb-0" style="font-size: large;" >Ban {{b.ban}}</div>
+            
+          </div>
+          <div class="float-md-right mb-3 mr-3">
+            <button type="button" class="btn btn-primary" ng-click="complete(b[0].hoadonchitietID.hoadon_HOADON_ID,1)"> Hoan Tat</button>
+          </div>
+      </div>
+    <div class="card-body " >
+        <div class="list-group">
+          
+            <a ng-repeat="c in b" href="#" class="list-group-item list-group-item-action list-group-item-info">
+              <div class="row">
+                <div class="col-9">{{c.tenMonAn}}</div>
+                <div class="col-3">So Luong: {{c.hoadonchitiet_SOLUONG}} </div>
+              </div>
+              
+            </a>
+          
+          </div>
+    </div> 
+  </div>
+  </div>
+
+  
+
+
+

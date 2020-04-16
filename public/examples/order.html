@@ -1,0 +1,270 @@
+<div class="row">
+  <div class="col">
+    <div class="card shadow">
+      <div class="card-header bg-primary">
+        <h1 style="color:white;">Đặt Bàn</h1>
+      </div>
+      <div class="card-body">
+        <div>
+          <div class="row ">
+            <div class="col-sm-6 border rounded bg-secondary">
+              <ul class="nav nav-tabs mt-2" id="myTab" role="tablist">
+                <li class="nav-item">
+                  <a class="nav-link active" id="table-tab" data-toggle="tab" href="#ban" target="_self" role="tab"
+                    aria-controls="table" aria-selected="true">BÀN</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" id="menu-tab" data-toggle="tab" href="#menu" target="_self" role="tab"
+                    aria-controls="menu" aria-selected="false">THỰC ĐƠN</a>
+                </li>
+
+              </ul>
+              <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="ban" role="tabpanel" aria-labelledby="home-tab">
+                  <div class="card-deck bg-white border">
+                    <a ng-repeat="x in tables" ng-click="getTable(x)" id="a">
+                      <!--repeat here -->
+                      <div class="card-block mb-2 mt-2">
+
+                        <div class="card" style="width: 10.2rem;">
+                          <img class="card-img-top p-4" src="assets\img\icons\dinner-table.png" alt="Card image cap"
+                            width="120px" height="150px">
+                          <div class="card-footer border" ng-style="x.tableColor">
+                            <p class="card-text" style="text-align: center; font-weight: bold"> {{x.ban_NO}}</p>
+                          </div>
+                        </div>
+                      </div>
+                    </a>
+                  </div>
+                </div>
+
+                <div class="tab-pane fade show " id="menu" role="tabpanel" aria-labelledby="home-tab">
+                  <div class="card-deck bg-white border">
+                    <a ng-repeat="x in foods" ng-click="addFood(x)">
+                      <!--repeat here -->
+                      <div class="card-block mb-2 mt-2">
+
+                        <div class="card" style="width: 10rem;">
+                          <img class="card-img-top p-4" src="assets\img\resources\Mon_an_va_nuoc\{{x.monan_IMG}}"
+                            alt="Card image cap" width="150px" height="150px">
+                          <div class="card-footer borde">
+                            <p class="card-text" style="text-align: center;">{{x.monan_NAME}}</p>
+                          </div>
+                        </div>
+                      </div>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="card border">
+                <div class="card-header bg-secondary">
+                  <h1>Bàn {{tableIndex}}</h1>
+                </div>
+                <div class="card-body" style="height:40em; overflow-y: scroll;">
+                  <div class="table-responsive">
+                    <table class="table  align-items-center table-flush accordion table-hover table-striped "
+                      id="accordionRow">
+                      <thead class="thead-light">
+                        <tr>
+                          <th scope="col">Stt</th>
+                          <th scope="col"></th>
+                          <th scope="col">Tên Món Ăn</th>
+                          <th scope="col">Số Lượng</th>
+                          <th scope="col">Đơn Giá</th>
+                          <th scope="col">Thành Tiền</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+
+                        <tr ng-repeat="y in details">
+                          <td>{{$index+1}}</td>
+                          <td><i class="fas fa-times" style="color: #F5365C; font-size: 20px" ng-click="delete(y)"></i>
+                          </td>
+                          <td>{{y.monan_NAME}}</td>
+                          <td>
+                            <input ng-model="y.hoadonchitiet_SOLUONG" ng-change="changeAmount(y)"
+                              type="number"  style=" width:4em">
+                          </td>
+                          <td>{{y.hoadonchitiet_PRICE | number}}</td>
+                          <td>{{y.hoadonchitiet_PRICE*y.hoadonchitiet_SOLUONG | number}}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+
+                  </div>
+                  <p><h3 class="text-danger float-md-right ">Tổng tiền: {{total | number}} đ</h4></p>
+                </div>
+                <div class="card-footer">
+                  <div class="float-right">
+                    <!-- Button trigger modal -->
+                    <button type="button"  class="btn btn-danger" data-toggle="modal" data-target="#btnPayment">
+                      Thanh Toán
+                    </button>
+                    <button type="button"  class="btn btn-primary" ng-click="confirm_order()">
+                      Xác nhận gọi món
+                    </button>
+                    <!-- Modal -->
+                    <div class="modal fade modal-custom" id="btnPayment" tabindex="-1" role="dialog"
+                      aria-labelledby="btnPaymentTitle" aria-hidden="true">
+                      <div class="modal-dialog modal-xl " role="document ">
+                        <div class="modal-content">
+                          <div class="modal-header bg-primary">
+                            <h5 class="modal-title" id="btnPayment">
+                              <h1 style="color: white;">Thanh Toán Bàn {{tableIndex}}</h1>
+                            </h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <div class="modal-body">
+                            <div class="container">
+                              <div class="row">
+                                <div class="col-md-6">
+
+                                  <div class="table-responsive">
+                                    <table class="table  align-items-center table-flush accordion  " id="accordionRow">
+                                      <thead class="thead-light">
+                                        <tr>
+                                          <th scope="col">Stt</th>
+                                          <th scope="col">Tên Món Ăn</th>
+                                          <th scope="col">Số Lượng</th>
+                                          <th scope="col">Đơn Giá</th>
+                                          <th scope="col">Thành Tiền</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <tr ng-repeat="y in details">
+                                          <td>{{$index+1}}</td>
+
+                                          <td>{{y.monan_NAME}}</td>
+                                          <td>
+                                            <input disabled ng-model="y.hoadonchitiet_SOLUONG"
+                                              ng-change="changeAmount(y)" type="number" " style=" width:4em">
+                                          </td>
+                                          <td>{{y.hoadonchitiet_PRICE | number}}</td>
+                                          <td>{{y.hoadonchitiet_PRICE*y.hoadonchitiet_SOLUONG}}</td>
+                                        </tr>
+                                      </tbody>
+                                    </table>
+
+                                  </div>
+                                </div>
+                                <div class="col-md-6 border-left">
+                                  <table class="table  align-items-center table-flush accordion border-0 ">
+                                    <tbody>
+                                      <tr>
+                                        <td>Tổng Tiền Hàng</td>
+                                        <td>{{total | number}}</td>
+                                      </tr>
+                                      <tr>
+                                        <td>Giảm Giá</td>
+                                        <td>0</td>
+                                      </tr>
+                                      <tr>
+                                        <td><b>Khách Cần Trả</b></td>
+                                        <td><b style="color: #F5365C;">{{total | number}}</b></td>
+                                      </tr>
+                                      <tr>
+                                        <td>Khách Thanh Toán</td>
+                                        <td><input ng-model="excesscash" type="number" /></td>
+                                      </tr>
+                                      <tr>
+                                        <td>Tiền Thừa Trả Khách </td>
+                                        <td>{{excesscash - total | number}}</td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" onclick="printJS('form-bill', 'html')" ng-click="payBill()">Thanh Toán</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+<form id="form-bill">
+  <!-- print -->
+<div class="container print-bill" style="font-size: 18px; line-height: 5px;">
+  <div class="container mt-3">
+    <div>
+      <p>Tên cửa càng: ABC</p>
+      <p>Địa chỉ: ABC</p>
+      <p>Điện Thoại: 0909888555</p>
+    </div>
+    <div style="border:0.5px dashed"></div>
+    <h5 style="text-align: center">HÓA ĐƠN CHI TIẾT</h5>
+    <p style="text-align: center; font-size: 16px"><b>Mã Hóa Đơn: {{hdno}} </b></p>
+    <p style="text-align: center; font-size: 12px"><b>Ngày Lập: {{day}}</b></p>
+    <div class="row">
+      <div class="col-sm-6">
+        <div style="line-height: 10px;">
+          <p>Tổng Tiền Hàng: {{total| number}} đ</p>
+          <p>Giảm Giá: 0 đ</p>
+          <p style="font-size: 20px"><b>Khách Cần Trả: {{total| number}} đ</b></p>
+          <p>Khách Thanh Toán:{{excesscash| number}} đ</p>
+          <p>Tiền thừa trả khách: {{excesscash - total| number}} đ</p>
+          <p>Thuế: 0%</p>
+          <hr>
+          <p>Thu Ngân: Nguyen Van A</p>
+        </div>
+
+      </div>
+      <div class="col-sm-6">
+      </div>
+    </div>
+  </div>
+
+  <div class="mb-3" style="border:0.5px dashed"></div>
+  <br>
+  <br>
+  <div >
+    <table class="table  align-items-center table-flush accordion  " id="accordionRow" >
+      <thead class="boder">
+        <tr>
+          <th scope="col">STT</th>
+          <th scope="col">TenM/A</th>
+          <th scope="col">SL</th>
+          <th scope="col">ĐG</th>
+          <th scope="col">TT</th>
+        </tr>
+        <br>
+      </thead>
+      <tbody>
+
+        <tr ng-repeat="y in details" style="line-height: 1em">
+          <br>
+          <br>
+          <td>{{$index+1}}</td>
+
+          <td>{{y.monan_NAME}}</td>
+          <td>
+            {{y.hoadonchitiet_SOLUONG}}
+          </td>
+          <td>{{y.hoadonchitiet_PRICE| number}}</td>
+          <td>{{y.hoadonchitiet_PRICE*y.hoadonchitiet_SOLUONG| number}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<!-- end print -->
+</form>
+<script type="text/javascript" src="assets\js\plugins\choose.js">
+
+</script>

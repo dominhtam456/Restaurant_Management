@@ -1,0 +1,514 @@
+<div class="row">
+  <div class="col">
+    <div class="card shadow">
+      <div class="card-header border-0 bg-primary">
+        <div>
+          <div class="float-left">
+            <h1 class="mb-0 modal-title" style="color: white;">Thực Đơn</h1>
+          </div>
+          <div class="float-md-right d-inline-block">
+            <form>
+              <div class="input-group md-form form-sm form-2 pl-0">
+                <input class="form-control " ng-model="searchInput" type="text" placeholder="Search"
+                  aria-label="Search">
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="float-md-right mb-3 mr-3">
+          <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalAddFoods"><i
+              class="fas fa-plus-circle"></i> Thêm Mới</button>
+          <div class="modal fade" id="modalAddFoods" tabindex="-1" role="dialog" aria-labelledby="modalAddFoods"
+            aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content ">
+                <div class="modal-header bg-primary">
+                  <h2 class="modal-title" id="modalAddFoods" style="color: white;">Thêm Món Ăn
+                  </h2>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item">
+                      <a class="nav-link active" id="info-tab" data-toggle="tab" href="#info" target="_self" role="tab"
+                        aria-controls="info" aria-selected="true">Thông tin</a>
+                    </li>
+                  </ul>
+                  <div class="card-body border">
+                    <div class="tab-content" id="myTabContent">
+                      <div class="tab-pane fade show active" id="info" role="tabpanel" aria-labelledby="home-tab">
+                        <form ng-submit="addFood()" name="formAddMaterial">
+                          <div class="container">
+                            <div class="row">
+                              <div class="col-6">
+                                <div class="form-group row">
+                                  <label for="input1" class="col-sm-4 col-form-label form-control-sm">Mã món
+                                    ăn:</label>
+                                  <div class="col-sm-7">
+                                    <input name="foodNo" ng-model="foodNo" type="text"
+                                      class="form-control form-control-sm" id="input1" required>
+                                    <span style="font-size:10px;color:red;"
+                                      ng-if="formAddMaterial.foodNo.$invalid && formAddMaterial.foodNo.$touched">Không
+                                      được để trống mã món ăn</span>
+                                  </div>
+                                </div>
+
+                                <div class="form-group row">
+                                  <label for="inputName" class="col-sm-4 col-form-label form-control-sm">Tên món
+                                    ăn:</label>
+                                  <div class="col-sm-7">
+                                    <input name="inputName" ng-model="inputName" type="text"
+                                      class="form-control form-control-sm" id="inputName" placeholder=" " required>
+                                    <span style="font-size:10px;color:red;"
+                                      ng-if="formAddMaterial.inputName.$invalid && formAddMaterial.inputName.$touched">Không
+                                      được để trống tên món ăn</span>
+                                  </div>
+                                </div>
+
+                                <div class="form-group row">
+                                  <label for="inputType" class="col-sm-4 col-form-label form-control-sm">Loại món
+                                    ăn:</label>
+                                  <div class="col-sm-7">
+                                    <select name="TypeId" class="form-control-sm" id="inputType" ng-model="TypeId"
+                                      required>
+                                      <option ng-repeat="x in foodsType" value="{{x.id}}">{{x.loaimonan_NAME}}
+                                      </option>
+                                    </select>
+                                    <div>
+                                      <span style="font-size:10px;color:red;"
+                                        ng-if="formAddMaterial.TypeId.$invalid && formAddMaterial.TypeId.$touched">Không
+                                        được để trống loại món ăn</span>
+                                      <a ng-click="" data-toggle="modal"
+                                      data-target="#addType"><i class="fas fa-plus-square mt-0 " ></i>Thêm loại</a>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="form-group row">
+                                  <label for="inputNum" class="col-sm-4 col-form-label form-control-sm">Giá
+                                    bán:</label>
+                                  <div class="col-sm-7">
+                                    <input ng-model="inputPrice" type="text" class="form-control form-control-sm "
+                                      id="inputNum" placeholder="0">
+                                  </div>
+                                </div>
+                                <div class="form-group row">
+                                  <label for="inputNum" class="col-sm-4 col-form-label form-control-sm">Đơn Vị
+                                    Tính:</label>
+                                  <div class="col-sm-7">
+                                    <input ng-model="inputUnit" type="text" class="form-control form-control-sm "
+                                      id="inputNum" placeholder="0">
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-6">
+                                <label for="inputNum" class="col-sm-4 col-form-label form-control-sm">Hình
+                                  Ảnh:</label>
+                                <div class="container" ng-controller="UploadController">
+                                  <div class="row">
+                                    <div class="card-body border">
+                                      <div class="col-6">
+                                        <img ng-src="{{imageSrc}}" width="150" height="150" alt="">
+                                      </div>
+                                    </div>
+                                    <div class="col-6"></div>
+                                  </div>
+                                  <div class="row mt-1">
+                                    <div class="file-field">
+                                      <div class="btn form-control-file btn-sm btn-success ml-2">
+                                        <input type="file" ng-file-select="onFileSelect($files)" ng-model="imageSrc"
+                                          onchange="angular.element(this).scope().setFile(this)">
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="text-right mt-3">
+                            <button type="submit" class="btn btn-danger">Lưu & thêm mới</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                          </div>
+                        </form>
+                        <div class="modal fade" id="addType" tabindex="-1" role="dialog" aria-labelledby="addTypeLabel"
+                          aria-hidden="true" style="z-index: 1600;">
+                          <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                              <div class="modal-header bg-primary">
+                                <h5 class="modal-title text-white" id="addTypeLabel">Thêm Loại Món Ăn</h5>
+                              </div>
+                              <div class="modal-body">
+                                <form ng-submit="AddTypeFood()" class="mt-2">
+                                  <div class="container">
+                                    <div class="row">
+                                      <div class="col-12">
+
+                                        <div class="form-group row">
+                                          <label for="inputName" class="col-sm-4 col-form-label form-control-sm">Loại
+                                            món
+                                            ăn:</label>
+                                          <div class="col-sm-7">
+                                            <input type="text" class="form-control form-control-sm" id="inputName"
+                                              placeholder="eg. Món chiên" ng-model="loaiMonAn">
+                                            <p class="text-danger">{{alertLNL}}</p>
+                                          </div>
+                                          <div class="col-sm-1">
+                                            <i class="fas fa-exclamation-circle"></i>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="submit" class="btn btn-danger">Lưu</button>
+                                  </div>
+                                </form>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="tab-pane fade" id="detail" role="tabpanel" aria-labelledby="profile-tab">
+                      </div>
+                      <div class="tab-pane fade" id="detailDescription" role="tabpanel" aria-labelledby="contact-tab">
+                        ...
+                      </div>
+                      <div class="tab-pane fade" id="moreDishs" role="tabpanel" aria-labelledby="contact-tab">...
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="table-responsive">
+        <table class="table align-items-center table-flush accordion" id="accordionRow">
+          <thead class="thead-light">
+            <th scope="col">STT</th>
+            <th scope="col">Mã Món Ăn</th>
+            <th scope="col">Tên Món Ăn</th>
+            <th scope="col">Loại món ăn</th>
+            <th scope="col">Giá bán </th>
+            <th scope="col">Đơn Vị Tính</th>
+            <th scope="col">Trạng thái</th>
+            <th scope="col"></th>
+
+          </thead>
+          <tbody dir-paginate="x in searched | itemsPerPage:10 | filter: searchInput">
+            <tr data-toggle="collapse" data-target="#a{{x.monan_ID}}" class="clickable" ng-click="getFoodIndex(x)"
+              aria-expanded="true">
+              <th>
+                <span>{{$index+1}}</span>
+              </th>
+              <th scope="row">
+                <div class="media align-items-center">
+
+                  <div class="media-body">
+                    <span class="mb-0 text-sm">{{x.monan_NO}}</span>
+                  </div>
+                </div>
+              </th>
+              <td>
+                {{x.monan_NAME}}
+              </td>
+              <td>
+                <span class="badge badge-dot">
+                  {{x.tenloai_LOAIMONAN}}
+                </span>
+              </td>
+              <td>
+                <span class="mr-2">{{x.monan_PRICE}}đ</span>
+              </td>
+              <td>
+                <div class="d-flex align-items-center">
+                  <span class="mr-2">{{x.monan_UNIT}}</span>
+                </div>
+              </td>
+              <td>
+                <div class="d-flex align-items-center">
+                  <span class="mr-2">{{x.monan_STATUS}}</span>
+                </div>
+              </td>
+              <td class="text-right">
+                <div class="dropdown">
+                  <a class="btn btn-sm btn-icon-only text-light" href="#!tables" role="button" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-ellipsis-v"></i>
+                  </a>
+                  <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                    <a class="dropdown-item" href="#">Action</a>
+                    <a class="dropdown-item" href="#">Another action</a>
+                    <a class="dropdown-item" href="#">Something else here</a>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr id="a{{x.monan_ID}}" class="collapse " data-parent="#accordionRow">
+              <td colspan="8">
+                <div class="container">
+                  <div class="row">
+                    <div class="card-body border">
+                      <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item">
+                          <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab"
+                            aria-controls="home" aria-selected="true">Thông Tin</a>
+                        </li>
+
+                      </ul>
+                      <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                          <div class="container border">
+                            <h2 mt-1>{{foodDetails.monan_NAME}}</h2>
+
+                            <div class="row p-2 mt-3 ">
+                              <div class="col-4">
+                                <div class="card">
+                                  <img width="250" height="300"
+                                    src="assets/img/resources/Mon_an_va_nuoc/{{x.monan_IMG}}" />
+                                </div>
+                              </div>
+                              <div class="col-4">
+                                <table>
+                                  <tr class="p-2">
+                                    <td>
+                                      Mã món ăn:
+                                    </td>
+                                    <td>
+                                      {{foodDetails.monan_NO}}
+                                    </td>
+                                  </tr>
+
+                                  <tr>
+                                    <td>
+                                      Loại món ăn:
+                                    </td>
+                                    <td>
+                                      {{foodDetails.tenloai_LOAIMONAN}}
+                                    </td>
+                                  </tr>
+
+                                  <tr>
+                                    <td>
+                                      Giá Bán:
+                                    </td>
+                                    <td>
+                                      {{foodDetails.monan_PRICE}}đ
+                                    </td>
+                                  </tr>
+
+                                </table>
+                              </div>
+
+                              <div class="col-4">
+                                <table>
+                                  <tr>
+                                    <td>
+                                      Đơn vị tính:
+                                    </td>
+                                    <td>
+                                      {{foodDetails.monan_UNIT}}
+                                    </td>
+                                  </tr>
+
+                                  <tr>
+                                    <td>
+                                      Trạng thái:
+                                    </td>
+                                    <td>
+                                        {{foodDetails.monan_STATUS}}
+                                    </td>
+
+                                  </tr>
+                                  <tr>
+                                    <td style="vertical-align: top;">
+                                      Thành Phần:
+                                    </td>
+                                    <td >
+                                      <span ng-repeat="z in foodING">- {{z.nguyenlieu.nguyenlieu_NAME}}<br><br></span>
+                                    </td>
+                                  </tr>
+                                </table>
+                              </div>
+                            </div>
+                          </div>
+                          <div>
+                            <div class="float-md-right mt-3">
+                              <button type="button" class="btn btn-success " data-toggle="modal"
+                                data-target="#b{{x.monan_ID}}"><i class="fas fa-plus-circle"></i> Cập Nhật</button>
+                              <!-- Modal -->
+                              <div class="modal fade" id="b{{x.monan_ID}}" tabindex="-1" role="dialog"
+                                aria-labelledby="modifyFoodsTitle" aria-hidden="true">
+                                <div class="modal-dialog modal-lg" role="document">
+                                  <div class="modal-content">
+                                    <div class="modal-header bg-primary">
+                                      <h2 class="modal-title" id="modifyFoodsTitle" style="color: white;">Cập Nhật Thông Tin Món Ăn
+                                      </h2>
+                                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                      </button>
+                                    </div>
+                                    <div class="modal-body">
+                                      <form ng-submit="updateFood()">
+                                        <div class="container">
+                                          <div class="row">
+                                            <div class="col-6">
+                                              <div class="form-group row">
+                                                <label for="input1" class="col-sm-4 col-form-label form-control-sm">Mã
+                                                  món ăn:</label>
+                                                <div class="col-sm-7">
+                                                  <input ng-model="foodDetails.monan_NO" type="text"
+                                                    class="form-control form-control-sm" id="input1">
+                                                </div>
+                                              </div>
+
+                                              <div class="form-group row">
+                                                <label for="inputName"
+                                                  class="col-sm-4 col-form-label form-control-sm">Tên món ăn:</label>
+                                                <div class="col-sm-7">
+                                                  <input ng-model="foodDetails.monan_NAME" type="text"
+                                                    class="form-control form-control-sm" id="inputName">
+
+                                                </div>
+                                              </div>
+
+                                              <div class="form-group row">
+                                                <label for="inputType"
+                                                  class="col-sm-4 col-form-label form-control-sm">Loại món ăn:</label>
+                                                <div class="col-sm-7">
+                                                  <select class="form-control-sm" id="inputType"
+                                                    ng-model="foodDetails.loaimonan_LOAIMONAN_ID">
+                                                    <option ng-repeat="x in foodsType" value="{{x.id}}">
+                                                      {{x.loaimonan_NAME}}</option>
+                                                  </select>
+
+                                                </div>
+                                              </div>
+
+                                              <div class="form-group row">
+                                                <label for="inputNum"
+                                                  class="col-sm-4 col-form-label form-control-sm">Giá bán:</label>
+                                                <div class="col-sm-7">
+                                                  <input ng-model="foodDetails.monan_PRICE" type="text"
+                                                    class="form-control form-control-sm " id="inputNum">
+                                                </div>
+                                              </div>
+
+                                              <div class="form-group row">
+                                                <label for="inputUnit"
+                                                  class="col-sm-4 col-form-label form-control-sm">Đơn vị tính:</label>
+                                                <div class="col-sm-7">
+                                                  <input ng-model="foodDetails.monan_UNIT" type="text"
+                                                    class="form-control form-control-sm " id="inputUnit">
+                                                </div>
+                                              </div>
+
+                                              <div class="form-group row">
+                                                <label for="inputType"
+                                                  class="col-sm-4 col-form-label form-control-sm">Trạng thái:</label>
+                                                <div class="col-sm-7">
+                                                  <select class="form-control-sm" id="inputType"
+                                                    ng-model="foodDetails.monan_STATUS">
+                                                    <option value="Còn">
+                                                      Còn
+                                                    </option>
+                                                    <option value="Không">
+                                                      Không
+                                                    </option>
+                                                  </select>
+                                                </div>
+                                              </div>
+
+                                            </div>
+                                            <div class="col-6">
+                                              <div class="col-6">
+                                                <label for="inputNum"
+                                                  class="col-sm-4 col-form-label form-control-sm">Hình Ảnh:</label>
+                                                <div class="container" ng-controller="UploadController">
+                                                  <div class="row">
+                                                    <div class="card-body border">
+                                                      <div class="col-6">
+                                                        <img ng-src="{{imageSrc}}"
+                                                          src="assets/img/resources/Mon_an_va_nuoc/{{x.monan_IMG}}"
+                                                          width="150" height="150"
+                                                          value="assets/img/resources/Mon_an_va_nuoc/{{x.monan_IMG}}"
+                                                          alt="">
+                                                      </div>
+                                                    </div>
+                                                    <div class="col-6"></div>
+                                                  </div>
+                                                  <div class="row mt-1">
+                                                    <div class="file-field">
+                                                      <div class="btn form-control-file btn-sm btn-success ml-2">
+                                                        <input type="file" ng-file-select="onFileSelect($files)"
+                                                          ng-model="imageSrc"
+                                                          onchange="angular.element(this).scope().setFile(this)">
+                                                      </div>
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                        <div class="text-right mt-3">
+                                          <button type="submit" class="btn btn-danger">Lưu</button>
+                                          <button type="button" class="btn btn-secondary"
+                                            data-dismiss="modal">Đóng</button>
+                                        </div>
+                                      </form>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <!-- <button type="button" class="btn btn-danger "><i class="fas fa-lock"></i> Ngừng Kinh Doanh</button> -->
+                              <button type="button" class="btn btn-danger " data-toggle="modal"
+                                data-target="#c{{x.monan_ID}}"><i class="far fa-trash-alt"></i> Xóa</button>
+                              <div class="modal fade" id="c{{x.monan_ID}}" tabindex="-1" role="dialog"
+                                aria-labelledby="modalDeleteMaterials" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-scrollable" role="document">
+                                  <div class="modal-content ">
+                                    <div class="modal-header">
+                                      <h5 class="modal-title" id="modalDeleteMaterials">Xác Nhận Xóa</h5>
+                                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                      </button>
+                                    </div>
+                                    <div class="modal-body">
+                                      <p style="white-space: normal">Bạn sẽ xóa sản phẩm có mã là
+                                        <b>{{foodDetails.monan_NO}}</b> có tên là
+                                        <b>{{foodDetails.monan_NAME}}</b></p>
+                                    </div>
+                                    <div class="modal-footer">
+                                      <button type="button" ng-click="deleteFood(x)" class="btn btn-secondary"
+                                        data-dismiss="modal">Đồng ý</button>
+                                      <button type="button" class="btn btn-danger" data-dismiss="modal">Hủy</button>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">...
+                        </div>
+                        <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">...
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="card-footer py-4">
+        <dir-pagination-controls boundary-links="true" direction-links="true">
+        </dir-pagination-controls>
+      </div>
+    </div>
+  </div>
+</div>
