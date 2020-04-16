@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
-import TableList from './TableList'
-import TableDetail from './TableDetail'
-import MenuList from './MenuList'
+import TableList from './table/TableList'
+import TableDetail from './table_detail/TableDetail'
+import MenuList from './menu/MenuList'
 import TableDetailFooter from './TableDetailFooter'
-import FormBill from './FormBill'
+import FormBill from './payment/FormBill'
 
 export default class TableOrder extends Component {
     componentDidMount() {
