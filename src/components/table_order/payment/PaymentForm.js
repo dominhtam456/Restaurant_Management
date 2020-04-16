@@ -8,8 +8,8 @@ export default class PaymentForm extends Component {
     }
     render() {
         return (
-            <div  className="modal fade modal-custom" id="btnPayment" tabIndex={-1} role="dialog" aria-labelledby="btnPaymentTitle" aria-hidden="true">
-                    <div  className="modal-dialog modal-xl mr-0" role="document ">
+            <div  className="modal fade modal-custom" style={{paddingRight: "0px"}} id="btnPayment" tabIndex={-1} role="dialog" aria-labelledby="btnPaymentTitle" aria-hidden="true">
+                    <div  className="modal-dialog modal-xl" role="document ">
                         <div className="modal-content">
                         <div className="modal-header bg-primary">
                             <h5 className="modal-title" id="btnPayment">

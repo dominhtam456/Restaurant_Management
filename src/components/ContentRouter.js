@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import TableOrder from './table_order/TableOrder'
+import Food from './food/Food'
 
 import {
     Switch,
@@ -13,6 +14,7 @@ export default class ContentRouter extends Component {
                 
                     <Switch>
                         <Route exact path="/table" component={TableOrder}/>
+                        <Route exact path="/food" component={Food}/>
                     </Switch>
                 
             </div>

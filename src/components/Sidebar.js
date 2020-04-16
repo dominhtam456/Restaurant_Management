@@ -61,9 +61,9 @@ export default class Sidebar extends Component {
                         </Link>
                       </li>
                       <li className="nav-item">
-                        <a className="nav-link text-white" href="#!foods" >
+                        <Link to='/food' className="nav-link text-white" >
                           <i className="fab fa-elementor text-success" /> Món ăn
-                        </a>
+                        </Link>
                       </li>
                       <li className="nav-item">
                         <a className="nav-link text-white" href="#!resources" >

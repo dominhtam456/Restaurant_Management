@@ -66,7 +66,7 @@ export default class TableOrder extends Component {
                         </div>
                     </div>
                 </div>
-                <FormBill/>
+                
             </div>
   
         )
