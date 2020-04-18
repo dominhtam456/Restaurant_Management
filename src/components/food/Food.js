@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import InsertFoodButton from './InsertForm/InsertFoodButton'
+import FoodList from './food_list/FoodList'
 
 export default class Food extends Component {
     render() {
@@ -24,6 +25,7 @@ export default class Food extends Component {
                         <InsertFoodButton />
                     </div>
                 </div>
+                <FoodList />
             </div>
         </div>
         </div>
