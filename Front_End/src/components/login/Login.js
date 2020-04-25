@@ -1,7 +1,46 @@
 import React, { Component } from 'react'
+import * as api from './../../services/LoginService'
+import { withRouter   } from 'react-router-dom'
 
-export default class Login extends Component {
+class Login extends Component {
+    constructor(props){
+        super(props)
+        this.usernameRef = React.createRef()
+        this.passwordRef = React.createRef()
+        this.state={
+            alert: 0
+        }
+    }
+
+    login(e){
+        const username = this.usernameRef.current.value;
+        const password = this.passwordRef.current.value;
+        const response = api.login(username, password);
+        response.then(data => {
+            if(data.error){
+                this.setState({
+                    alert: true
+                })
+            }
+            else{
+                this.setState({
+                    alert: false
+                })
+                localStorage.setItem('token', data.result.token)
+                localStorage.setItem('username', data.result.username)
+                localStorage.setItem('role', data.result.role)
+                this.props.history.push('/table')
+            }
+        })
+
+    }
+
     render() {
+        console.log(this.props.history)
+        const errorMessage = () => {
+            return <div className="alert alert-danger">Username or password not correct</div>
+        }
+
         return (
             <div className="login">
             <div className="background-login">
@@ -15,7 +54,7 @@ export default class Login extends Component {
                             <div className="input-group-prepend">
                             <span className="input-group-text"><i className="ni ni-email-83" /></span>
                             </div>
-                            <input className="form-control" placeholder="Email" type="email" required />
+                            <input ref={this.usernameRef} className="form-control" placeholder="Email" type="email" required />
                         </div>
                         </div>
                         <div className="form-group">
@@ -23,7 +62,7 @@ export default class Login extends Component {
                             <div className="input-group-prepend">
                             <span className="input-group-text"><i className="ni ni-lock-circle-open" /></span>
                             </div>
-                            <input className="form-control" placeholder="Password" type="password" required />
+                            <input ref={this.passwordRef} className="form-control" placeholder="Password" type="password" required />
                         </div>
                         </div>
                         <div className="custom-control custom-control-alternative custom-checkbox">
@@ -33,9 +72,9 @@ export default class Login extends Component {
                         </label>
                         </div>
                         <div className="text-center">
-                        <button type="button" ng-click="vm.login()" className="btn btn-primary my-4">Sign in</button>
+                        <button to='/table' type="button" onClick={e => this.login(e)} className="btn btn-primary my-4">Sign in</button>
                         </div>
-                        <div className="alert alert-danger">{'{'}{'{'}vm.error{'}'}{'}'}</div>
+                        {this.state.alert ? errorMessage() : ''}
                     </form>
                     </div>
                 </div>
@@ -55,3 +94,5 @@ export default class Login extends Component {
         )
     }
 }
+
+export default withRouter(Login)
