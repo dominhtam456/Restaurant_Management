@@ -2,22 +2,39 @@ import React, { Component } from 'react'
 import FootDetailFooter from './FootDetailFooter'
 
 export default class FoodDetail extends Component {
+    constructor(props){
+        super(props)
+        this.myRef = React.createRef();
+    }
+
+    componentDidMount(){
+        // console.log(this.myRef.current.childNodes[0].childNodes[0].className)
+        // if(this.myRef.current.childNodes[0].childNodes[0].className="collapse"){
+        //     this.myRef.current.style="display: none;"
+        // }
+        // else this.myRef.current.style="display: content;"
+
+       
+        
+    }
+    
     render() {
         return (
-            <tr id="a1" className="collapse " data-parent="#accordionRow">
-                <td colSpan={8}>
-                <div className="container">
+            
+            <tr className="detail">
+                <td colSpan={8} className="hiddenRow">
+                <div id={this.props.id} className="collapse" data-parent="#accordionRow">
                     <div className="row">
-                    <div className="card-body border">
-                        <ul className="nav nav-tabs" id="myTab" role="tablist">
+                    <div className="card-body border" >
+                        {/* <ul className="nav nav-tabs border-bottom-lighblue" id="myTab" role="tablist">
                         <li className="nav-item">
                             <a className="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Thông Tin</a>
                         </li>
-                        </ul>
+                        </ul> */}
                         <div className="tab-content" id="myTabContent">
                         <div className="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                            <div className="container border">
-                            <h2 className="mt-1">{'{'}{'{'}foodDetails.monan_NAME{'}'}{'}'}</h2>
+                            <div className="container border-lightblue" >
+                            <h2 className="mt-1">{this.props.id}</h2>
                             <div className="row p-2 mt-3 ">
                                 <div className="col-4">
                                 <div className="card">
@@ -34,7 +51,7 @@ export default class FoodDetail extends Component {
                                         {'{'}{'{'}foodDetails.monan_NO{'}'}{'}'}
                                         </td>
                                     </tr>
-                                    <tr>
+                                    <tr className="p-2">
                                         <td>
                                         Loại món ăn:
                                         </td>
@@ -42,7 +59,7 @@ export default class FoodDetail extends Component {
                                         {'{'}{'{'}foodDetails.tenloai_LOAIMONAN{'}'}{'}'}
                                         </td>
                                     </tr>
-                                    <tr>
+                                    <tr className="p-2">
                                         <td>
                                         Giá Bán:
                                         </td>
@@ -54,7 +71,7 @@ export default class FoodDetail extends Component {
                                 </div>
                                 <div className="col-4">
                                 <table>
-                                    <tbody><tr>
+                                    <tbody><tr className="p-2">
                                         <td>
                                         Đơn vị tính:
                                         </td>
@@ -62,7 +79,7 @@ export default class FoodDetail extends Component {
                                         {'{'}{'{'}foodDetails.monan_UNIT{'}'}{'}'}
                                         </td>
                                     </tr>
-                                    <tr>
+                                    <tr className="p-2">
                                         <td>
                                         Trạng thái:
                                         </td>
@@ -70,7 +87,7 @@ export default class FoodDetail extends Component {
                                         {'{'}{'{'}foodDetails.monan_STATUS{'}'}{'}'}
                                         </td>
                                     </tr>
-                                    <tr>
+                                    <tr className="p-2">
                                         <td style={{verticalAlign: 'top'}}>
                                         Thành Phần:
                                         </td>
@@ -96,6 +113,7 @@ export default class FoodDetail extends Component {
                 </div>
                 </td>
             </tr>
+            
         )
     }
 }

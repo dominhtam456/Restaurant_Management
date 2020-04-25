@@ -6,6 +6,22 @@
   }
 
 }
+.hiddenRow {
+  padding: 0 4px !important;
+  background-color: lightblue;
+}
+
+.border-lightblue {
+  border: 1px solid lightblue !important;
+}
+
+.border-bottom-lighblue {
+  border-bottom: 1px solid lightblue;
+}
+
+tr.p-2 td{
+  border-top: 0;
+}
 
 @media(max-width:807px) {
   .form-search-custom {
@@ -79,4 +95,25 @@ th {
 .card{
   border: #2c92ff solid 2px;
 }
+
+.background-login{
+  position: relative;
+}
+
+.background-login::after{
+  content : "";
+  display: block;
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin-right: 0;
+  background-image: linear-gradient(rgb(94, 113, 228, 0.5), rgb(94, 113, 228,0.5)), url("./../img/theme/bar.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 100%;
+  height: 100vh;
+  z-index: -1;
+}
+
+
 

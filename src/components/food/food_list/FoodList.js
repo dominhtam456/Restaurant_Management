@@ -5,8 +5,7 @@ import FoodDetail from '../food_detail/FoodDetail'
 export default class FoodList extends Component {
 
     componentDidMount() {
-        let table = document.querySelectorAll("table#accordionRow.menu-table");
-        console.log('table ==>', table[0].tBodies);
+        
     }
 
     render() {
@@ -24,8 +23,11 @@ export default class FoodList extends Component {
                         <th scope="col" />
                     </tr></thead>
                     <tbody>
-                    <FoodRow />
-                    <FoodDetail />
+                    <FoodRow id={"#a1"}/>
+                    <FoodDetail id={"a1"}/>
+                    <FoodRow id={"#a2"}/>
+                    
+                    <FoodDetail id={"a2"}/>
                     </tbody>
                 </table>
                 </div>

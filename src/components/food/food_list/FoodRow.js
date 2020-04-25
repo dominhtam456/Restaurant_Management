@@ -1,11 +1,14 @@
 import React, { Component } from 'react'
 
 export default class FoodRow extends Component {
+
+
+
     render() {
         return (
-            <tr data-toggle="collapse" data-target="#a1" className="clickable" aria-expanded="true">
+            <tr  data-toggle="collapse" data-target={this.props.id} className="clickable" aria-expanded="false">
                 <th>
-                <span>{'{'}{'{'}$index+1{'}'}{'}'}</span>
+                    <span>{this.props.id}</span>
                 </th>
                 <th scope="row">
                 <div className="media align-items-center">
