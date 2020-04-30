@@ -107,7 +107,7 @@ th {
   top: 0;
   right: 0;
   margin-right: 0;
-  background-image: linear-gradient(rgb(94, 113, 228, 0.5), rgb(94, 113, 228,0.5)), url("./../img/theme/bar.jpg");
+  background-image:  url("./../img/theme/bar.jpg");
   background-repeat: no-repeat;
   background-size: cover;
   width: 100%;
