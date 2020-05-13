@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import * as api from './../../services/LoginService'
 import { withRouter   } from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 
 class Login extends Component {
     constructor(props){
@@ -8,23 +9,26 @@ class Login extends Component {
         this.usernameRef = React.createRef()
         this.passwordRef = React.createRef()
         this.state={
-            alert: 0
+            alert: false,
+            idLogged: false
         }
     }
 
-    login(e){
+    login(e) {
+        const { history } = this.props;
         const username = this.usernameRef.current.value;
         const password = this.passwordRef.current.value;
         const response = api.login(username, password);
         response.then(data => {
-            if(data.error){
+            if(data.error) {
                 this.setState({
                     alert: true
                 })
             }
-            else{
+            else {
                 this.setState({
-                    alert: false
+                    alert: false,
+                    isLogged: true
                 })
                 localStorage.setItem('token', data.result.token)
                 localStorage.setItem('username', data.result.username)
@@ -35,8 +39,10 @@ class Login extends Component {
 
     }
 
+
+
     render() {
-        console.log(this.props.history)
+
         const errorMessage = () => {
             return <div className="alert alert-danger">Username or password not correct</div>
         }

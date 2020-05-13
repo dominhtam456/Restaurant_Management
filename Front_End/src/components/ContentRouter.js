@@ -13,8 +13,8 @@ export default class ContentRouter extends Component {
             <div>
                 
                     <Switch>
-                        <Route exact path="/table" component={TableOrder}/>
-                        <Route exact path="/food" component={Food}/>
+                        <Route exact path="/table" render={() => <TableOrder/>}/>
+                        <Route exact path="/food" render={() => <Food/>}/>
                     </Switch>
                 
             </div>
