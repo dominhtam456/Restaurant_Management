@@ -4,12 +4,10 @@ import com.example.demo.model.NhanVien;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.function.Function;
 
@@ -56,11 +54,11 @@ public class JwtTokenUtil implements Serializable {
     private String doGenerateToken(String subject, int loainv) {
 
         Claims claims = Jwts.claims().setSubject(subject);
-        claims.put("scopes", Arrays.asList(new SimpleGrantedAuthority(loainv+"")));
+        claims.put("role", loainv);
 
         return Jwts.builder()
                 .setClaims(claims)
-                .setIssuer("http://devglan.com")
+                .setIssuer("issue")
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + ACCESS_TOKEN_VALIDITY_SECONDS*1000))
                 .signWith(SignatureAlgorithm.HS256, SIGNING_KEY)

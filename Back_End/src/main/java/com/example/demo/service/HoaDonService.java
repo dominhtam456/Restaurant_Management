@@ -73,9 +73,8 @@ public interface HoaDonService extends JpaRepository<HoaDon,Long>{
 			if(temp!=null) {
 				this.save(temp);
 				return true;
-			}else {
-				return false;
 			}
+			return false;
 		}
 		
 		//DELETE HoaDon

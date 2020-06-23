@@ -9,17 +9,15 @@ class TableList extends Component {
         
     }
     render() {
+        const element= this.props.tableStore.listTable.map((table, index)=>{
+            return <TableElement table={table} key={table.id}/>
+        })
         console.log(toJS(this.props.tableStore.listTable))
         return (
             
                 <div className="tab-pane fade show active" id="ban" role="tabpanel" aria-labelledby="home-tab">
                     <div className="card-deck bg-white border" style={{justifyContent: "center"}}>
-                    <TableElement />
-                    <TableElement />
-                    <TableElement />
-                    <TableElement />
-                    <TableElement />
-                    <TableElement />
+                        {element}
                     </div>
                 </div>
             

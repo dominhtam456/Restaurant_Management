@@ -12,7 +12,7 @@ export default class Table {
             this.listTable = data;
             if(data.error) this.status = true;
             else this.status = false;
-            console.log(toJS(this.listTable));
+            //console.log(toJS(this.listTable));
     }
 }
 decorate(Table, {

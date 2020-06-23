@@ -31,16 +31,11 @@ class Login extends Component {
                     isLogged: true
                 })
                 localStorage.setItem('token', data.result.token)
-                localStorage.setItem('username', data.result.username)
-                localStorage.setItem('role', data.result.role)
                 this.props.history.push('/table')
             }
         })
 
     }
-
-
-
     render() {
 
         const errorMessage = () => {

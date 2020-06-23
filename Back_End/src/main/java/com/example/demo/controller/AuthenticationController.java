@@ -29,7 +29,7 @@ public class AuthenticationController {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginUser.getUsername(), loginUser.getPassword()));
         final NhanVien nhanvien = nhanvienService.findOne(loginUser.getUsername());
         final String token = jwtTokenUtil.generateToken(nhanvien);
-        return new ApiResponse<>(200, "success",new AuthToken(token, nhanvien.getUsername(),nhanvien.getLoai()));
+        return new ApiResponse<>(200, "success",new AuthToken(token));
     }
 
 }
