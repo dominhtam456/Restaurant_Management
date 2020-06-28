@@ -96,7 +96,6 @@ public class FoodController {
 		ma.setName(monanForm.getName());
 		ma.setPrice(monanForm.getPrice());
 		ma.setUnit(monanForm.getUnit());
-		ma.setStatus(monanForm.getStatus());
 
 		MonAn updatedMonAn = repositoryMonAn.save(ma);// update trong database
 		return ResponseEntity.ok(updatedMonAn);

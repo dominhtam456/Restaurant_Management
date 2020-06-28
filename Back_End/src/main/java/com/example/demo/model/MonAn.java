@@ -16,7 +16,9 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.Null;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity(name = "MonAn")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
@@ -42,20 +44,18 @@ public class MonAn implements Serializable{
 		 @Column(name = "unit")
 		 private String unit;
 		 
-		 @Column(name = "status")
-		 private String status;
-		 
 		 @Column(name="image")
 		 private String image;
 		 
 		 @Column(name = "loaimonan_id")
 		 private int loaimonan_id;
 		 
+		
 		 @OneToMany(
 			        mappedBy = "monan",
 			        cascade = CascadeType.ALL,
 			        orphanRemoval = true
-			    )
+				)
 		 private List<MonAnChiTiet> nguyenlieus = new ArrayList<>();
 		 
 		 @Transient
@@ -71,7 +71,6 @@ public class MonAn implements Serializable{
 			this.name = name;
 			this.price = price;
 			this.unit = unit;
-			this.status = status;
 			this.image = image;
 			this.loaimonan_id = loaimonan_id;
 		}
@@ -83,7 +82,6 @@ public class MonAn implements Serializable{
 			this.name = name;
 			this.price = price;
 			this.unit = unit;
-			this.status = status;
 			this.loaimonan_id = loaimonan_id;
 		}
 		
@@ -152,20 +150,6 @@ public class MonAn implements Serializable{
 		public void setUnit(String unit) {
 			this.unit = unit;
 		}
-
-
-
-		public String getStatus() {
-			return status;
-		}
-
-
-
-		public void setStatus(String status) {
-			this.status = status;
-		}
-
-
 
 		public String getImage() {
 			return image;

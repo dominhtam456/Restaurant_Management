@@ -1,8 +1,16 @@
 import React, { Component } from 'react'
 import TableDetailRow from './TableDetailRow'
+import { inject , observer } from 'mobx-react'
+import { toJS } from 'mobx'
 
-export default class TableDetail extends Component {
+class TableDetail extends Component {
+    componentDidMount() {
+        this.props.tableStore.getListOrder();
+    }
     render() {
+        const element = this.props.tableStore.currentListOrder.map((order,index) => {
+            return <TableDetailRow order={order} key={index} index={index}/>
+        })
         return (
             <table className="table  align-items-center table-flush accordion table-hover table-striped " id="accordionRow">
             <thead className="thead-light">
@@ -16,12 +24,7 @@ export default class TableDetail extends Component {
                 </tr>
             </thead>
             <tbody>
-                <TableDetailRow />
-                <TableDetailRow />
-                <TableDetailRow />
-                <TableDetailRow />
-                <TableDetailRow />
-                <TableDetailRow />
+                {element}
                 
             </tbody>
             </table>
@@ -29,3 +32,5 @@ export default class TableDetail extends Component {
         )
     }
 }
+
+export default inject("tableStore")(observer(TableDetail));

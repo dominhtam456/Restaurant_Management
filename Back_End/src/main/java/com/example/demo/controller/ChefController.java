@@ -20,27 +20,27 @@ import com.example.demo.model.BepID;
 @CrossOrigin
 public class ChefController {
 
-    @Autowired
-    BepService repositoryBep;
+    // @Autowired
+    // BepService repositoryBep;
     
-    @RequestMapping(path = "/getAllBep", method = RequestMethod.GET)
-	public List<Bep> getAllBep(){
-		return repositoryBep.findAll();
-	}
+    // @RequestMapping(path = "/getAllBep", method = RequestMethod.GET)
+	// public List<Bep> getAllBep(){
+	// 	return repositoryBep.findAll();
+	// }
 	
-	@RequestMapping(path = "/getAllBepByIDBep/{bepID}", method = RequestMethod.GET)
-	public List<Bep> getAllBepByIDBep(@PathVariable(value = "bepID") int bepID){
-		return repositoryBep.getBepByBep_ID(bepID);
-	}
+	// @RequestMapping(path = "/getAllBepByIDBep/{bepID}", method = RequestMethod.GET)
+	// public List<Bep> getAllBepByIDBep(@PathVariable(value = "bepID") int bepID){
+	// 	return repositoryBep.getBepByBep_ID(bepID);
+	// }
 	
-	@RequestMapping(path = "/insertToBep/{bepID}&{hoadonID}", method = RequestMethod.POST)
-	public Bep insertToBep(@PathVariable(value = "bepID") int bepID, @PathVariable(value = "hoadonID") int hoadonID){
-		return repositoryBep.save(new Bep(new BepID(bepID, hoadonID),0));
-	}
+	// @RequestMapping(path = "/insertToBep/{bepID}&{hoadonID}", method = RequestMethod.POST)
+	// public Bep insertToBep(@PathVariable(value = "bepID") int bepID, @PathVariable(value = "hoadonID") int hoadonID){
+	// 	return repositoryBep.save(new Bep(new BepID(bepID, hoadonID),0));
+	// }
 	
-	@RequestMapping(path = "/deleteFromBep/{bepID}&{hoadonID}", method = RequestMethod.POST)
-	public boolean deleteFromBep(@PathVariable(value = "bepID") int bepID, @PathVariable(value = "hoadonID") int hoadonID){
-		repositoryBep.deleteById(new BepID(bepID, hoadonID));
-		return true;
-	}
+	// @RequestMapping(path = "/deleteFromBep/{bepID}&{hoadonID}", method = RequestMethod.POST)
+	// public boolean deleteFromBep(@PathVariable(value = "bepID") int bepID, @PathVariable(value = "hoadonID") int hoadonID){
+	// 	repositoryBep.deleteById(new BepID(bepID, hoadonID));
+	// 	return true;
+	// }
 }

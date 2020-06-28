@@ -1,13 +1,18 @@
 package com.example.demo.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import java.io.Serializable;
 
 import javax.persistence.*;
 
 @Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Table(name = "nhanvien")
-public class NhanVien {
-	
+public class NhanVien implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 	 @Id
 	 @GeneratedValue(strategy = GenerationType.IDENTITY)
 	 @Column(name = "id")
@@ -102,6 +107,5 @@ public class NhanVien {
 	public void setImg(String img) {
 		this.img = img;
 	}
-
 	 
 }

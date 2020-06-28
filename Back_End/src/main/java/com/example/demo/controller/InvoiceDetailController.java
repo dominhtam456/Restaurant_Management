@@ -33,7 +33,13 @@ public class InvoiceDetailController {
 	@RequestMapping(path = "/GetAllHoaDonChiTiet", produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<HoaDonChiTiet> GetAllHoaDonChiTiets() {
 		// This returns a JSON or XML with the users
-		return repositoryHDCT.GetAllHoaDonChiTiets();
+		List<HoaDonChiTiet> listHDCT = repositoryHDCT.findAll();
+		for (HoaDonChiTiet item : listHDCT) {
+			item.setTenMonAn(
+					repositoryMonAn.getOne(Long.valueOf(item.getHoadonchitiet_id().getMonan_id()))
+							.getName());
+		}
+		return listHDCT;
 	}
 
 	// LAY CTHD THEO ID_HOADON

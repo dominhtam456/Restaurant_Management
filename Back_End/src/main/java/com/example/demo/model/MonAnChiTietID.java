@@ -16,8 +16,6 @@ public class MonAnChiTietID implements Serializable{
 	 
 	 @Column(name = "nguyenlieu_id")
 	 private Long nguyenlieu_id;
-	 
-	
 	
 	public MonAnChiTietID(Long monan_id, Long nguyenlieu_id) {
 		super();
@@ -30,7 +28,6 @@ public class MonAnChiTietID implements Serializable{
 	public MonAnChiTietID() {
 		super();
 	}
-
 
 
 	public Long getMonan_id() {

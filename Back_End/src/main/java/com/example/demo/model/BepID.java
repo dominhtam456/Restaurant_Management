@@ -10,24 +10,24 @@ public class BepID implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	
-	@Column(name = "id")
-	private Integer id;
+	@Column(name = "monan_id")
+	private Integer monan_id;
 	
 	@Column(name = "hoadon_id")
 	private Integer hoadon_id;
 
-	public BepID(Integer id, Integer hoadon_id) {
+	public BepID(Integer monan_id, Integer hoadon_id) {
 		super();
-		this.id = id;
+		this.monan_id = monan_id;
 		this.hoadon_id = hoadon_id;
 	}
 
-	public Integer getId() {
-		return id;
+	public Integer getMonan_id() {
+		return monan_id;
 	}
 
-	public void setId(Integer id) {
-		this.id = id;
+	public void setMonan_id(Integer id) {
+		this.monan_id = id;
 	}
 
 	public Integer getHoadon_id() {

@@ -4,6 +4,10 @@ import java.util.Objects;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity(name = "MonAnChiTiet")
 @Table(name = "monanchitiet")
 public class MonAnChiTiet {
@@ -11,8 +15,9 @@ public class MonAnChiTiet {
 	@EmbeddedId
 	private MonAnChiTietID id;
 	
+	@JsonIgnore 
 	@ManyToOne(fetch = FetchType.LAZY)
-    @MapsId("monan_id")
+	@MapsId("monan_id")
     private MonAn monan;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -28,9 +33,10 @@ public class MonAnChiTiet {
 	}
 	
 
-	public MonAnChiTiet(MonAnChiTietID id, MonAn monan, NguyenLieu nguyenlieu, Float soluong) {
+	public MonAnChiTiet(MonAn monan, NguyenLieu nguyenlieu, Float soluong) {
 		super();
 		this.id = new MonAnChiTietID(monan.getId(), nguyenlieu.getId());
+		//this.id = id;
 		this.monan = monan;
 		this.nguyenlieu = nguyenlieu;
 		this.soluong = soluong;

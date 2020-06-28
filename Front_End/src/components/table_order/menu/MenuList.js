@@ -1,19 +1,22 @@
 import React, { Component } from 'react'
 import MenuElement from './MenuElement'
+import { inject , observer } from 'mobx-react'
+import { toJS } from 'mobx'
 
-
-export default class MenuList extends Component {
+class MenuList extends Component {
+    componentDidMount() {
+        this.props.tableStore.getFoods();
+    }
     render() {
+        console.log(toJS(this.props.tableStore.listFood))
+        const element = this.props.tableStore.listFood.map((food, index) => {
+            return <MenuElement key={food.id} food={food}/>
+        })
         return (
             
                 <div className="tab-pane fade show " id="menu" role="tabpanel" aria-labelledby="home-tab">
                     <div className="card-deck bg-white border" style={{justifyContent: "center"}}>
-                        <MenuElement />
-                        <MenuElement />
-                        <MenuElement />
-                        <MenuElement />
-                        <MenuElement />
-                        <MenuElement />
+                        {element}
                     </div>
                 </div>
             
@@ -21,3 +24,5 @@ export default class MenuList extends Component {
         )
     }
 }
+
+export default inject("tableStore")(observer(MenuList));

@@ -52,19 +52,19 @@ public interface HoaDonService extends JpaRepository<HoaDon,Long>{
 					}
 					return "HD00"+(maxID+1);
 				}
-				//INSERT HoaDon
-				@SuppressWarnings("unused")
-				public default HoaDon InsertHoaDon(HoaDon o) {
-					o.setNo(CreateHoaDonNo());
-					//mac dinh khahc hanng le=1
-					o.setKhachhang_id(1);
-					if(o!=null) {
-					   return save(o);
-						
-					}else {
-						return null;
-					}
-				}
+		//INSERT HoaDon
+		@SuppressWarnings("unused")
+		public default HoaDon InsertHoaDon(HoaDon o) {
+			//o.setNo(CreateHoaDonNo());
+			//mac dinh khahc hanng le=1
+			o.setKhachhang_id(1);
+			if(o!=null) {
+				return save(o);
+				
+			}else {
+				return null;
+			}
+		}
 		
 		//UPDATE HoaDon
 		public default boolean UpdateHoaDon(HoaDon o) {

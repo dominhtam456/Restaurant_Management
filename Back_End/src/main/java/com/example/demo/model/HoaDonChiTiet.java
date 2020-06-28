@@ -30,6 +30,9 @@ public class HoaDonChiTiet implements Serializable {
 
 	@Column(name = "soluong")
 	private Integer soluong;
+
+	@Column(name = "status")
+	private String status;
     
 	@Transient
 	private String thanhTien;
@@ -39,11 +42,12 @@ public class HoaDonChiTiet implements Serializable {
 	
 	//HAM TAO
 	
-	public HoaDonChiTiet(HoaDonChiTietID hoadonchitiet_id, String price, Integer soluong) {
+	public HoaDonChiTiet(HoaDonChiTietID hoadonchitiet_id, String price, Integer soluong, String status) {
 		super();
 		this.hoadonchitiet_id = hoadonchitiet_id;
 		this.price = price;
 		this.soluong = soluong;
+		this.status = status;
 	}
 
 	public HoaDonChiTiet() {
@@ -64,6 +68,14 @@ public class HoaDonChiTiet implements Serializable {
 
 	public void setPrice(String price) {
 		this.price = price;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 	public Integer getSoluong() {

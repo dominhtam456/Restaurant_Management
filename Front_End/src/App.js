@@ -9,12 +9,6 @@ class App extends Component {
 
 
     render(){
-      const container = () => {
-        return (<div>
-          <Sidebar />
-          <Content />
-        </div>)
-      }
       return (
       <div>
         <Router>

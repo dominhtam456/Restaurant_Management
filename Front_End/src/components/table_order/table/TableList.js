@@ -21,7 +21,6 @@ class TableList extends Component {
                     </div>
                 </div>
             
-
         )
     }
 }

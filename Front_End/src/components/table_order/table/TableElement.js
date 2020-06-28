@@ -1,10 +1,17 @@
 import React, { Component } from 'react'
+import { inject , observer } from 'mobx-react'
+import { toJS } from 'mobx'
 
-export default class TableElement extends Component {
+class TableElement extends Component {
+    onHandelClickTable() {
+        this.props.tableStore.setCurrentTable(this.props.table);
+        this.props.tableStore.getCurrentListOrder(this.props.table);
+    }
+
     render() {
         return (
             
-                <a style={{cursor: "pointer"}}>
+                <a style={{cursor: "pointer"}} onClick = {() => this.onHandelClickTable()}>
                     <div className="card-block mb-2 mt-2">
                     <div className="card" style={{width: '10.2rem'}}>
                         <img className="card-img-top p-4" 
@@ -20,4 +27,6 @@ export default class TableElement extends Component {
         )
     }
 }
+
+export default inject("tableStore")(observer(TableElement));
 

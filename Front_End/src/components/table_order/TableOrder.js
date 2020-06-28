@@ -4,8 +4,10 @@ import TableDetail from './table_detail/TableDetail'
 import MenuList from './menu/MenuList'
 import TableDetailFooter from './TableDetailFooter'
 import FormBill from './payment/FormBill'
+import { inject , observer } from 'mobx-react'
+import { toJS } from 'mobx'
 
-export default class TableOrder extends Component {
+class TableOrder extends Component {
     componentDidMount() {
         const s = document.createElement('script');
         s.type = 'text/javascript';
@@ -46,7 +48,7 @@ export default class TableOrder extends Component {
                             <div className="col-sm-6">
                                 <div className="card border">
                                     <div className="card-header bg-secondary">
-                                    <h1>Bàn 1</h1>
+                                        <h1>{this.props.tableStore.currentTable.name}</h1>
                                     </div>
                                     <div className="card-body" style={{height:"40em", overflowY: "scroll"}}>
                                     <div className="table-responsive">
@@ -72,3 +74,5 @@ export default class TableOrder extends Component {
         )
     }
 }
+
+export default inject("tableStore")(observer(TableOrder));
