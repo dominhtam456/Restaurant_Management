@@ -66,19 +66,19 @@ export default class Sidebar extends Component {
                         </Link>
                       </li>
                       <li className="nav-item">
-                        <a className="nav-link text-white" href="#!resources" >
-                          <i className="ni ni-bullet-list-67 text-red" /> Nguyên Liệu
-                        </a>
+                        <Link to='/resources' className="nav-link text-white" >
+                          <i className="fab fa-elementor text-success" /> Nguyên Liệu
+                        </Link>
                       </li>
                       <li className="nav-item">
-                        <a className="nav-link text-white" href="#!statistical" >
-                          <i className="fas fa-table text-success" />Thống Kê
-                        </a>
+                        <Link to='/statistical' className="nav-link text-white" >
+                          <i className="fas fa-elementor text-success " /> Thống Kê
+                        </Link>
                       </li>
                       <li className="nav-item">
-                        <a className="nav-link text-white" href="#!kitchen" >
-                          <i className="fas fa-table text-success" />Nhà bếp 
-                        </a>
+                        <Link to='/kitchen' className="nav-link text-white" >
+                          <i className="fab fa-elementor text-success"/> Bếp
+                        </Link>
                       </li>
                     </ul>
                     {/* Divider */}
