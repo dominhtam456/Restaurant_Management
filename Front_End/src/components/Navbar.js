@@ -34,7 +34,7 @@ export default class Navbar extends Component {
                                 <img alt="Image placeholder" src={process.env.PUBLIC_URL + "/img/icons/avatar.png"} />
                                 </span>
                                 <div className="media-body ml-2 d-none d-lg-block">
-                                <span className="mb-0 text-sm  font-weight-bold text-dark">Tâm Thiên Tài</span>
+                                <span className="mb-0 text-sm  font-weight-bold text-dark">Tâm </span>
                                 </div>
                             </div>
                             </a>

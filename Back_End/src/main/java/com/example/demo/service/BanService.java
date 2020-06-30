@@ -30,9 +30,9 @@ public interface BanService extends JpaRepository<Ban, Long>{
 	/* @Procedure(name = "firstProcedure") public String DanhSachBan(); */
 	 
 	    @Modifying
-	    @Query(value = "update ban set status = :status where name = :name", nativeQuery = true)
+	    @Query(value = "update ban set status = :status where id = :id", nativeQuery = true)
 	    @Transactional
-	   void CapNhatTrangThaiBan(@Param("status") String status,@Param("name") String name);
+	   void CapNhatTrangThaiBan(@Param("status") String status,@Param("id") Long id);
 	//GET DANH SACH BAN
 	public default List<Ban> GetAllBans(){
 		return this.findAll();

@@ -12,7 +12,7 @@ import java.util.List;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/api")
 public class UserController {
    
     @Autowired
@@ -31,6 +31,11 @@ public class UserController {
     @GetMapping("/{id}")
     public ApiResponse<NhanVien> getOne(@PathVariable int id){
         return new ApiResponse<>(HttpStatus.OK.value(), "User fetched successfully.",nhanvienService.findById(id));
+    }
+
+    @GetMapping("/email/{username}")
+    public NhanVien getByUsername(@PathVariable String username){
+        return nhanvienService.findOne(username);
     }
 
     @PutMapping("/{id}")

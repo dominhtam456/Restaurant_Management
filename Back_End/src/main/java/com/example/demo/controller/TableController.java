@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -89,8 +90,15 @@ public class TableController {
 
 	// CAP NHAT TRANG THAI BAN
 
-	@RequestMapping(value = "/UpdateStatusBan", method = RequestMethod.GET)
-	public void UpdateStatusBan() {
-		repositoryBan.CapNhatTrangThaiBan("aaa", "Bàn 1");
+	@RequestMapping(value = "/UpdateStatusBan", method = RequestMethod.POST)
+	public Boolean UpdateStatusBan(
+		@RequestParam(value = "status") String status,
+		@RequestParam(value = "id") Long id) {
+		try{
+			repositoryBan.CapNhatTrangThaiBan(status, id);
+			return true;
+		}catch(Exception e){
+			return false;
+		}
 	}
 }

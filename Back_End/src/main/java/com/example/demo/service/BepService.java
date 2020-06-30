@@ -11,15 +11,5 @@ import com.example.demo.model.BepID;
 
 @Repository
 public interface BepService extends JpaRepository<Bep,BepID> {
-	// GET BEP BY BEPID
-	// public default List<Bep> getBepByBep_ID(int bepid){
-	// 	List<Bep> l = new ArrayList<Bep>();
-	// 	for (Bep b : this.findAll()) {
-	// 		if(bepid==b.getId().getId()) {
-	// 			l.add(b);
-	// 		}
-	// 	}
-	// 	return l;
-	// }
 
 }

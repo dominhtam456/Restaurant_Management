@@ -2,6 +2,8 @@ import { observable, computed, action, decorate, toJS } from "mobx"
 import * as TableService from './../services/TableService';
 import * as FoodService from './../services/FoodService';
 import * as InvoiceService from './../services/InvoiceService';
+import * as UserService from './../services/UserService';
+
 import CommonUtil from './../util'
 import { URL_API } from './../constants'
 
@@ -11,6 +13,11 @@ export default class Table {
     listOrder = []
     currentTable = {};
     currentListOrder = [];
+    updateCount = 0;
+
+    setUpdateCount = () => {
+        this.updateCount++;
+    }
 
     deleteOrder = (order) => {
         for(let i=0; i<this.currentListOrder.length; i++){
@@ -22,8 +29,23 @@ export default class Table {
     }
 
     getListOrder = async () => {
+        //console.log("wtf")
         const data = await InvoiceService.getInvoiceByStatus(0);
         this.listOrder = data;
+        if(this.currentTable.id){
+            for(let i = 0; i < this.listOrder.length; i++){
+                for(let j = 0; j < this.listOrder[i].ban.length; j++){
+                    //console.log(this.listOrder[i].ban[j].ban.id)
+                    if(this.listOrder[i].ban[j].ban.id == this.currentTable.id){
+                        const data = await InvoiceService.getInvoiceDetailByInvoiceId(this.listOrder[i].id);
+                        this.currentListOrder = data; 
+                        //console.log(toJS(this.currentListOrder));
+                        return;
+                    }
+                }
+            }
+        }
+        this.currentListOrder = [];
     }
 
     getCurrentListOrder = async (table) => {
@@ -93,7 +115,9 @@ export default class Table {
     confirm = async () => {
         let currentTimestamp = Math.floor(Date.now() / 1000);
         let invoiceNo = "HD" + currentTimestamp;
-        let date = CommonUtil.epochToDateTime(currentTimestamp, 'yyyy-mm-dd');
+        let date = CommonUtil.epochToDateTime(currentTimestamp, 'yyyy-MM-dd');
+
+        console.log(date);
         let invoice =  {
             "no": invoiceNo,
             "date": date,
@@ -109,13 +133,15 @@ export default class Table {
         }
         
         let userEmail = JSON.parse(atob(localStorage.getItem('token').split('.')[1])).sub;
-        // let invoiceStaff = {
-        //     "id":{
-        //         "hoadonId": InvoiceData.id,
-        //         "nhanvienId": this.currentTable.id
-        //     }
-        // }
-        // InvoiceService.addinvoiceStaff();
+        const user = await UserService.getUserByEmail(userEmail);
+
+        let invoiceStaff = {
+            "id":{
+                "hoadonId": InvoiceData.id,
+                "nhanvienId": user.id
+            }
+        }
+        await InvoiceService.addinvoiceStaff(invoiceStaff);
 
         let invoiceTable = {
                 "id":{
@@ -123,7 +149,11 @@ export default class Table {
                     "banId": this.currentTable.id
                 }
             }
-        InvoiceService.addinvoiceTable(invoiceTable);
+        await InvoiceService.addinvoiceTable(invoiceTable);
+
+        await TableService.updateTableStatus("Có", this.currentTable.id);
+        this.getTable();
+        console.log(toJS(this.listTable))
     }
 }
 decorate(Table, {
@@ -132,6 +162,7 @@ decorate(Table, {
     listOrder: observable,
     currentListOrder: observable,
     currentTable: observable,
+    updateCount: observable,
 
     getTable: action,
     getFoods: action,
@@ -141,5 +172,6 @@ decorate(Table, {
     setCurrentListOrder: action,
     setAmount: action,
     deleteOrder: action,
-    confirm: action
+    confirm: action,
+    setUpdateCount: action
 })

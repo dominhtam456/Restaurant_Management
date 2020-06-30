@@ -5,15 +5,21 @@ import { toJS } from 'mobx'
 class TableElement extends Component {
     onHandelClickTable() {
         this.props.tableStore.setCurrentTable(this.props.table);
-        this.props.tableStore.getCurrentListOrder(this.props.table);
+        this.props.tableStore.getListOrder(this.props.table);
     }
 
     render() {
+        const style = {
+            cursor: "pointer",
+            width: '10.2rem'
+        }
+
+        if(this.props.table.status !== "Trống") style.backgroundColor = "lightgray";
         return (
             
-                <a style={{cursor: "pointer"}} onClick = {() => this.onHandelClickTable()}>
+                <a onClick = {() => this.onHandelClickTable()}>
                     <div className="card-block mb-2 mt-2">
-                    <div className="card" style={{width: '10.2rem'}}>
+                    <div className="card" style={style}>
                         <img className="card-img-top p-4" 
                             src={ process.env.PUBLIC_URL + "/img/icons/dinner-table.png" } 
                             alt="Card image cap" width="120px" height="150px" />

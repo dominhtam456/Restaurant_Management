@@ -8,6 +8,12 @@ class TableList extends Component {
         this.props.tableStore.getTable();
         
     }
+
+    componentDidUpdate(prevProps) {
+    if(prevProps.update != this.props.update)
+        this.props.tableStore.getTable();
+    }
+
     render() {
         const element= this.props.tableStore.listTable.map((table, index)=>{
             return <TableElement table={table} key={table.id}/>

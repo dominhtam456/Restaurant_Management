@@ -7,6 +7,12 @@ class TableDetail extends Component {
     componentDidMount() {
         this.props.tableStore.getListOrder();
     }
+
+    // componentDidUpdate(prevProps) {
+    //     if(prevProps.update != this.props.update)
+    //         this.props.tableStore.getListOrder();
+    // }
+
     render() {
         const element = this.props.tableStore.currentListOrder.map((order,index) => {
             return <TableDetailRow order={order} key={index} index={index}/>

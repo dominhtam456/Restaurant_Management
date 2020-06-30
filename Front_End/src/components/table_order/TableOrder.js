@@ -8,12 +8,24 @@ import { inject , observer } from 'mobx-react'
 import { toJS } from 'mobx'
 
 class TableOrder extends Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            update: 1
+        }
+    }
     componentDidMount() {
         const s = document.createElement('script');
         s.type = 'text/javascript';
         s.async = true;
         s.src = process.env.PUBLIC_URL + '/js/plugins/choose.js';
         document.body.appendChild(s);
+        
+        setInterval(() => {
+            this.props.tableStore.setUpdateCount();
+        }, 10000);
+       
+        
       }
     render() {
         return (
@@ -40,7 +52,7 @@ class TableOrder extends Component {
 
                                 </ul>
                                 <div className="tab-content" id="myTabContent">
-                                    <TableList />
+                                    <TableList update={this.props.tableStore.updateCount}/>
                                     <MenuList />
                                     
                                 </div> 
