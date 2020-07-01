@@ -15,13 +15,13 @@ export default class ContentRouter extends Component {
         return (
             <div>
                 
-                    <Switch>
-                        <Route exact path="/table" render={() => <TableOrder/>}/>
-                        <Route exact path="/food" render={() => <Food/>}/>
-                        <Route exact path="/resources" render={() => <Resource/>}/>
-                        <Route exact path="/statistical" render={() => <Statistical/>}/>
-                        <Route exact path="/kitchen" render={() => <Kitchen/>}/>
-                    </Switch>
+                <Switch>
+                    <Route exact path="/table" render={() => <TableOrder/>}/>
+                    <Route exact path="/food" render={() => <Food/>}/>
+                    <Route exact path="/resources" render={() => <Resource/>}/>
+                    <Route exact path="/statistical" render={() => <Statistical/>}/>
+                    <Route exact path="/kitchen" render={() => <Kitchen/>}/>
+                </Switch>
                 
             </div>
         )

@@ -14,4 +14,18 @@ export default class CommonUtil{
         //let dateString = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()} (${date.getHours()}:${date.getMinutes()})`
         return format;
     }
+
+    static formatVND = (text, groupSeparate = '.', currency = 'đ') => {
+        text += "";
+        text = text.replace(/\D/gm, '');
+        // if ( text[0] === '0' ) {
+        //   text =  text.replace( text[0], '' );
+        // }
+        if (text.length >= 4) {
+          for ( var i = text.length - 3; i >=1 ; i -= 3 ) {
+            text =  text.replace( text, text.substr(0, i) + groupSeparate + text.substr(i, text.length) );
+          }
+        }
+        return text + currency;
+      }
 }

@@ -1,10 +1,33 @@
 import React, { Component } from 'react'
 import FormBill from './FormBill'
 import printJS from 'print-js'
+import TableDetail from './../table_detail/TableDetail'
+import { inject , observer } from 'mobx-react'
+import CommonUtil from './../../../util'
 
-export default class PaymentForm extends Component {
+class PaymentForm extends Component {
+    constructor(props) {
+        super(props);
+        this.payCash = React.createRef();
+        this.state = {
+            excessCash: 0
+        }
+      }
     print(){
         printJS('form-bill', 'html')
+    }
+
+    onLoseFocus() {
+        let excessCash = this.payCash.current.value - this.props.tableStore.totalMoney;
+        if(excessCash >= 0)
+            this.setState({
+                excessCash: this.payCash.current.value - this.props.tableStore.totalMoney 
+            })
+        else
+            this.setState({
+                excessCash: 0 
+            })
+        //console.log(this.state.excessCash)
     }
     render() {
         return (
@@ -13,7 +36,8 @@ export default class PaymentForm extends Component {
                         <div className="modal-content">
                         <div className="modal-header bg-primary">
                             <h5 className="modal-title" id="btnPayment">
-                            </h5><h1 style={{color: 'white'}}>Thanh Toán Bàn {'{'}{'{'}tableIndex{'}'}{'}'}</h1>
+                                </h5><h1 style={{color: 'white'}}>
+                                    Thanh Toán {this.props.tableStore.currentTable.name}</h1>
                             <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">×</span>
                             </button>
@@ -23,28 +47,7 @@ export default class PaymentForm extends Component {
                             <div className="row">
                                 <div className="col-md-6">
                                 <div className="table-responsive">
-                                    <table className="table  align-items-center table-flush accordion  " id="accordionRow">
-                                    <thead className="thead-light">
-                                        <tr>
-                                        <th scope="col">Stt</th>
-                                        <th scope="col">Tên Món Ăn</th>
-                                        <th scope="col">Số Lượng</th>
-                                        <th scope="col">Đơn Giá</th>
-                                        <th scope="col">Thành Tiền</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr >
-                                        <td>{'{'}{'{'}$index+1{'}'}{'}'}</td>
-                                        <td>{'{'}{'{'}y.monan_NAME{'}'}{'}'}</td>
-                                        <td>
-                                            <input disabled={true} type="number" style={{width: '4em'}} />
-                                        </td>
-                                        <td>{'{'}{'{'}y.hoadonchitiet_PRICE | number{'}'}{'}'}</td>
-                                        <td>{'{'}{'{'}y.hoadonchitiet_PRICE*y.hoadonchitiet_SOLUONG{'}'}{'}'}</td>
-                                        </tr>
-                                    </tbody>
-                                    </table>
+                                    <TableDetail />
                                 </div>
                                 </div>
                                 <div className="col-md-6 border-left">
@@ -52,7 +55,7 @@ export default class PaymentForm extends Component {
                                     <tbody>
                                     <tr>
                                         <td>Tổng Tiền Hàng</td>
-                                        <td>{'{'}{'{'}total | number{'}'}{'}'}</td>
+                                        <td>{CommonUtil.formatVND(this.props.tableStore.totalMoney)}</td>
                                     </tr>
                                     <tr>
                                         <td>Giảm Giá</td>
@@ -60,15 +63,15 @@ export default class PaymentForm extends Component {
                                     </tr>
                                     <tr>
                                         <td><b>Khách Cần Trả</b></td>
-                                        <td><b style={{color: '#F5365C'}}>{'{'}{'{'}total | number{'}'}{'}'}</b></td>
+                                        <td><b style={{color: '#F5365C'}}>{CommonUtil.formatVND(this.props.tableStore.totalMoney)}</b></td>
                                     </tr>
                                     <tr>
                                         <td>Khách Thanh Toán</td>
-                                        <td><input type="number" /></td>
+                                        <td><input type="number" ref={this.payCash} onChange={() => this.onLoseFocus()} /></td>
                                     </tr>
                                     <tr>
                                         <td>Tiền Thừa Trả Khách </td>
-                                        <td>{'{'}{'{'}excesscash - total | number{'}'}{'}'}</td>
+                                        <td>{CommonUtil.formatVND(this.state.excessCash)}</td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -88,3 +91,5 @@ export default class PaymentForm extends Component {
         )
     }
 }
+
+export default inject("tableStore")(observer(PaymentForm));

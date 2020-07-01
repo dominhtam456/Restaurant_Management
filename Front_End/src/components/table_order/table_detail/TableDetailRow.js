@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { inject , observer } from 'mobx-react'
-import { toJS } from 'mobx'
+import CommonUtil from './../../../util'
 
 class TableDetailRow extends Component {
     onChangeAmount(e) {
@@ -24,8 +24,8 @@ class TableDetailRow extends Component {
                         value={this.props.order.soluong}
                         onChange={(e) => this.onChangeAmount(e)}/>
                 </td>
-                <td>{this.props.order.price}</td>
-                <td>{this.props.order.price * this.props.order.soluong}</td>
+                <td>{CommonUtil.formatVND(this.props.order.price)}</td>
+                <td>{CommonUtil.formatVND(this.props.order.price * this.props.order.soluong)}</td>
                 </tr>
             
         )

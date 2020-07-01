@@ -3,9 +3,9 @@ import TableList from './table/TableList'
 import TableDetail from './table_detail/TableDetail'
 import MenuList from './menu/MenuList'
 import TableDetailFooter from './TableDetailFooter'
-import FormBill from './payment/FormBill'
 import { inject , observer } from 'mobx-react'
-import { toJS } from 'mobx'
+import CommonUtil from './../../util'
+
 
 class TableOrder extends Component {
     constructor(props){
@@ -66,7 +66,7 @@ class TableOrder extends Component {
                                     <div className="table-responsive">
                                     <TableDetail />
                                     </div>
-                                    <h3 className="text-danger float-md-right ">Tổng tiền: 1 đ</h3>
+                                    <h3 className="text-danger float-md-right ">Tổng tiền: {CommonUtil.formatVND(this.props.tableStore.totalMoney)}</h3>
                                 </div>
                                 
                                 <TableDetailFooter />

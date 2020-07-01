@@ -10,10 +10,19 @@ import { URL_API } from './../constants'
 export default class Table {
     listTable = [];
     listFood = [];
-    listOrder = []
+    listOrder = [];
     currentTable = {};
     currentListOrder = [];
     updateCount = 0;
+    totalMoney = 0;
+
+    calTotalMoney = () => {
+        let totalMoney = 0;
+        for(let i=0; i<this.currentListOrder.length; i++){
+            totalMoney+= (this.currentListOrder[i].price * this.currentListOrder[i].soluong);
+        }
+        return totalMoney;
+    }
 
     setUpdateCount = () => {
         this.updateCount++;
@@ -23,6 +32,7 @@ export default class Table {
         for(let i=0; i<this.currentListOrder.length; i++){
             if(order.hoadonchitiet_id.monan_id == this.currentListOrder[i].hoadonchitiet_id.monan_id){
                 this.currentListOrder.splice(i, 1);
+                this.totalMoney = this.calTotalMoney();
                 return;
             }
         }
@@ -39,12 +49,14 @@ export default class Table {
                     if(this.listOrder[i].ban[j].ban.id == this.currentTable.id){
                         const data = await InvoiceService.getInvoiceDetailByInvoiceId(this.listOrder[i].id);
                         this.currentListOrder = data; 
+                        this.totalMoney = this.calTotalMoney();
                         //console.log(toJS(this.currentListOrder));
                         return;
                     }
                 }
             }
         }
+        this.totalMoney = 0;
         this.currentListOrder = [];
     }
 
@@ -83,8 +95,8 @@ export default class Table {
             "status": "queue",
             "tenMonAn": food.name
         }
-
         this.currentListOrder.push(order);
+        this.totalMoney = this.calTotalMoney();
     }
 
     setAmount = (order, amount) => {
@@ -92,6 +104,7 @@ export default class Table {
         for(let i=0; i<this.currentListOrder.length; i++){
             if(order.hoadonchitiet_id.monan_id == this.currentListOrder[i].hoadonchitiet_id.monan_id){
                 this.currentListOrder[i].soluong = amount;
+                this.totalMoney = this.calTotalMoney();
                 return;
             }
         }
@@ -163,6 +176,7 @@ decorate(Table, {
     currentListOrder: observable,
     currentTable: observable,
     updateCount: observable,
+    totalMoney: observable,
 
     getTable: action,
     getFoods: action,
@@ -173,5 +187,5 @@ decorate(Table, {
     setAmount: action,
     deleteOrder: action,
     confirm: action,
-    setUpdateCount: action
+    setUpdateCount: action,
 })
