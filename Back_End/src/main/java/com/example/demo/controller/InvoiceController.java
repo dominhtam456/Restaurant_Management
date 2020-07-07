@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -74,5 +75,19 @@ public class InvoiceController {
 	public java.util.List<HoaDon> GetHoaDonToStatus(@PathVariable(value = "status") boolean status) {
 		// This returns a JSON or XML with the users
 		return repositoryHoaDon.GetHoaDonToStatus(status);
+	}
+
+	@RequestMapping(value = "/UpdateInvoiceStatus", method = RequestMethod.POST)
+	public boolean UpdateInvoiceStatus(
+		@RequestParam(value = "status") int status,
+		@RequestParam(value = "id") Long id) {
+		try {
+			repositoryHoaDon.UpdateStatusInvoice(status, id);
+			return true;
+		} catch (Exception e) {
+			// TODO: handle exception
+			return false;
+		}
+
 	}
 }

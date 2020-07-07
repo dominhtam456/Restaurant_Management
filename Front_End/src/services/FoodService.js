@@ -11,3 +11,4 @@ export const getFoods = async () => {
     });
     return await response.json();
 }
+

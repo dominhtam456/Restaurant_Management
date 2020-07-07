@@ -14,7 +14,8 @@ class PaymentForm extends Component {
         }
       }
     print(){
-        printJS('form-bill', 'html')
+        this.props.tableStore.payment();
+        //printJS('form-bill', 'html');     
     }
 
     onLoseFocus() {
@@ -80,7 +81,7 @@ class PaymentForm extends Component {
                             </div>
                         </div>
                         <div className="modal-footer">
-                            <button type="button" className="btn btn-danger" onClick={ this.print } >Thanh Toán</button>
+                            <button type="button" className="btn btn-danger" onClick={() => this.print() } >Thanh Toán</button>
                             
                         </div>
                         

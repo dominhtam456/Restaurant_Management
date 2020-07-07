@@ -47,4 +47,6 @@ public class FoodDetailController {
 		return repositoryMonAnChiTiet.InSertMACT(mact);
 
 	}
+
+
 }

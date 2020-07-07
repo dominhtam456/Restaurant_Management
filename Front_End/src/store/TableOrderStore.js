@@ -3,9 +3,7 @@ import * as TableService from './../services/TableService';
 import * as FoodService from './../services/FoodService';
 import * as InvoiceService from './../services/InvoiceService';
 import * as UserService from './../services/UserService';
-
 import CommonUtil from './../util'
-import { URL_API } from './../constants'
 
 export default class Table {
     listTable = [];
@@ -15,6 +13,13 @@ export default class Table {
     currentListOrder = [];
     updateCount = 0;
     totalMoney = 0;
+
+    payment = async () => {
+        await InvoiceService.updateInvoiceStatus(1, this.currentListOrder[0].hoadonchitiet_id.hoadon_id);
+        await TableService.updateTableStatus("Trong", this.currentTable.id);
+        await this.getTable();
+        await this.getListOrder();
+    }
 
     calTotalMoney = () => {
         let totalMoney = 0;
@@ -188,4 +193,5 @@ decorate(Table, {
     deleteOrder: action,
     confirm: action,
     setUpdateCount: action,
+    payment: action
 })

@@ -75,3 +75,58 @@ export const addinvoiceTable = async (invoiceTable) => {
   });
   return await response.json();
 }
+
+export const updateInvoiceStatus = async (status, id) => {
+  var url = new URL(`${URL_API}/UpdateInvoiceStatus`),
+  params = {id, status}
+  Object.keys(params).forEach(key => url.searchParams.append(key, params[key]))
+  
+  const response = await fetch(url, {
+      method: 'POST', // *GET, POST, PUT, DELETE, etc.
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      }      
+  });
+  return await response.json();
+  
+}
+
+export const getUncompletedInvoiceDetail = async () => {
+  const url = `${URL_API}/GetUncompletedFood`;
+  const response = await fetch(url, {
+      method: 'GET', // *GET, POST, PUT, DELETE, etc.
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      }      
+  });
+  return await response.json();
+}
+
+export const getInvoiceDetailByStatus = async (status) => {
+  const url = `${URL_API}/GetFoodByStatus/${status}`;
+  const response = await fetch(url, {
+      method: 'GET', // *GET, POST, PUT, DELETE, etc.
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      }      
+  });
+  return await response.json();
+}
+
+export const updateInvoiceDetailStatus = async (status, hoaDonId, monAnId) => {
+  var url = new URL(`${URL_API}/UpdateHDCTStatus`),
+  params = {status, hoaDonId, monAnId}
+  Object.keys(params).forEach(key => url.searchParams.append(key, params[key]))
+  
+  const response = await fetch(url, {
+      method: 'POST', // *GET, POST, PUT, DELETE, etc.
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      }      
+  });
+  return await response.json();
+}

@@ -1,35 +1,41 @@
 import React, { Component } from "react";
 import KitchenDetail from "./KitchenDetail";
+import { inject , observer } from 'mobx-react'
+import { toJS } from 'mobx'
 
-export default class Kitchen extends Component {
+class Kitchen extends Component {
+  componentDidMount() {
+    this.props.kitchenStore.getListUncompledFood();
+  }
   render() {
+    const element = this.props.kitchenStore.listUncompledFood.map((food, index) => {
+      return <KitchenDetail food={food} key={index} index={index}/>
+    })
+    console.log(toJS(this.props.kitchenStore.listUncompledFood))
     return (
       <div className="container-fluid mt--7">
-        <div class="row">
-          <div class="col">
-            <div class="card shadow card-with-satistical ">
-              <div class="card-header bg-primary">
-                <h3 class="mb-0 modal-title" style={{ color: "white" }}>
-                  {" "}
-                  Nhà bếp{" "}
-                </h3>{" "}
+        <div className="row">
+          <div className="col">
+            <div className="card shadow card-with-satistical ">
+              <div className="card-header bg-primary">
+                <h3 className="mb-0 modal-title" style={{ color: "white" }}>
+                  Nhà bếp
+                </h3>
               </div>
 
-              <div class="card border-top-0 border-right-0 border-left-0">
-                <div class="card-body ">
-                  <div class="list-group">
-                    <div class="list-group-item list-group-item-action list-group-item-info">
-                      <div class="row">
-                        <div class="col-1" style={{textAlign:"center"}}> STT </div>
-                        <div class="col-1" style={{textAlign:"center"}}> Bàn </div>
-                        <div class="col-5" style={{textAlign:"center"}}> Tên món ăn </div>
-                        <div class="col-3" style={{textAlign:"center"}}> Số lượng </div>
-                        <div class="float-md-right mb-3 mr-3" style={{textAlign:"center"}}> Trạng thái </div>
+              <div className="card border-top-0 border-right-0 border-left-0">
+                <div className="card-body ">
+                  <div className="list-group">
+                    <div className="list-group-item list-group-item-action list-group-item-info">
+                      <div className="row">
+                        <div className="col-1 text-center" > STT </div>
+                        <div className="col-1 text-center" > Bàn </div>
+                        <div className="col-5 text-center" > Tên món ăn </div>
+                        <div className="col-3 text-center" > Số lượng </div>
+                        <div className="float-md-right mb-3 mr-3 text-center" > Trạng thái </div>
                       </div>
                       <div>
-                        <KitchenDetail />
-                        <KitchenDetail />
-                        <KitchenDetail />
+                        {element}
                       </div>
                     </div>
                   </div>
@@ -42,3 +48,5 @@ export default class Kitchen extends Component {
     );
   }
 }
+
+export default inject("kitchenStore")(observer(Kitchen));

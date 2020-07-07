@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,14 +10,18 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.service.HoaDonChiTietService;
+import com.example.demo.service.HoadonBanService;
 import com.example.demo.service.MonAnService;
 
 import com.example.demo.model.HoaDonChiTiet;
 import com.example.demo.model.HoaDonChiTietID;
+import com.example.demo.model.HoadonBan;
+import com.example.demo.model.InvoiceDetailDTO;
 
 @RestController
 @RequestMapping("/api")
@@ -28,6 +33,9 @@ public class InvoiceDetailController {
     
     @Autowired
 	MonAnService repositoryMonAn;
+	
+	@Autowired
+	HoadonBanService hoadonBanService;
 
 	// LAY ALL HOA DON CHI TIET
 	@RequestMapping(path = "/GetAllHoaDonChiTiet", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -81,4 +89,66 @@ public class InvoiceDetailController {
 			@PathVariable("monan_ID") Integer monan_ID) {
 		return repositoryHDCT.DeLeTeCTHD(new HoaDonChiTietID(hoadon_ID, monan_ID));
 	}
+
+	@RequestMapping(path = "/GetFoodByStatus/{status}", method = RequestMethod.GET)
+	public List<InvoiceDetailDTO> GetFoodByStatus(@PathVariable(value = "status") String status) {
+		List<HoaDonChiTiet> listHDCT = repositoryHDCT.GetHDCTByStatus(status); 
+		List<InvoiceDetailDTO> response = new ArrayList<>(); 
+
+		for (HoaDonChiTiet item : listHDCT) {
+			item.setTenMonAn(
+					repositoryMonAn.getOne(Long.valueOf(item.getHoadonchitiet_id().getMonan_id()))
+							.getName());
+
+			List<HoadonBan> ban = hoadonBanService.Get(item.getHoadonchitiet_id().getHoadon_id());
+
+			InvoiceDetailDTO iv = new InvoiceDetailDTO(
+				item.getHoadonchitiet_id().getMonan_id(),
+				item.getHoadonchitiet_id().getHoadon_id(), 
+				item.getSoluong(),
+				item.getStatus(), 
+				item.getTenMonAn(), 
+				ban);
+			response.add(iv);
+		}
+		return response;
+	}
+
+	@RequestMapping(path = "/GetUncompletedFood", method = RequestMethod.GET)
+	public List<InvoiceDetailDTO> GetUncompletedFood() {
+		List<HoaDonChiTiet> listHDCT = repositoryHDCT.GetUncompletedHDCT(); 
+		List<InvoiceDetailDTO> response = new ArrayList<>(); 
+
+		for (HoaDonChiTiet item : listHDCT) {
+			item.setTenMonAn(
+					repositoryMonAn.getOne(Long.valueOf(item.getHoadonchitiet_id().getMonan_id()))
+							.getName());
+
+			List<HoadonBan> ban = hoadonBanService.Get(item.getHoadonchitiet_id().getHoadon_id());
+
+			InvoiceDetailDTO iv = new InvoiceDetailDTO(
+				item.getHoadonchitiet_id().getMonan_id(),
+				item.getHoadonchitiet_id().getHoadon_id(), 
+				item.getSoluong(),
+				item.getStatus(), 
+				item.getTenMonAn(), 
+				ban);
+			response.add(iv);
+		}
+		return response;
+	}
+
+	@RequestMapping(value = "/UpdateHDCTStatus", method = RequestMethod.POST)
+	public Boolean UpdateHDCTStatus(
+		@RequestParam(value = "status") String status,
+		@RequestParam(value = "hoaDonId") Long hoaDonId,
+		@RequestParam(value = "monAnId") Long monAnId) {
+		try{
+			repositoryHDCT.UpdateHDCTStatus(status, hoaDonId,monAnId);
+			return true;
+		}catch(Exception e){
+			return false;
+		}
+	}
+
 }

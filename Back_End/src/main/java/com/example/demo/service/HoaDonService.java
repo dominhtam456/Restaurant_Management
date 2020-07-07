@@ -87,5 +87,10 @@ public interface HoaDonService extends JpaRepository<HoaDon,Long>{
 				return false;
 			}
 		}
+
+		@Modifying
+		@Query(value = "update hoadon set status = :status where id = :id", nativeQuery = true)
+		@Transactional
+	   	void UpdateStatusInvoice(@Param("status") int status,@Param("id") Long id);
 		
 }

@@ -3,7 +3,12 @@ package com.example.demo.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.transaction.Transactional;
+
+import org.springframework.data.repository.query.Param;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 
 import com.example.demo.model.HoaDonChiTiet;
 import com.example.demo.model.HoaDonChiTietID;
@@ -83,5 +88,27 @@ public interface HoaDonChiTietService extends JpaRepository<HoaDonChiTiet, HoaDo
 		//GET MON AN NAME
 		
 	
-		
+		@Modifying
+	    @Query(value = "select * from hoadonchitiet where status = :status", nativeQuery = true)
+	    @Transactional
+		public List<HoaDonChiTiet> GetHDCTByStatus(@Param("status") String status);
+		   
+		public default List<HoaDonChiTiet> GetUncompletedHDCT() {
+			List<HoaDonChiTiet> list=new ArrayList<HoaDonChiTiet>();
+			for (HoaDonChiTiet o : this.findAll()) {
+				if(!o.getStatus().equals("completed")) {
+					list.add(o);
+				}
+			}
+			return list;
+		}
+
+		@Modifying
+	    @Query(value = "update hoadonchitiet set status = :status where hoadon_id = :hoaDonId and monan_id = :monAnId", nativeQuery = true)
+	    @Transactional
+		void UpdateHDCTStatus(
+			@Param("status") String status, 
+			@Param("hoaDonId") Long hoaDonId, 
+			@Param("monAnId") Long monAnId);
+		   
 }

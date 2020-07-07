@@ -14,7 +14,7 @@ class TableElement extends Component {
             width: '10.2rem'
         }
 
-        if(this.props.table.status !== "Trống") style.backgroundColor = "lightgray";
+        if(this.props.table.status !== "Trong") style.backgroundColor = "lightgray";
         return (
             
                 <a onClick = {() => this.onHandelClickTable()}>
