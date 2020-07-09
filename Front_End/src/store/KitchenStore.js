@@ -4,6 +4,7 @@ import * as FoodService from './../services/FoodService';
 import * as InvoiceService from './../services/InvoiceService';
 import * as UserService from './../services/UserService';
 import CommonUtil from './../util'
+import { STATUS_FOOD } from './../constants'
 
 export default class Kitchen {
     listUncompledFood = [];
@@ -12,9 +13,16 @@ export default class Kitchen {
         const data = await InvoiceService.getUncompletedInvoiceDetail();
         this.listUncompledFood = data;
     }
+
+    updateStatusFood = async (status, invoiceId, foodId) => {
+        let index =  STATUS_FOOD.indexOf(status) + 1;
+        await InvoiceService.updateInvoiceDetailStatus(STATUS_FOOD[index], invoiceId, foodId);
+        this.getListUncompledFood()
+    }
 }
 decorate(Kitchen, {
     listUncompledFood: observable,
 
-    getListUncompledFood: action
+    getListUncompledFood: action,
+    updateStatusFood: action
 })

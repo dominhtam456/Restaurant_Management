@@ -12,9 +12,17 @@ class TableDetailRow extends Component {
     }
 
     render() {
+        let style = {}
+        if(this.props.order.status === "processing")
+            style={backgroundColor: "khaki"};
+        
+        if(this.props.order.status === "ready")
+            style={backgroundColor: "lawngreen"};
+
+
         return (
             
-                <tr>
+                <tr style={style}>
                 <td>{this.props.index + 1}</td>
                 <td onClick={() => this.onClickDelete()}><i className="fa fa-times" style={{color: '#F5365C', fontSize: 20}} />
                 </td>
