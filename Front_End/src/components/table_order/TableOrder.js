@@ -5,6 +5,8 @@ import MenuList from './menu/MenuList'
 import TableDetailFooter from './TableDetailFooter'
 import { inject , observer } from 'mobx-react'
 import CommonUtil from './../../util'
+import ReadyFoodPanel from './ready_food_panel/ReadyFoodPanel'
+import ProblemPanel from './problem/ProblemPanel'
 
 
 class TableOrder extends Component {
@@ -67,6 +69,11 @@ class TableOrder extends Component {
                                     <TableDetail />
                                     </div>
                                     <h3 className="text-danger float-md-right ">Tổng tiền: {CommonUtil.formatVND(this.props.tableStore.totalMoney)}</h3>
+                                    
+                                    <div id="accordion" className="col-12 float-md-right">
+                                        <ReadyFoodPanel />
+                                        <ProblemPanel />
+                                    </div>
                                 </div>
                                 
                                 <TableDetailFooter />

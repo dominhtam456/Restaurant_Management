@@ -10,7 +10,7 @@ export default class InsertFoodButton extends Component {
                     <div className="modal-dialog modal-lg" role="document">
                     <div className="modal-content ">
                         <div className="modal-header bg-primary">
-                        <h2 className="modal-title" id="modalAddFoods" style={{color: 'white'}}>Thêm Món Ăn
+                        <h2 className="modal-title" style={{color: 'white'}}>Thêm Món Ăn
                         </h2>
                         <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">×</span>

@@ -6,6 +6,7 @@ class TableElement extends Component {
     onHandelClickTable() {
         this.props.tableStore.setCurrentTable(this.props.table);
         this.props.tableStore.getListOrder(this.props.table);
+        this.props.tableStore.getListReadyFood();
     }
 
     render() {

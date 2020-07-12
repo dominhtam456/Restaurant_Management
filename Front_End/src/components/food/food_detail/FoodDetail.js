@@ -100,7 +100,7 @@ export default class FoodDetail extends Component {
                             </div>
                             </div>
                             <div>
-                            <FootDetailFooter />
+                            <FootDetailFooter id={this.props.id}/>
                             </div>
                         </div>
                         <div className="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">...

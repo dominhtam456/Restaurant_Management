@@ -13,6 +13,20 @@ export default class Table {
     currentListOrder = [];
     updateCount = 0;
     totalMoney = 0;
+    listReadyFood = [];
+
+    getListReadyFood = async () => {
+        const data = await InvoiceService.getInvoiceDetailByStatus("ready");
+        const list = []
+        await this.getCurrentListOrder(this.currentTable);
+        if(this.currentListOrder.length !=0 ){
+            for(let i=0;i<data.length; i++){
+                if(data[i].hoadon_id === this.currentListOrder[0].hoadonchitiet_id.hoadon_id)
+                    list.push(data[i])
+            }
+        }
+        this.listReadyFood = list;
+    }
 
     payment = async () => {
         await InvoiceService.updateInvoiceStatus(1, this.currentListOrder[0].hoadonchitiet_id.hoadon_id);
@@ -69,17 +83,15 @@ export default class Table {
         this.getListOrder();
         for(let i = 0; i < this.listOrder.length; i++){
             for(let j = 0; j < this.listOrder[i].ban.length; j++){
-                console.log(this.listOrder[i].ban[j].ban.id)
                 if(this.listOrder[i].ban[j].ban.id == table.id){
                     const data = await InvoiceService.getInvoiceDetailByInvoiceId(this.listOrder[i].id);
                     this.currentListOrder = data; 
-                    console.log(toJS(this.currentListOrder));
+                    //console.log(toJS(this.currentListOrder));
                     return;
                 }
             }
         }
         this.currentListOrder = [];
-        console.log(toJS(this.currentListOrder));
     }
 
     setCurrentListOrder = (food) => {
@@ -171,7 +183,7 @@ export default class Table {
 
         await TableService.updateTableStatus("Có", this.currentTable.id);
         this.getTable();
-        console.log(toJS(this.listTable))
+        //console.log(toJS(this.listTable))
     }
 }
 decorate(Table, {
@@ -182,6 +194,7 @@ decorate(Table, {
     currentTable: observable,
     updateCount: observable,
     totalMoney: observable,
+    listReadyFood: observable,
 
     getTable: action,
     getFoods: action,
@@ -193,5 +206,6 @@ decorate(Table, {
     deleteOrder: action,
     confirm: action,
     setUpdateCount: action,
-    payment: action
+    payment: action,
+    getListReadyFood: action
 })
