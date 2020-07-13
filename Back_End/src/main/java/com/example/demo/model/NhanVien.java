@@ -40,7 +40,10 @@ public class NhanVien implements Serializable {
 	 @Column(name="image")
 	 private String img;
 	 
-	 public NhanVien() {
+	 @Column(name="is_active")
+	 private Integer isActive; 
+
+	public NhanVien() {
 		 
 	 }
 			
@@ -108,4 +111,25 @@ public class NhanVien implements Serializable {
 		this.img = img;
 	}
 	 
+	public int getIsactive() {
+		return isActive;
+	}
+
+	public void setIsactive(Integer isactive) {
+		this.isActive = isactive;
+	}
+
+	public NhanVien(int id, String no, String fullname, String phone, String username, String password, int loai,
+			String img, Integer isactive) {
+		super();
+		this.id = id;
+		this.no = no;
+		this.fullname = fullname;
+		this.phone = phone;
+		this.username = username;
+		this.password = password;
+		this.loai = loai;
+		this.img = img;
+		this.isActive = isactive;
+	}
 }

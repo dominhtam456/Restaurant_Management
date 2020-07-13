@@ -51,8 +51,34 @@ public class NguyenLieu implements Serializable {
 		 @Column(name = "loainguyenlieu_id")
 		 private int loainguyenlieu_id;
 		 
+		 @Column(name="is_active")
+		 private Integer isActive;
 		 
-		 private String tenloainguyenlieu;
+		 public Integer getIsActive() {
+			return isActive;
+		}
+
+		public void setIsActive(Integer isActive) {
+			this.isActive = isActive;
+		}
+
+		public NguyenLieu(long id, String no, String name, String price, Date date, String image, int loainguyenlieu_id,
+				 Integer isactive, String tenloainguyenlieu) {
+			super();
+			this.id = id;
+			this.no = no;
+			this.name = name;
+			this.price = price;
+			this.date = date;
+			this.image = image;
+			this.loainguyenlieu_id = loainguyenlieu_id;
+			this.isActive = isactive;
+			this.tenloainguyenlieu = tenloainguyenlieu;
+		}
+
+		
+
+		private String tenloainguyenlieu;
 		
 
 		public NguyenLieu() {

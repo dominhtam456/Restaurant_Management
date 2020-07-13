@@ -1,6 +1,0 @@
-spring.datasource.url=jdbc:mysql://localhost:3306/qlnh
-spring.datasource.username=root
-spring.datasource.password=
-spring.jpa.generate-ddl=true
-
-

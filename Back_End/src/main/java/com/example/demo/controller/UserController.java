@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import javax.websocket.server.PathParam;
+
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api")
@@ -48,5 +50,13 @@ public class UserController {
         nhanvienService.delete(id);
         return new ApiResponse<>(HttpStatus.OK.value(), "User deleted successfully.", null);
     }
+    
+    @DeleteMapping("/email/{email}")
+    public Boolean delete(@PathVariable String email) {
+        nhanvienService.findOne(email);
+        return true;
+    }
+    
+    
 
 }
