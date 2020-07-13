@@ -19,6 +19,9 @@ class TableDetailRow extends Component {
         if(this.props.order.status === "ready")
             style={backgroundColor: "lawngreen"};
 
+        if(this.props.order.status === "completed")
+            style={backgroundColor: "lightblue"};
+
 
         return (
             

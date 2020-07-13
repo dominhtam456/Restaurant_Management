@@ -28,4 +28,9 @@ export default class CommonUtil{
         }
         return text + currency;
       }
+
+    static moveElementToLast = (element, array) => {
+      array.push(array.splice(array.indexOf(element), 1)[0]);
+      return array;
+    }
 }

@@ -115,5 +115,13 @@ th {
   z-index: -1;
 }
 
+.borderless td, .borderless th {
+  border: none;
+}
+
+.content-wrap td{
+  white-space: normal !important;
+}
+
 
 
