@@ -15,7 +15,7 @@ class PaymentForm extends Component {
       }
     print(){
         this.props.tableStore.payment();
-        //printJS('form-bill', 'html');     
+        printJS('form-bill', 'html');     
     }
 
     onLoseFocus() {

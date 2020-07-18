@@ -11,8 +11,29 @@ class TableDetailFooter extends Component {
         console.log(printJS.params);
     }
 
-    onConfirm() {
-        this.props.tableStore.confirm();
+    async onConfirm() {
+        await this.props.tableStore.confirm();
+        document.getElementById("table-tab").click();
+    }
+
+    async onUpdate() {
+        await this.props.tableStore.update();
+        document.getElementById("table-tab").click();
+    }
+
+    showButton() {
+        if(this.props.tableStore.currentTable.status === "Trong")
+            return (
+                <button type="button" className="btn btn-primary" onClick={() => this.onConfirm()}>
+                    Xác nhận gọi món
+                </button>
+            )
+        else 
+            return (
+                <button type="button" className="btn btn-primary" onClick={() => this.onUpdate()}>
+                    Cập nhật
+                </button>
+            )   
     }
 
     render() {
@@ -21,11 +42,9 @@ class TableDetailFooter extends Component {
                 <div className="float-right">
                     {/* Button trigger modal */}
                     <button type="button" className="btn btn-danger" data-toggle="modal" data-target="#btnPayment">
-                    Thanh Toán
+                        Thanh Toán
                     </button>
-                    <button type="button" className="btn btn-primary" onClick={() => this.onConfirm()}>
-                    Xác nhận gọi món
-                    </button>
+                    {this.showButton()}
                     {/* Modal */}
                     <PaymentForm />
                 </div>

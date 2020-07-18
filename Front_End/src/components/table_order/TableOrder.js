@@ -29,6 +29,7 @@ class TableOrder extends Component {
        
         
       }
+
     render() {
         return (
             <div className="container-fluid mt--7">
@@ -66,17 +67,17 @@ class TableOrder extends Component {
                                     </div>
                                     <div className="card-body" style={{height:"40em", overflowY: "scroll"}}>
                                     <div className="table-responsive">
-                                    <TableDetail />
+                                    <TableDetail update={this.props.tableStore.updateCount}/>
                                     </div>
                                     <h3 className="text-danger float-md-right ">Tổng tiền: {CommonUtil.formatVND(this.props.tableStore.totalMoney)}</h3>
                                     
                                     <div id="accordion" className="col-12 float-md-right">
-                                        <ReadyFoodPanel />
-                                        <ProblemPanel />
+                                        <ReadyFoodPanel update={this.props.tableStore.updateCount}/>
+                                        <ProblemPanel update={this.props.tableStore.updateCount}/>
                                     </div>
                                 </div>
                                 
-                                <TableDetailFooter />
+                                <TableDetailFooter/>
                                 
                             </div>
                             </div>

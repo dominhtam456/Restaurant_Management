@@ -3,9 +3,10 @@ package com.example.demo.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 
 import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -110,5 +111,23 @@ public interface HoaDonChiTietService extends JpaRepository<HoaDonChiTiet, HoaDo
 			@Param("status") String status, 
 			@Param("hoaDonId") Long hoaDonId, 
 			@Param("monAnId") Long monAnId);
+
+		
+		@Modifying
+		@Query(value = "delete from hoadonchitiet where hoadon_id = :hoadonId", nativeQuery = true)
+		@Transactional
+		public void DeleteHDCTByHoadonId(@Param("hoadonId") Integer id);
+
+		@Transactional
+		public default void UpdateHDCT(List<HoaDonChiTiet> hdct){
+			if(hdct.size() != 0){
+				this.DeleteHDCTByHoadonId(hdct.get(0).getHoadonchitiet_id().getHoadon_id());
+				for (HoaDonChiTiet hd : hdct) {
+					HoaDonChiTietID hdctId = new HoaDonChiTietID(hdct.get(0).getHoadonchitiet_id().getHoadon_id(), hd.getHoadonchitiet_id().getMonan_id());
+					hd.setHoadonchitiet_id(hdctId);
+					this.InSertHDCT(hd);
+				}
+			}
+		}
 		   
 }

@@ -8,7 +8,7 @@ class ReadyFoodTable extends Component {
 
     }
     render() {
-        console.log(toJS(this.props.tableStore.listReadyFood));
+        //console.log(toJS(this.props.tableStore.listReadyFood));
         if(this.props.tableStore.listReadyFood.length == 0) 
             return <p className="text-center">Empty</p>
         const element = this.props.tableStore.listReadyFood.map((food,index) => {
@@ -18,11 +18,10 @@ class ReadyFoodTable extends Component {
 
         return (
             <table  className="table borderless content-wrap table-responsive">
-            <tbody>
-                {element}
-
-            </tbody>
-          </table>
+                <tbody>
+                    {element}
+                </tbody>
+           </table>
         )
     }
 }

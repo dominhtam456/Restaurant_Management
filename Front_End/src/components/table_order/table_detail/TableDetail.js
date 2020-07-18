@@ -8,10 +8,11 @@ class TableDetail extends Component {
         this.props.tableStore.getListOrder();
     }
 
-    // componentDidUpdate(prevProps) {
-    //     if(prevProps.update != this.props.update)
-    //         this.props.tableStore.getListOrder();
-    // }
+    //componentDidUpdate(prevProps) {
+    //    if(prevProps.update != this.props.update && this.props.tableStore.currentListOrder.length > 0)
+    //        if(this.props.tableStore.currentListOrder[0].hoadonchitiet_id.hoadon_id != null)
+    //        this.props.tableStore.();
+    //}
 
     render() {
         const element = this.props.tableStore.currentListOrder.map((order,index) => {

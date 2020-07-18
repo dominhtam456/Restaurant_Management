@@ -1,10 +1,22 @@
 import React, { Component } from "react";
 import { inject , observer } from 'mobx-react'
+import { toJS } from 'mobx';
 
 class KitchenDetail extends Component {
   
   changeStatus(status, invoiceId, foodId) {
     this.props.kitchenStore.updateStatusFood(status, invoiceId, foodId);
+  }
+
+  onClickCancel(food) {
+    this.props.kitchenStore.setCurrentFoodModal(food);
+  }
+  
+  cancelButton = () => {
+    return (
+    <button onClick={()=>{this.onClickCancel(this.props.food)}} type="button" className="btn btn-danger" data-toggle="modal" data-target="#problemDescModal">
+      Cancel
+    </button>)
   }
 
   showButton() {
@@ -36,10 +48,12 @@ class KitchenDetail extends Component {
             <div className="col-1 "> {this.props.index + 1} </div>
             <div className="col-1 "> {this.props.food.ban[0].ban.name}</div>
             <div className="col-5 text-center"> {this.props.food.tenMonAn}</div>
-            <div className="col-3 text-center"> {this.props.food.soluong}</div>
+            <div className="col-2 text-center"> {this.props.food.soluong}</div>
 
             <div className="float-md-right mb-3 mr-3">
               {this.showButton()}
+              {this.props.food.status === "ready" ? '' : this.cancelButton()}
+              
             </div>
           </div>
         </div>

@@ -3,11 +3,13 @@ import * as TableService from './../services/TableService';
 import * as FoodService from './../services/FoodService';
 import * as InvoiceService from './../services/InvoiceService';
 import * as UserService from './../services/UserService';
+import * as NoticeService from './../services/NoticeService';
 import CommonUtil from './../util';
 import { STATUS_FOOD } from './../constants';
 
 export default class Kitchen {
     listUncompledFood = [];
+    currentFoodModal = {};
 
     getListUncompledFood = async () => {
         const data = await InvoiceService.getUncompletedInvoiceDetail();
@@ -17,8 +19,6 @@ export default class Kitchen {
                 arrayIndexReadyFood.push(i);
             }
         }
-        //console.log(arrayIndexReadyFood)
-
         for(let i =arrayIndexReadyFood.length-1; i>=0; i--){
             data.push(data.splice(arrayIndexReadyFood[i], 1)[0]);
         }
@@ -32,11 +32,31 @@ export default class Kitchen {
         this.getListUncompledFood()
     }
 
+    setCurrentFoodModal = async(food) => {
+        this.currentFoodModal = food;
+        console.log(toJS(this.currentFoodModal))
+    }
+
+    pushNotice = async (desc) => {
+        let notice = {
+            "noticeId": {
+                "hoadon_id": this.currentFoodModal.hoadon_id,
+                "monan_id": this.currentFoodModal.monan_id
+            },
+            "description": desc,
+            "status": "Unsolved"
+        }
+        await NoticeService.addNotice(notice);
+        await InvoiceService.updateInvoiceDetailStatus("cancel", this.currentFoodModal.hoadon_id, this.currentFoodModal.monan_id)
+    }
 
 }
 decorate(Kitchen, {
     listUncompledFood: observable,
+    currentFoodModal: observable,
 
     getListUncompledFood: action,
-    updateStatusFood: action
+    updateStatusFood: action,
+    setCurrentFoodModal: action,
+    pushNotice: action
 })

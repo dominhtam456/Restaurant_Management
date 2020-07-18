@@ -3,6 +3,7 @@ import * as TableService from './../services/TableService';
 import * as FoodService from './../services/FoodService';
 import * as InvoiceService from './../services/InvoiceService';
 import * as UserService from './../services/UserService';
+import * as NoticeService from './../services/NoticeService';
 import CommonUtil from './../util'
 
 export default class Table {
@@ -14,6 +15,38 @@ export default class Table {
     updateCount = 0;
     totalMoney = 0;
     listReadyFood = [];
+    listNotice = [];
+    currentListNotice = [];
+
+    solvedNotice = async(notice) => {
+        await InvoiceService.updateInvoiceDetailStatus("queue", notice.hoadon_id, notice.monan_id);
+        let noticeData = {
+            "noticeId": {
+                "hoadon_id": notice.hoadon_id,
+                "monan_id": notice.monan_id
+            },
+            "description": notice.description,
+            "status": "Solved"
+        }
+        await NoticeService.addNotice(noticeData);
+        this.getCurrentListNotice();
+        this.getCurrentListOrder(this.currentTable);
+    }
+
+    getCurrentListNotice = async() => {
+        let data = await NoticeService.getNoticeByStatus("Unsolved");
+        const list = []
+        await this.getCurrentListOrder(this.currentTable);
+        if(this.currentListOrder.length !=0 ){
+            for(let i=0;i<data.length; i++){
+                if(data[i].hoadon_id === this.currentListOrder[0].hoadonchitiet_id.hoadon_id){
+                    data[i].tenMonAn = this.currentListOrder[0].tenMonAn
+                    list.push(data[i])
+                }
+            }
+        }
+        this.currentListNotice = list;   
+    }
 
     getListReadyFood = async () => {
         const data = await InvoiceService.getInvoiceDetailByStatus("ready");
@@ -142,6 +175,10 @@ export default class Table {
         this.listFood = data;
     }
 
+    update = async () => {
+        await InvoiceService.updateHDCT(this.currentListOrder);
+    }
+
     confirm = async () => {
         let currentTimestamp = Math.floor(Date.now() / 1000);
         let invoiceNo = "HD" + currentTimestamp;
@@ -195,6 +232,8 @@ decorate(Table, {
     updateCount: observable,
     totalMoney: observable,
     listReadyFood: observable,
+    listNotice: observable,
+    currentListNotice: observable,
 
     getTable: action,
     getFoods: action,
@@ -207,5 +246,7 @@ decorate(Table, {
     confirm: action,
     setUpdateCount: action,
     payment: action,
-    getListReadyFood: action
+    getListReadyFood: action,
+    update: action,
+    solvedNotice: action
 })

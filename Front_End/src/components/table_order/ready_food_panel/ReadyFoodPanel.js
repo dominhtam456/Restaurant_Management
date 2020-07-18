@@ -5,15 +5,15 @@ import { inject , observer } from 'mobx-react'
 class ReadyFoodPanel extends Component {
     render() {
         return (
-            <div class="card">
-            <div class="card-header" id="headingOne" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-              <h5 class="mb-0">
+            <div className="card">
+            <div className="card-header" id="headingOne" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+              <h5 className="mb-0">
                   Ready Food
               </h5>
             </div>
         
-            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
-              <div class="card-body">
+            <div id="collapseOne" className="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+              <div className="card-body">
                 <ReadyFoodTable />
               </div>
             </div>

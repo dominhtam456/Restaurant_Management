@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import KitchenDetail from "./KitchenDetail";
+import DescriptionModal from './DescriptionModal'
 import { inject , observer } from 'mobx-react'
 import { toJS } from 'mobx'
 
@@ -36,6 +37,7 @@ class Kitchen extends Component {
                       </div>
                       <div>
                         {element}
+                        <DescriptionModal />
                       </div>
                     </div>
                   </div>

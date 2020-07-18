@@ -151,4 +151,14 @@ public class InvoiceDetailController {
 		}
 	}
 
+	@RequestMapping(value = "/UpdateHDCTByHoadonId", method = RequestMethod.POST)
+	public Boolean DeleteHDCTByHoadonId(@RequestBody List<HoaDonChiTiet> listHDCT ) {
+		try{
+			repositoryHDCT.UpdateHDCT(listHDCT);
+			return true;
+		}catch(Exception e){
+			return false;
+		}
+	}
+
 }

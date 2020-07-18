@@ -13,6 +13,9 @@ class TableDetailRow extends Component {
 
     render() {
         let style = {}
+        if(this.props.order.status === "pending")
+            style={backgroundColor: "white"};
+
         if(this.props.order.status === "processing")
             style={backgroundColor: "khaki"};
         
@@ -22,6 +25,8 @@ class TableDetailRow extends Component {
         if(this.props.order.status === "completed")
             style={backgroundColor: "lightblue"};
 
+        if(this.props.order.status === "cancel")
+            style={backgroundColor: "lightcoral"};
 
         return (
             

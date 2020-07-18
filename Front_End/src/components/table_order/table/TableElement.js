@@ -7,6 +7,7 @@ class TableElement extends Component {
         this.props.tableStore.setCurrentTable(this.props.table);
         this.props.tableStore.getListOrder(this.props.table);
         this.props.tableStore.getListReadyFood();
+        this.props.tableStore.getCurrentListNotice();
     }
 
     render() {

@@ -130,3 +130,20 @@ export const updateInvoiceDetailStatus = async (status, hoaDonId, monAnId) => {
   });
   return await response.json();
 }
+
+
+export const updateHDCT = async (listHDCT) => {
+  console.log(listHDCT)
+  var url = new URL(`${URL_API}/UpdateHDCTByHoadonId`)
+
+  const response = await fetch(url, {
+      method: 'POST', // *GET, POST, PUT, DELETE, etc.
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      },
+      body: JSON.stringify(listHDCT)   
+  });
+  return await response.json();
+}
+
