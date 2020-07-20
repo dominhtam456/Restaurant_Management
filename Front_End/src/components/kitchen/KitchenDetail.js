@@ -40,19 +40,28 @@ class KitchenDetail extends Component {
         Ready
     </button>)
   }
+
+  listTableName() {
+    console.log(toJS(this.props.food.ban))
+    let str='';
+    this.props.food.ban.forEach(tbl => {
+      str += tbl.ban.name + ' ';
+    });
+    return str;
+  }
   render() {
     return (
       <div className="list-group">
         <div className="list-group-item list-group-item-action">
           <div className="row">
             <div className="col-1 "> {this.props.index + 1} </div>
-            <div className="col-1 "> {this.props.food.ban[0].ban.name}</div>
+            <div className="col-1 "> {this.listTableName()}</div>
             <div className="col-5 text-center"> {this.props.food.tenMonAn}</div>
             <div className="col-2 text-center"> {this.props.food.soluong}</div>
 
             <div className="float-md-right mb-3 mr-3">
               {this.showButton()}
-              {this.props.food.status === "ready" ? '' : this.cancelButton()}
+              {(this.props.food.status === "ready" || this.props.food.status === "cancel") ? '' : this.cancelButton()}
               
             </div>
           </div>

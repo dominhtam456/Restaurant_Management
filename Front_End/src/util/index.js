@@ -33,4 +33,9 @@ export default class CommonUtil{
       array.push(array.splice(array.indexOf(element), 1)[0]);
       return array;
     }
+
+    static getRandomColor = () => {
+      let color = "hsl(" + Math.random() * 360 + ", 100%, 75%)";
+      return color;
+    }
 }

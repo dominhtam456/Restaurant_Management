@@ -31,7 +31,6 @@ export default class FoodDetail extends Component {
                             <a className="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Thông Tin</a>
                         </li>
                         </ul> */}
-<<<<<<< HEAD
                 <div className="tab-content" id="myTabContent">
                   <div
                     className="tab-pane fade show active"
@@ -46,79 +45,6 @@ export default class FoodDetail extends Component {
                           <div className="card">
                             <img width={250} height={300} />
                           </div>
-=======
-                        <div className="tab-content" id="myTabContent">
-                        <div className="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                            <div className="container border-lightblue" >
-                            <h2 className="mt-1">{this.props.id}</h2>
-                            <div className="row p-2 mt-3 ">
-                                <div className="col-4">
-                                <div className="card">
-                                    <img width={250} height={300} src="assets/img/resources/Mon_an_va_nuoc/{{x.monan_IMG}}" />
-                                </div>
-                                </div>
-                                <div className="col-4">
-                                <table>
-                                    <tbody><tr className="p-2">
-                                        <td>
-                                        Mã món ăn:
-                                        </td>
-                                        <td>
-                                        {'{'}{'{'}foodDetails.monan_NO{'}'}{'}'}
-                                        </td>
-                                    </tr>
-                                    <tr className="p-2">
-                                        <td>
-                                        Loại món ăn:
-                                        </td>
-                                        <td>
-                                        {'{'}{'{'}foodDetails.tenloai_LOAIMONAN{'}'}{'}'}
-                                        </td>
-                                    </tr>
-                                    <tr className="p-2">
-                                        <td>
-                                        Giá Bán:
-                                        </td>
-                                        <td>
-                                        {'{'}{'{'}foodDetails.monan_PRICE{'}'}{'}'}đ
-                                        </td>
-                                    </tr>
-                                    </tbody></table>
-                                </div>
-                                <div className="col-4">
-                                <table>
-                                    <tbody><tr className="p-2">
-                                        <td>
-                                        Đơn vị tính:
-                                        </td>
-                                        <td>
-                                        {'{'}{'{'}foodDetails.monan_UNIT{'}'}{'}'}
-                                        </td>
-                                    </tr>
-                                    <tr className="p-2">
-                                        <td>
-                                        Trạng thái:
-                                        </td>
-                                        <td>
-                                        {'{'}{'{'}foodDetails.monan_STATUS{'}'}{'}'}
-                                        </td>
-                                    </tr>
-                                    <tr className="p-2">
-                                        <td style={{verticalAlign: 'top'}}>
-                                        Thành Phần:
-                                        </td>
-                                        <td>
-                                        <span >- {'{'}{'{'}z.nguyenlieu.nguyenlieu_NAME{'}'}{'}'}<br /><br /></span>
-                                        </td>
-                                    </tr>
-                                    </tbody></table>
-                                </div>
-                            </div>
-                            </div>
-                            <div>
-                            <FootDetailFooter id={this.props.id}/>
-                            </div>
->>>>>>> afcd4d99530fdec809e2264f47ac3cc380b04d4f
                         </div>
                         <div className="col-4">
                           <table>

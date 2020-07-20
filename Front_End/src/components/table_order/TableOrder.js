@@ -7,6 +7,7 @@ import { inject , observer } from 'mobx-react'
 import CommonUtil from './../../util'
 import ReadyFoodPanel from './ready_food_panel/ReadyFoodPanel'
 import ProblemPanel from './problem/ProblemPanel'
+import { toJS } from 'mobx'
 
 
 class TableOrder extends Component {
@@ -15,6 +16,15 @@ class TableOrder extends Component {
         this.state = {
             update: 1
         }
+    }
+
+    listTableName() {
+        let str = '';
+        console.log(toJS(this.props.tableStore.currentTable))
+        this.props.tableStore.currentTable.forEach(table => {
+            str += table.name + ' '
+        });
+        return str;
     }
     componentDidMount() {
         const s = document.createElement('script');
@@ -63,7 +73,7 @@ class TableOrder extends Component {
                             <div className="col-sm-6">
                                 <div className="card border">
                                     <div className="card-header bg-secondary">
-                                        <h1>{this.props.tableStore.currentTable.name}</h1>
+                                        <h1>{this.listTableName()}</h1>
                                     </div>
                                     <div className="card-body" style={{height:"40em", overflowY: "scroll"}}>
                                     <div className="table-responsive">

@@ -10,13 +10,30 @@ export default class Table {
     listTable = [];
     listFood = [];
     listOrder = [];
-    currentTable = {};
+    currentTable = [];
     currentListOrder = [];
     updateCount = 0;
     totalMoney = 0;
     listReadyFood = [];
     listNotice = [];
     currentListNotice = [];
+    flag = false;
+
+    checkTable = async (check, table) => {
+        if(this.flag) {
+            this.currentTable = [];
+            this.flag = false;
+        }
+        if(check) this.currentTable.push(table);
+        else {
+            this.currentTable.forEach(t => {
+                if(t.id === table.id) {
+                    this.currentTable.splice(this.currentTable.indexOf(t), 1);
+                    return;
+                }
+            });
+        }
+    }
 
     solvedNotice = async(notice) => {
         await InvoiceService.updateInvoiceDetailStatus("queue", notice.hoadon_id, notice.monan_id);
@@ -30,13 +47,13 @@ export default class Table {
         }
         await NoticeService.addNotice(noticeData);
         this.getCurrentListNotice();
-        this.getCurrentListOrder(this.currentTable);
+        this.getCurrentListOrder(this.currentTable[0]);
     }
 
     getCurrentListNotice = async() => {
         let data = await NoticeService.getNoticeByStatus("Unsolved");
         const list = []
-        await this.getCurrentListOrder(this.currentTable);
+        await this.getCurrentListOrder(this.currentTable[0]);
         if(this.currentListOrder.length !=0 ){
             for(let i=0;i<data.length; i++){
                 if(data[i].hoadon_id === this.currentListOrder[0].hoadonchitiet_id.hoadon_id){
@@ -51,7 +68,7 @@ export default class Table {
     getListReadyFood = async () => {
         const data = await InvoiceService.getInvoiceDetailByStatus("ready");
         const list = []
-        await this.getCurrentListOrder(this.currentTable);
+        await this.getCurrentListOrder(this.currentTable[0]);
         if(this.currentListOrder.length !=0 ){
             for(let i=0;i<data.length; i++){
                 if(data[i].hoadon_id === this.currentListOrder[0].hoadonchitiet_id.hoadon_id)
@@ -63,7 +80,7 @@ export default class Table {
 
     payment = async () => {
         await InvoiceService.updateInvoiceStatus(1, this.currentListOrder[0].hoadonchitiet_id.hoadon_id);
-        await TableService.updateTableStatus("Trong", this.currentTable.id);
+        await TableService.updateTableStatus("Trong", this.currentTable[0].id);
         await this.getTable();
         await this.getListOrder();
     }
@@ -94,11 +111,11 @@ export default class Table {
         //console.log("wtf")
         const data = await InvoiceService.getInvoiceByStatus(0);
         this.listOrder = data;
-        if(this.currentTable.id){
+        if(this.currentTable.length > 0){
             for(let i = 0; i < this.listOrder.length; i++){
                 for(let j = 0; j < this.listOrder[i].ban.length; j++){
                     //console.log(this.listOrder[i].ban[j].ban.id)
-                    if(this.listOrder[i].ban[j].ban.id == this.currentTable.id){
+                    if(this.listOrder[i].ban[j].ban.id == this.currentTable[0].id){
                         const data = await InvoiceService.getInvoiceDetailByInvoiceId(this.listOrder[i].id);
                         this.currentListOrder = data; 
                         this.totalMoney = this.calTotalMoney();
@@ -116,19 +133,21 @@ export default class Table {
         this.getListOrder();
         for(let i = 0; i < this.listOrder.length; i++){
             for(let j = 0; j < this.listOrder[i].ban.length; j++){
-                if(this.listOrder[i].ban[j].ban.id == table.id){
-                    const data = await InvoiceService.getInvoiceDetailByInvoiceId(this.listOrder[i].id);
-                    this.currentListOrder = data; 
-                    //console.log(toJS(this.currentListOrder));
-                    return;
-                }
+                if(table != undefined){
+                    if(this.listOrder[i].ban[j].ban.id == table.id){
+                        const data = await InvoiceService.getInvoiceDetailByInvoiceId(this.listOrder[i].id);
+                        this.currentListOrder = data; 
+                        //console.log(toJS(this.currentListOrder));
+                        return;
+                    }
+                 }
             }
         }
         this.currentListOrder = [];
     }
 
     setCurrentListOrder = (food) => {
-        if(!this.currentTable.id) return;
+        if(!this.currentTable[0].id) return;
         for(let i=0; i<this.currentListOrder.length; i++){
             if(food.id == this.currentListOrder[i].hoadonchitiet_id.monan_id){
                 this.currentListOrder[i].soluong++;
@@ -162,7 +181,12 @@ export default class Table {
     
 
     setCurrentTable = (table) => {
-        this.currentTable = table;
+        this.currentTable = [];
+        this.currentTable[0] = table;
+        let list = document.getElementsByClassName('check');
+        for(let i=0; i<list.length; i++)
+            list[i].checked = false;
+        this.flag = true;
     }
 
     getTable = async () => {
@@ -210,15 +234,22 @@ export default class Table {
         }
         await InvoiceService.addinvoiceStaff(invoiceStaff);
 
-        let invoiceTable = {
+        let listTable = []
+        this.currentTable.forEach(table => {
+            let invoiceTable = {
                 "id":{
                     "hoadonId": InvoiceData.id,
-                    "banId": this.currentTable.id
+                    "banId": table.id
                 }
             }
-        await InvoiceService.addinvoiceTable(invoiceTable);
-
-        await TableService.updateTableStatus("Có", this.currentTable.id);
+            listTable.push(invoiceTable);
+        });
+        let color = CommonUtil.getRandomColor();
+        await InvoiceService.addinvoiceTable(listTable);
+        this.currentTable.forEach(table => {
+            table.color = color;
+        })
+        await TableService.updateTableStatus("Có", this.currentTable);
         this.getTable();
         //console.log(toJS(this.listTable))
     }

@@ -12,17 +12,16 @@ export const getTables = async () => {
     return await response.json();
 }
 
-export const updateTableStatus = async (status, id) => {
-  var url = new URL(`${URL_API}/UpdateStatusBan`),
-  params = {id, status}
-  Object.keys(params).forEach(key => url.searchParams.append(key, params[key]))
+export const updateTableStatus = async (status, listTable) => {
+  var url = new URL(`${URL_API}/UpdateStatusBan/${status}`)
   
   const response = await fetch(url, {
       method: 'POST', // *GET, POST, PUT, DELETE, etc.
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${localStorage.getItem('token')}`
-      }      
+      },
+      body: JSON.stringify(listTable)      
   });
   return await response.json();
 }

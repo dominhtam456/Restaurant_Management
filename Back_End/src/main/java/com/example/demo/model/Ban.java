@@ -38,6 +38,9 @@ public class Ban implements Serializable {
 	 @Column(name = "is_active")
 	 private Integer isActive;
 
+	 @Column(name = "color")
+	 private String color;
+	 
 	protected Ban() {
 		  
 	 }
@@ -92,6 +95,22 @@ public class Ban implements Serializable {
 		super();
 		this.name = name;
 		this.status = status;
+	}
+
+	public String getColor() {
+		return color;
+	}
+
+	public void setColor(String color) {
+		this.color = color;
+	}
+
+	public Ban(long id, String name, String status, Integer isActive, String color) {
+		this.id = id;
+		this.name = name;
+		this.status = status;
+		this.isActive = isActive;
+		this.color = color;
 	}
 	 
 	

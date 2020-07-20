@@ -22,18 +22,20 @@ class TableDetailFooter extends Component {
     }
 
     showButton() {
-        if(this.props.tableStore.currentTable.status === "Trong")
-            return (
-                <button type="button" className="btn btn-primary" onClick={() => this.onConfirm()}>
-                    Xác nhận gọi món
-                </button>
-            )
-        else 
-            return (
-                <button type="button" className="btn btn-primary" onClick={() => this.onUpdate()}>
-                    Cập nhật
-                </button>
-            )   
+        const listTable = this.props.tableStore.currentTable
+        for(let i=0; i< listTable.length; i++){
+            if(listTable[i].status === "Trong")
+                return (
+                    <button type="button" className="btn btn-primary" onClick={() => this.onConfirm()}>
+                        Xác nhận gọi món
+                    </button>
+                )
+        }
+        return (
+            <button type="button" className="btn btn-primary" onClick={() => this.onUpdate()}>
+                Cập nhật
+            </button>
+        )   
     }
 
     render() {

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -90,12 +91,12 @@ public class TableController {
 
 	// CAP NHAT TRANG THAI BAN
 
-	@RequestMapping(value = "/UpdateStatusBan", method = RequestMethod.POST)
-	public Boolean UpdateStatusBan(
-		@RequestParam(value = "status") String status,
-		@RequestParam(value = "id") Long id) {
+	@RequestMapping(value = "/UpdateStatusBan/{status}", method = RequestMethod.POST)
+	public Boolean UpdateStatusBan(@RequestBody List<Ban> listTable, @PathVariable(value = "status") String status) {
 		try{
-			repositoryBan.CapNhatTrangThaiBan(status, id);
+			for (Ban ban : listTable) {
+				repositoryBan.CapNhatTrangThaiBan(status, ban.getId(),ban.getColor());
+			}
 			return true;
 		}catch(Exception e){
 			return false;

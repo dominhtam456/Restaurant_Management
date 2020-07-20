@@ -34,7 +34,7 @@ export default class Kitchen {
 
     setCurrentFoodModal = async(food) => {
         this.currentFoodModal = food;
-        console.log(toJS(this.currentFoodModal))
+
     }
 
     pushNotice = async (desc) => {
@@ -47,7 +47,8 @@ export default class Kitchen {
             "status": "Unsolved"
         }
         await NoticeService.addNotice(notice);
-        await InvoiceService.updateInvoiceDetailStatus("cancel", this.currentFoodModal.hoadon_id, this.currentFoodModal.monan_id)
+        await InvoiceService.updateInvoiceDetailStatus("cancel", this.currentFoodModal.hoadon_id, this.currentFoodModal.monan_id);
+        await this.getListUncompledFood();
     }
 
 }

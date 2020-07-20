@@ -34,7 +34,14 @@ public class HoadonBanController {
     @RequestMapping(value = "/InsertHoaDonBan", method = RequestMethod.POST, 
         produces = MediaType.APPLICATION_JSON_VALUE,
         consumes = MediaType.APPLICATION_JSON_VALUE)
-    public HoadonBan insertNguyenLieu(@RequestBody HoadonBan hoaddonBan) {
-       return hoadonBanService.save(hoaddonBan);
+    public Boolean insertNguyenLieu(@RequestBody List<HoadonBan> listHDB) {
+        try{
+            for (HoadonBan hoadonBan : listHDB) {
+                hoadonBanService.save(hoadonBan);
+            }
+            return true;
+        }catch(Exception ex){
+            return false;
+        }
     }
 }
