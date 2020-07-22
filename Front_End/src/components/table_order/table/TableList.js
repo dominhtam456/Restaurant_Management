@@ -5,13 +5,20 @@ import { toJS } from 'mobx'
 
 class TableList extends Component {
     componentDidMount(){
-        this.props.tableStore.getTable();
-        
+        this.props.tableStore.getTable();  
     }
 
     componentDidUpdate(prevProps) {
     if(prevProps.update != this.props.update)
         this.props.tableStore.getTable();
+    }
+
+    async onChangeTable() {
+        const crTable = this.props.tableStore.currentTable;
+        if(crTable.length != 2) {alert("Phải chọn 2 bàn để đổi"); return;}
+        if((crTable[0].status === 'Có' && crTable[1].status === 'Có') || (crTable[0].status === 'Trong' && crTable[1].status === 'Trong')) {alert("Phải có 1 bàn trống và 1 bàn có người"); return;}
+        await this.props.tableStore.changeTable();
+        await this.props.tableStore.getTable();
     }
 
     render() {
@@ -22,6 +29,13 @@ class TableList extends Component {
         return (
             
                 <div className="tab-pane fade show active" id="ban" role="tabpanel" aria-labelledby="home-tab">
+                    <div className='row '>
+                        <div className="ml-auto mr-4">
+                            <button type="button" className="btn btn-success ">Ghép bàn</button>
+                            <button onClick={() => this.onChangeTable()} type="button" className="btn btn-success ">Đổi bàn</button>
+                        </div>
+                        
+                    </div>
                     <div className="card-deck bg-white border" style={{justifyContent: "center"}}>
                         {element}
                     </div>

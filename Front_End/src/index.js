@@ -7,6 +7,7 @@ import { Provider } from "mobx-react";
 import Table from './store/TableOrderStore';
 import Kitchen from './store/KitchenStore';
 
+
 ReactDOM.render(
   <React.StrictMode>
     <Provider 

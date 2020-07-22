@@ -9,10 +9,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.service.BanService;
 import com.example.demo.service.BepService;
 import com.example.demo.service.HoadonBanService;
+import com.example.demo.model.Ban;
 import com.example.demo.model.Bep;
 import com.example.demo.model.BepID;
 import com.example.demo.model.HoadonBan;
@@ -25,6 +28,9 @@ public class HoadonBanController {
 
     @Autowired
     private HoadonBanService hoadonBanService;
+
+    @Autowired
+	BanService repositoryBan;
 
     @RequestMapping(path = "/get", produces = MediaType.APPLICATION_JSON_VALUE)
 	public java.util.List<HoadonBan> getAllMonAn() {
@@ -39,6 +45,22 @@ public class HoadonBanController {
             for (HoadonBan hoadonBan : listHDB) {
                 hoadonBanService.save(hoadonBan);
             }
+            return true;
+        }catch(Exception ex){
+            return false;
+        }
+    }
+
+    @RequestMapping(value = "/updateHDB", method = RequestMethod.POST)
+    public Boolean updateHDB(
+        @RequestParam(value = "fromTable") Long fromTable,
+        @RequestParam(value = "toTable") Long toTable,
+        @RequestParam(value = "hoadon_id") Long hoadon_id) {
+        try{
+            hoadonBanService.updateHDB(hoadon_id, toTable, fromTable);
+            Ban ban = repositoryBan.GetBan(fromTable);
+            repositoryBan.CapNhatTrangThaiBan("Có", toTable, ban.getColor());
+            repositoryBan.CapNhatTrangThaiBan("Trong", fromTable, "white");
             return true;
         }catch(Exception ex){
             return false;

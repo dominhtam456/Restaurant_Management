@@ -28,6 +28,10 @@ class TableDetailRow extends Component {
         if(this.props.order.status === "cancel")
             style={backgroundColor: "lightcoral"};
 
+        if(this.props.tableStore.isPayment){
+            document.getElementById('amount-input').disable = true;
+        }
+
         return (
             
                 <tr style={style}>
@@ -38,7 +42,7 @@ class TableDetailRow extends Component {
                 <td>
                     <input type="number" style={{width: '4em'}} 
                         value={this.props.order.soluong}
-                        onChange={(e) => this.onChangeAmount(e)}/>
+                        onChange={(e) => this.onChangeAmount(e)} id="amount-input"/>
                 </td>
                 <td>{CommonUtil.formatVND(this.props.order.price)}</td>
                 <td>{CommonUtil.formatVND(this.props.order.price * this.props.order.soluong)}</td>

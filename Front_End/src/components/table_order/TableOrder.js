@@ -10,6 +10,7 @@ import ProblemPanel from './problem/ProblemPanel'
 import { toJS } from 'mobx'
 
 
+
 class TableOrder extends Component {
     constructor(props){
         super(props);
@@ -36,8 +37,6 @@ class TableOrder extends Component {
         setInterval(() => {
             this.props.tableStore.setUpdateCount();
         }, 10000);
-       
-        
       }
 
     render() {
@@ -77,7 +76,7 @@ class TableOrder extends Component {
                                     </div>
                                     <div className="card-body" style={{height:"40em", overflowY: "scroll"}}>
                                     <div className="table-responsive">
-                                    <TableDetail update={this.props.tableStore.updateCount}/>
+                                    <TableDetail update={this.props.tableStore.updateCount} />
                                     </div>
                                     <h3 className="text-danger float-md-right ">Tổng tiền: {CommonUtil.formatVND(this.props.tableStore.totalMoney)}</h3>
                                     

@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.service.HoaDonChiTietService;
+import com.example.demo.service.HoaDonService;
 import com.example.demo.service.HoadonBanService;
 import com.example.demo.service.MonAnService;
 
@@ -36,6 +38,9 @@ public class InvoiceDetailController {
 	
 	@Autowired
 	HoadonBanService hoadonBanService;
+
+	@Autowired
+	HoaDonService repositoryHoaDon;
 
 	// LAY ALL HOA DON CHI TIET
 	@RequestMapping(path = "/GetAllHoaDonChiTiet", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -101,6 +106,8 @@ public class InvoiceDetailController {
 							.getName());
 
 			List<HoadonBan> ban = hoadonBanService.Get(item.getHoadonchitiet_id().getHoadon_id());
+			
+			
 
 			InvoiceDetailDTO iv = new InvoiceDetailDTO(
 				item.getHoadonchitiet_id().getMonan_id(),
@@ -120,6 +127,8 @@ public class InvoiceDetailController {
 		List<InvoiceDetailDTO> response = new ArrayList<>(); 
 
 		for (HoaDonChiTiet item : listHDCT) {
+			if(repositoryHoaDon.GetHoaDon(item.getHoadonchitiet_id().getHoadon_id()).getStatus())
+				continue;
 			item.setTenMonAn(
 					repositoryMonAn.getOne(Long.valueOf(item.getHoadonchitiet_id().getMonan_id()))
 							.getName());
