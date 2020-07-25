@@ -12,6 +12,7 @@ public class InvoiceDetailDTO implements Serializable{
     private Integer soluong;
     private String status;
     private String tenMonAn;
+    private String comment;
     private List<HoadonBan> ban = new ArrayList<>();
 
     
@@ -75,6 +76,25 @@ public class InvoiceDetailDTO implements Serializable{
     }
 
     public InvoiceDetailDTO() {
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    public InvoiceDetailDTO(Integer monan_id, Integer hoadon_id, Integer soluong, String status, String tenMonAn,
+            String comment, List<HoadonBan> ban) {
+        this.monan_id = monan_id;
+        this.hoadon_id = hoadon_id;
+        this.soluong = soluong;
+        this.status = status;
+        this.tenMonAn = tenMonAn;
+        this.comment = comment;
+        this.ban = ban;
     }
 
     

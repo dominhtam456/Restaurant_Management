@@ -49,8 +49,8 @@ public class InvoiceDetailController {
 		List<HoaDonChiTiet> listHDCT = repositoryHDCT.findAll();
 		for (HoaDonChiTiet item : listHDCT) {
 			item.setTenMonAn(
-					repositoryMonAn.getOne(Long.valueOf(item.getHoadonchitiet_id().getMonan_id()))
-							.getName());
+				repositoryMonAn.getOne(Long.valueOf(item.getHoadonchitiet_id().getMonan_id()))
+					.getName());
 		}
 		return listHDCT;
 	}
@@ -107,14 +107,13 @@ public class InvoiceDetailController {
 
 			List<HoadonBan> ban = hoadonBanService.Get(item.getHoadonchitiet_id().getHoadon_id());
 			
-			
-
 			InvoiceDetailDTO iv = new InvoiceDetailDTO(
 				item.getHoadonchitiet_id().getMonan_id(),
 				item.getHoadonchitiet_id().getHoadon_id(), 
-				item.getSoluong(),
+				item.getSoluong(), 
 				item.getStatus(), 
-				item.getTenMonAn(), 
+				item.getTenMonAn(),
+				item.getComment(),  
 				ban);
 			response.add(iv);
 		}
@@ -141,6 +140,7 @@ public class InvoiceDetailController {
 				item.getSoluong(),
 				item.getStatus(), 
 				item.getTenMonAn(), 
+				item.getComment(),
 				ban);
 			response.add(iv);
 		}

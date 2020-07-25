@@ -133,7 +133,6 @@ export const updateInvoiceDetailStatus = async (status, hoaDonId, monAnId) => {
 
 
 export const updateHDCT = async (listHDCT) => {
-  console.log(listHDCT)
   var url = new URL(`${URL_API}/UpdateHDCTByHoadonId`)
 
   const response = await fetch(url, {
@@ -143,6 +142,20 @@ export const updateHDCT = async (listHDCT) => {
         'Authorization': `Bearer ${localStorage.getItem('token')}`
       },
       body: JSON.stringify(listHDCT)   
+  });
+  return await response.json();
+}
+
+export const mergeTable = async (listHDId) => {
+  var url = new URL(`${URL_API}/MergeTable`)
+
+  const response = await fetch(url, {
+      method: 'POST', // *GET, POST, PUT, DELETE, etc.
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      },
+      body: JSON.stringify(listHDId)   
   });
   return await response.json();
 }

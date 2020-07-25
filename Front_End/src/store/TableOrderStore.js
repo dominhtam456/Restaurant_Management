@@ -19,6 +19,25 @@ export default class Table {
     currentListNotice = [];
     flag = false;
 
+    mergeTable = async() => {
+        let list = [];
+        this.currentListOrder.forEach(order => {
+            list.push(order[0].hoadonchitiet_id.hoadon_id)
+        });
+        await InvoiceService.mergeTable(list);
+        await this.getTable();
+        //console.log(toJS(this.currentListOrder))
+    }
+
+    updateComment = async(text, id) => {
+        this.currentListOrder[0].forEach(order => {
+            if(order.hoadonchitiet_id.monan_id === id){
+                order.comment = text;
+            }
+        });
+        //console.log(toJS(this.currentListOrder));
+    }
+
     changeTable = async() => {
         let fromTable, toTable, hoadon_id;
         if(this.currentTable[0].color != "white"){
@@ -46,7 +65,16 @@ export default class Table {
             this.currentTable = [];
             this.flag = false;
         }
-        if(check) this.currentTable.push(table);
+        if(check) {
+            let flag = true;
+            this.currentTable.forEach(tbl => {
+                if(tbl.color === table.color){
+                    flag = false;
+                } 
+            })
+
+            if(flag) this.currentTable.push(table);
+        }
         else {
             this.currentTable.forEach(t => {
                 if(t.id === table.id) {
@@ -55,7 +83,7 @@ export default class Table {
                 }
             });
         }
-        console.log(toJS(this.currentListOrder))
+        //console.log(toJS(this.currentListOrder))
     }
 
     solvedNotice = async(notice) => {
@@ -167,7 +195,7 @@ export default class Table {
                             const data = await InvoiceService.getInvoiceDetailByInvoiceId(this.listOrder[i].id);
                             lst.push(data); 
                             
-                            //console.log(toJS(this.currentListOrder));
+                            console.log(toJS(this.currentListOrder));
                             flag=true;
                         }
                     }
@@ -266,7 +294,7 @@ export default class Table {
         let invoiceNo = "HD" + currentTimestamp;
         let date = CommonUtil.epochToDateTime(currentTimestamp, 'yyyy-MM-dd');
 
-        console.log(date);
+        //console.log(date);
         let invoice =  {
             "no": invoiceNo,
             "date": date,
@@ -344,4 +372,5 @@ decorate(Table, {
     getListReadyFood: action,
     update: action,
     solvedNotice: action,
+    mergeTable: action
 })

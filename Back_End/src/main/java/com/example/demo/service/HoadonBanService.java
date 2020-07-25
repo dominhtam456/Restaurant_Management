@@ -23,4 +23,9 @@ public interface HoadonBanService extends JpaRepository<HoadonBan, HoadonBanID>{
     @Query(value = "update hoadon_ban set ban_id = :toTable where hoadon_id = :id and ban_id = :fromTable", nativeQuery = true)
     @Transactional
     public void updateHDB(@Param("id") Long id, @Param("toTable") Long toTable, @Param("fromTable") Long fromTable);
+
+    @Modifying
+    @Query(value = "update hoadon_ban set hoadon_id = :newId where hoadon_id = :oldId", nativeQuery = true)
+    @Transactional
+    public void UpdateHDId(@Param("newId") Integer newId, @Param("oldId") Integer oldId);
 }

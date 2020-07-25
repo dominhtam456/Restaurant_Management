@@ -29,10 +29,10 @@ class Kitchen extends Component {
                   <div className="list-group">
                     <div className="list-group-item list-group-item-action list-group-item-info">
                       <div className="row">
-                        <div className="col-1 text-center" > STT </div>
                         <div className="col-1 text-center" > Bàn </div>
-                        <div className="col-5 text-center" > Tên món ăn </div>
-                        <div className="col-3 text-center" > Số lượng </div>
+                        <div className="col-4 text-center" > Tên món ăn </div>
+                        <div className="col-1 text-center" > Số lượng </div>
+                        <div className="col-3 text-center" > Ghi chú </div>
                         <div className="float-md-right mb-3 mr-3 text-center" > Trạng thái </div>
                       </div>
                       <div>

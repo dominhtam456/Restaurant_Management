@@ -33,6 +33,7 @@ class TableDetail extends Component {
                 <th scope="col">Số Lượng</th>
                 <th scope="col">Đơn Giá</th>
                 <th scope="col">Thành Tiền</th>
+                <th scope="col">Ghi chú</th>
                 </tr>
             </thead>
             <tbody>

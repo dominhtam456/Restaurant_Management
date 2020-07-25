@@ -33,6 +33,9 @@ public class HoaDonChiTiet implements Serializable {
 
 	@Column(name = "status")
 	private String status;
+
+	@Column(name = "comment")
+	private String comment;
     
 	@Transient
 	private String thanhTien;
@@ -97,6 +100,22 @@ public class HoaDonChiTiet implements Serializable {
 
 	public void setTenMonAn(String tenMonAn) {
 		this.tenMonAn = tenMonAn;
+	}
+
+	public String getComment() {
+		return comment;
+	}
+
+	public void setComment(String comment) {
+		this.comment = comment;
+	}
+
+	public HoaDonChiTiet(HoaDonChiTietID hoadonchitiet_id, String price, Integer soluong, String status,String comment) {
+		this.hoadonchitiet_id = hoadonchitiet_id;
+		this.price = price;
+		this.soluong = soluong;
+		this.status = status;
+		this.comment = comment;
 	}
 
 

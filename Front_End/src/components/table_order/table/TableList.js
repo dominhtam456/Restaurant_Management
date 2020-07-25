@@ -13,6 +13,10 @@ class TableList extends Component {
         this.props.tableStore.getTable();
     }
 
+    async onMergeTable() {
+        this.props.tableStore.mergeTable();
+    }
+
     async onChangeTable() {
         const crTable = this.props.tableStore.currentTable;
         if(crTable.length != 2) {alert("Phải chọn 2 bàn để đổi"); return;}
@@ -31,7 +35,7 @@ class TableList extends Component {
                 <div className="tab-pane fade show active" id="ban" role="tabpanel" aria-labelledby="home-tab">
                     <div className='row '>
                         <div className="ml-auto mr-4">
-                            <button type="button" className="btn btn-success ">Ghép bàn</button>
+                            <button onClick={() => this.onMergeTable()} type="button" className="btn btn-success ">Ghép bàn</button>
                             <button onClick={() => this.onChangeTable()} type="button" className="btn btn-success ">Đổi bàn</button>
                         </div>
                         
