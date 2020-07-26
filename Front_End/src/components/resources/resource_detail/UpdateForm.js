@@ -1,7 +1,33 @@
 import React, { Component } from "react";
+import { inject , observer } from 'mobx-react'
 
-export default class UpdateForm extends Component {
+class UpdateForm extends Component {
+  constructor(props) {
+    super(props);
+    this.no = React.createRef();
+    this.name = React.createRef();
+    this.price = React.createRef();
+    this.typename = React.createRef();  
+    this.date = React.createRef();
+    this.isactive = React.createRef();
+    //this.image = React.createRef();
+    }
+
+  onupdate(){
+    this.props.resourceStore.pushResource(this.no.current.value,
+                                          this.name.current.value, 
+                                          this.price.current.value, 
+                                          this.typename.value,
+                                          this.date.current.value, 
+                                          this.isactive.value)
+}
   render() {
+    const listType= this.props.resourceStore.listTypeResource.map((resource, index)=>{
+      return <option value={resource.id}>
+                {resource.name}
+              </option>
+    })
+    
     return (
       <div className="modal-dialog modal-lg" role="document">
         <div className="modal-content">
@@ -39,6 +65,7 @@ export default class UpdateForm extends Component {
                           type="text"
                           className="form-control form-control-sm"
                           id="input1"
+                          ref={this.no}
                         />
                       </div>
                     </div>
@@ -47,13 +74,14 @@ export default class UpdateForm extends Component {
                         htmlFor="inputName"
                         className="col-sm-4 col-form-label form-control-sm"
                       >
-                        Tên nguyên liệuliệu:
+                        Tên nguyên liệu:
                       </label>
                       <div className="col-sm-7">
                         <input
                           type="text"
                           className="form-control form-control-sm"
                           id="inputName"
+                          ref={this.name}
                         />
                       </div>
                     </div>
@@ -65,12 +93,8 @@ export default class UpdateForm extends Component {
                         Loại nguyên liệu:
                       </label>
                       <div className="col-sm-7">
-                        <select className="form-control-sm" id="inputType">
-                          <option value="{{x.id}}">
-                            {"{"}
-                            {"{"}x.loaimonan_NAME{"}"}
-                            {"}"}
-                          </option>
+                        <select className="form-control-sm" id="inputType" ref={this.typename}>
+                          {listType}
                         </select>
                       </div>
                     </div>
@@ -88,6 +112,7 @@ export default class UpdateForm extends Component {
                           class="form-control form-control-sm "
                           id="inputNum"
                           placeholder={0}
+                          ref={this.price}
                         />
                       </div>
                     </div>
@@ -105,7 +130,22 @@ export default class UpdateForm extends Component {
                           class="form-control form-control-sm "
                           id="inputNum"
                           placeholder={0}
+                          ref={this.date}
                         />
+                      </div>
+                    </div>
+                    <div className="form-group row">
+                      <label
+                        htmlFor="inputUnit"
+                        className="col-sm-4 col-form-label form-control-sm"
+                      >
+                        Hiện trạng:
+                      </label>
+                      <div className="col-sm-7">
+                        <select ref={this.isactive}>
+                          <option value="1">Active</option>
+                          <option value="0">Deactive</option>
+                        </select>
                       </div>
                     </div>
                     <div className="form-group row">
@@ -145,7 +185,7 @@ export default class UpdateForm extends Component {
                 </div>
               </div>
               <div className="text-right mt-3">
-                <button type="submit" className="btn btn-danger">
+                <button type="submit" className="btn btn-danger" onClick={() => this.onupdate()}>
                   Lưu
                 </button>
                 <button
@@ -163,3 +203,4 @@ export default class UpdateForm extends Component {
     );
   }
 }
+export default inject("resourceStore")(observer(UpdateForm))

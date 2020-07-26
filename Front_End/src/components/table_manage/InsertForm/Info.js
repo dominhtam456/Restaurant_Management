@@ -1,104 +1,59 @@
 import React, { Component } from "react";
+import { inject , observer } from 'mobx-react'
 
-export default class Info extends Component {
+class Info extends Component {
+  constructor(props) {
+    super(props);
+    this.name = React.createRef();
+
+    this.state = {
+      check: true
+    }
+  }
+
+  async onCreate(){
+    await this.props.tableManageStore.pushTable(this.name.current.value);
+    await this.props.tableStore.getTable();
+  }
+
+  showAlert() {
+    return (<span style={{ fontSize: 10, color: "red" }}>
+    Không được để trống tên món ăn
+  </span>)
+  }
+
+
+
   render() {
     return (
-      <div class="col-6">
-        <div class="form-group row">
-          <label for="input1" class="col-sm-4 col-form-label form-control-sm">
-            Mã nguyên liệu:
-          </label>
-          <div class="col-sm-7">
-            <input
-              name="resourcesNo"
-              type="text"
-              class="form-control form-control-sm"
-              id="input1"
-              required
-            />
-            <span
-              style={{ fontSize: "10px", color: "red" }}
-            >
-              Không được để trống mã nguyên liệu
-            </span>
-          </div>
-        </div>
-
+      <div class="col-12">
         <div className="form-group row">
           <label
             htmlFor="inputName"
             className="col-sm-4 col-form-label form-control-sm"
           >
-            Tên món ăn:
+            Tên bàn:
           </label>
           <div className="col-sm-7">
             <input
               name="inputName"
               type="text"
               className="form-control form-control-sm"
-              id="inputName"
-              placeholder={0}
+              id="tablename"
               required
+              ref={this.name}
+              onfocusout=""
             />
-            <span style={{ fontSize: 10, color: "red" }}>
-              Không được để trống tên món ăn
-            </span>
+            {this.state.check ? '' : this.showAlert()}
           </div>
         </div>
-
-        <div class="form-group row">
-          <label
-            for="inputType"
-            class="col-sm-4 col-form-label form-control-sm"
-          >
-            Loại nguyên liệu:
-          </label>
-          <div class="col-sm-7">
-            <select
-              name="TypeId"
-              class="form-control-sm"
-              id="inputType"
-              ng-model="TypeId"
-              required
-            >
-              <option></option>
-            </select>
-            <p
-              style={{ fontSize: "10px", color: "red" }}
-            >
-              Không được để trống loại nguyên liệu
-            </p>
-          </div>
-        </div>
-        <div class="form-group row">
-          <label for="inputNum" class="col-sm-4 col-form-label form-control-sm">
-            Giá nhập:
-          </label>
-          <div class="col-sm-7">
-            <input
-              ng-model="inputPrice"
-              type="text"
-              class="form-control form-control-sm "
-              id="inputNum"
-              placeholder={0}
-            />
-          </div>
-        </div>
-        <div class="form-group row">
-          <label htmlFor="inputNum" class="col-sm-4 col-form-label form-control-sm">
-            Hạn Sử Dụng:
-          </label>
-          <div class="col-sm-7">
-            <input
-              ng-model="inputDate"
-              type="date"
-              class="form-control form-control-sm "
-              id="inputNum"
-              placeholder={0}
-            />
-          </div>
+        <div class="float-right mt-3">
+          <button type="submit" class="btn btn-danger" onClick={() => this.onCreate()} data-dismiss="modal">Lưu & thêm mới</button>
+          <button type="button" class="btn btn-secondary"
+            data-dismiss="modal">Đóng</button>
         </div>
       </div>
     )
   }
 }
+export default inject("tableManageStore","tableStore")(observer(Info));

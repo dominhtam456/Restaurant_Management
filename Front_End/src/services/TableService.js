@@ -25,3 +25,48 @@ export const updateTableStatus = async (status, listTable) => {
   });
   return await response.json();
 }
+
+export const addTables = async (table) => {
+  const url = `${URL_API}/InsertBan`;
+  const response = await fetch(url, {
+      method: 'POST', // *GET, POST, PUT, DELETE, etc.
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      },
+      body: JSON.stringify(table)
+  });
+  return await response.json();
+}
+
+export const updateTables = async (table) => {
+  var url = new URL(`${URL_API}/UpdateBan`);
+  // params = {id, name, isActive}
+  // Object.keys(params).forEach(key => url.searchParams.append(key, params[key]))
+
+  const response = await fetch(url, {
+      method: 'POST', // *GET, POST, PUT, DELETE, etc.
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      },
+      body: JSON.stringify(table)
+  });
+  return await response.json();
+}
+
+export const deleteTables = async (table) => {
+  var url = new URL(`${URL_API}/UpdateBan`);
+  // params = {id, name, isActive}
+  // Object.keys(params).forEach(key => url.searchParams.append(key, params[key]))
+
+  const response = await fetch(url, {
+      method: 'POST', // *GET, POST, PUT, DELETE, etc.
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      },
+      body: JSON.stringify(table)
+  });
+  return await response.json();
+}

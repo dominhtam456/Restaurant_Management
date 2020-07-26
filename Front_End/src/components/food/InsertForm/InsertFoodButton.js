@@ -117,6 +117,30 @@ export default class InsertFoodButton extends Component {
                                           <i className="fas fa-exclamation-circle" />
                                         </div>
                                       </div>
+                                      <div className="form-group row">
+                                        <label
+                                          htmlFor="inputName"
+                                          className="col-sm-4 col-form-label form-control-sm"
+                                        >
+                                          Mô tả:
+                                        </label>
+                                        <div className="col-sm-7">
+                                          <textarea
+                                            type="text"
+                                            className="form-control form-control-sm"
+                                            id="inputName"
+                                            placeholder="eg. Món chiên"
+                                          />
+                                          <p className="text-danger">
+                                            {"{"}
+                                            {"{"}alertLNL{"}"}
+                                            {"}"}
+                                          </p>
+                                        </div>
+                                        <div className="col-sm-1">
+                                          <i className="fas fa-exclamation-circle" />
+                                        </div>
+                                      </div>
                                     </div>
                                   </div>
                                 </div>

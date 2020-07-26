@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
+import { inject , observer } from 'mobx-react'
 
 class Footer extends Component {
+
+    onCreate() {
+        this.props.tableManageStore.pushTable(this.name.current.value);
+    }
     render() {
         return (
-            <div class="text-right mt-3">
-                            <button type="submit" class="btn btn-danger">Lưu & thêm mới</button>
-                            <button type="button" ng-click="test()" class="btn btn-secondary"
-                              data-dismiss="modal">Đóng</button>
-                          </div>
+            <div></div>
         );
     }
 }
 
-export default Footer;
+export default inject("tableManageStore")(observer(Footer))

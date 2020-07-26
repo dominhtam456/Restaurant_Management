@@ -57,7 +57,7 @@ public class MaterialTypeController {
 	}
 
 	// THEM LOAI NGUYEN LIEU
-	@RequestMapping(value = "/InsertLoaiNguyenLieu/", method = RequestMethod.POST)
+	@RequestMapping(value = "/InsertLoaiNguyenLieu", method = RequestMethod.POST)
 	@ResponseBody
 	public LoaiNguyenLieu insertLoaiNguyenLieu(@Valid @RequestBody LoaiNguyenLieu loainguyenlieuForm) {
 		// @Valid: kiem tra xem co ton tai object trong body
@@ -66,7 +66,7 @@ public class MaterialTypeController {
 	}
 
 	// CAP NHAT LOAI NGUYEN LIEU
-	@RequestMapping(value = "/UpdateLoaiNguyenLieu/", method = RequestMethod.POST)
+	@RequestMapping(value = "/UpdateLoaiNguyenLieu", method = RequestMethod.POST)
 	public ResponseEntity<LoaiNguyenLieu> updateLoaiNguyenLieu(@Valid @RequestBody LoaiNguyenLieu loainguyenlieuForm) {
 		LoaiNguyenLieu lnl = repositoryLoaiNguyenLieu.getOne(loainguyenlieuForm.getId());
 		if (lnl == null) {

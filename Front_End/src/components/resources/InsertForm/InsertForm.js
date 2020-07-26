@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Info from "./Info";
-import Footer from "./Footer";
-import Image from "./Image";
+//import Footer from "./Footer";
+//import Image from "./Image";
 
 class InsertForm extends Component {
   render() {
@@ -10,10 +10,8 @@ class InsertForm extends Component {
         <div class="container">
           <div class="row">
             <Info />
-            <Image />
           </div>
         </div>
-        <Footer />
       </form>
     );
   }

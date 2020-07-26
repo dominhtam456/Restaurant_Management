@@ -71,6 +71,16 @@ export default class Sidebar extends Component {
                         </Link>
                       </li>
                       <li className="nav-item">
+                        <Link to='/table_manage' className="nav-link text-white" >
+                          <i className="fab fa-elementor text-success" /> Bàn
+                        </Link>
+                      </li>
+                      <li className="nav-item">
+                        <Link to='/staff_manage' className="nav-link text-white" >
+                          <i className="fab fa-elementor text-success" /> Nhân viên
+                        </Link>
+                      </li>
+                      <li className="nav-item">
                         <Link to='/statistical' className="nav-link text-white" >
                           <i className="fas fa-elementor text-success " /> Thống Kê
                         </Link>
