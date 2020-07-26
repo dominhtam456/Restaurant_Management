@@ -5,6 +5,7 @@ import PaymentForm from './payment/PaymentForm';
 import { inject , observer } from 'mobx-react'
 import { toJS } from 'mobx'
 
+
 class TableDetailFooter extends Component {
     print(){
         printJS('form-bill', 'html')
@@ -22,20 +23,38 @@ class TableDetailFooter extends Component {
     }
 
     showButton() {
-        const listTable = this.props.tableStore.currentTable
-        for(let i=0; i< listTable.length; i++){
-            if(listTable[i].status === "Trong")
+        if(this.props.tableStore.currentTable.length > 0){
+            const listTable = this.props.tableStore.currentTable
+            let flag = true;
+            for(let i=0; i< listTable.length; i++){
+                if(listTable[i].status === "Có"){
+                    flag = false;
+                    break;
+                }
+            }
+            if(flag) {
                 return (
                     <button type="button" className="btn btn-primary" onClick={() => this.onConfirm()}>
                         Xác nhận gọi món
                     </button>
                 )
+            }
+            if(this.props.tableStore.currentTable.length == 1){ 
+                return (
+                    <button type="button" className="btn btn-primary" onClick={() => this.onUpdate()}>
+                        Cập nhật
+                    </button>
+                )   
+            }
         }
-        return (
-            <button type="button" className="btn btn-primary" onClick={() => this.onUpdate()}>
-                Cập nhật
-            </button>
-        )   
+    }
+
+    showPaymentButton() {
+        if(this.props.tableStore.currentTable.length == 1 && this.props.tableStore.currentListOrder.length == 1){
+            return (<button type="button" className="btn btn-danger" data-toggle="modal" data-target="#btnPayment" >
+                Thanh Toán
+            </button>)
+        }
     }
 
     render() {
@@ -43,12 +62,10 @@ class TableDetailFooter extends Component {
             <div className="card-footer ">
                 <div className="float-right">
                     {/* Button trigger modal */}
-                    <button type="button" className="btn btn-danger" data-toggle="modal" data-target="#btnPayment">
-                        Thanh Toán
-                    </button>
+                    {this.showPaymentButton()}
                     {this.showButton()}
                     {/* Modal */}
-                    <PaymentForm />
+                   <PaymentForm />
                 </div>
                 
                 </div>

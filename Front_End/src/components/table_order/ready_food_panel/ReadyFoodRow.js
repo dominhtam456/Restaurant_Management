@@ -4,7 +4,7 @@ import { inject , observer } from 'mobx-react'
 class ReadyFoodRow extends Component {
     async onClickComplete() {
         await this.props.kitchenStore.updateStatusFood("completed", this.props.food.hoadon_id,this.props.food.monan_id);
-        await this.props.tableStore.getCurrentListOrder(this.props.tableStore.currentTable)
+        await this.props.tableStore.getListOrder(this.props.tableStore.currentTable)
         await this.props.tableStore.getListReadyFood();
     }
 

@@ -10,6 +10,7 @@ import TableStore from './store/TableStore';
 import FoodStore from './store/FoodStore';
 import ResourceStore from './store/ResourceStore';
 
+
 ReactDOM.render(
   <React.StrictMode>
     <Provider 

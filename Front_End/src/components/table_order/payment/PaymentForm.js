@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import FormBill from './FormBill'
 import printJS from 'print-js'
-import TableDetail from './../table_detail/TableDetail'
+import TableDetail from './TableDetail'
 import { inject , observer } from 'mobx-react'
 import CommonUtil from './../../../util'
 
@@ -15,7 +15,7 @@ class PaymentForm extends Component {
       }
     print(){
         this.props.tableStore.payment();
-        printJS('form-bill', 'html');     
+        //printJS('form-bill', 'html');     
     }
 
     onLoseFocus() {
@@ -32,7 +32,7 @@ class PaymentForm extends Component {
     }
     render() {
         return (
-            <div  className="modal fade modal-custom" style={{paddingRight: "0px"}} id="btnPayment" tabIndex={-1} role="dialog" aria-labelledby="btnPaymentTitle" aria-hidden="true">
+            <div id="paymentModal" className="modal fade modal-custom" style={{paddingRight: "0px"}} id="btnPayment" tabIndex={-1} role="dialog" aria-labelledby="btnPaymentTitle" aria-hidden="true">
                     <div  className="modal-dialog modal-xl" role="document ">
                         <div className="modal-content">
                         <div className="modal-header bg-primary">
@@ -48,7 +48,7 @@ class PaymentForm extends Component {
                             <div className="row">
                                 <div className="col-md-6">
                                 <div className="table-responsive">
-                                    <TableDetail />
+                                    <TableDetail/>
                                 </div>
                                 </div>
                                 <div className="col-md-6 border-left">
@@ -81,7 +81,7 @@ class PaymentForm extends Component {
                             </div>
                         </div>
                         <div className="modal-footer">
-                            <button type="button" className="btn btn-danger" onClick={() => this.print() } >Thanh Toán</button>
+                            <button type="button" className="btn btn-danger" onClick={() => this.print() } data-dismiss="modal" >Thanh Toán</button>
                             
                         </div>
                         

@@ -1,14 +1,23 @@
 import React, { Component } from 'react'
 import { inject , observer } from 'mobx-react'
 import CommonUtil from './../../../util'
+import { toJS } from 'mobx'
 
 class TableDetailRow extends Component {
+    constructor(props){
+        super(props)
+        this.commentRef = React.createRef();
+    }
     onChangeAmount(e) {
         this.props.tableStore.setAmount(this.props.order, e.target.value)
     }
 
     onClickDelete() {
         this.props.tableStore.deleteOrder(this.props.order)
+    }
+
+    onLoseFocusComment() {
+        this.props.tableStore.updateComment(this.commentRef.current.value, this.props.order.hoadonchitiet_id.monan_id);
     }
 
     render() {
@@ -28,6 +37,12 @@ class TableDetailRow extends Component {
         if(this.props.order.status === "cancel")
             style={backgroundColor: "lightcoral"};
 
+        if(this.props.tableStore.isPayment){
+            document.getElementById('amount-input').disable = true;
+        }
+
+        //console.log(this.commentRef.current)
+
         return (
             
                 <tr style={style}>
@@ -38,10 +53,15 @@ class TableDetailRow extends Component {
                 <td>
                     <input type="number" style={{width: '4em'}} 
                         value={this.props.order.soluong}
-                        onChange={(e) => this.onChangeAmount(e)}/>
+                        onChange={(e) => this.onChangeAmount(e)} id="amount-input"/>
                 </td>
                 <td>{CommonUtil.formatVND(this.props.order.price)}</td>
                 <td>{CommonUtil.formatVND(this.props.order.price * this.props.order.soluong)}</td>
+                <td>
+                    <textarea 
+                        ref={this.commentRef}
+                        onBlur={() => this.onLoseFocusComment()} rows="2" cols="20" defaultValue={this.props.order.comment} key={this.props.order.comment}></textarea>
+                </td>
                 </tr>
             
         )

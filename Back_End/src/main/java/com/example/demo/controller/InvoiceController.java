@@ -1,5 +1,7 @@
 package com.example.demo.controller;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.service.HoaDonService;
-
+import com.example.demo.service.MergeTableService;
 import com.example.demo.model.HoaDon;
 
 @RestController
@@ -23,6 +25,9 @@ import com.example.demo.model.HoaDon;
 public class InvoiceController {
     @Autowired
 	HoaDonService repositoryHoaDon;
+
+	@Autowired
+	MergeTableService mergeTableService;
 
 	// LAY ALL HOA DON
 	@RequestMapping(path = "/GetAllHoaDon", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -54,7 +59,7 @@ public class InvoiceController {
 			return repositoryHoaDon.UpdateHoaDon(hdForm);
 		} catch (Exception e) {
 			// TODO: handle exception
-			return false;
+			throw e;
 		}
 
 	}
@@ -66,7 +71,7 @@ public class InvoiceController {
 			return repositoryHoaDon.DeleteHoaDon(id);
 		} catch (Exception e) {
 			// TODO: handle exception
-			return false;
+			throw e;
 		}
 	}
 
@@ -86,8 +91,17 @@ public class InvoiceController {
 			return true;
 		} catch (Exception e) {
 			// TODO: handle exception
-			return false;
+			throw e;
 		}
+	}
 
+	@RequestMapping(value = "/MergeTable", method = RequestMethod.POST)
+	public boolean MergeTale(@Valid @RequestBody List<Long> list) {
+		try {
+			mergeTableService.mergeTable(list);
+			return true;
+		} catch (Exception e) {
+			throw e;
+		}
 	}
 }

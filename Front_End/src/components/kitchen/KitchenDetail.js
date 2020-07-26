@@ -54,10 +54,10 @@ class KitchenDetail extends Component {
       <div className="list-group">
         <div className="list-group-item list-group-item-action">
           <div className="row">
-            <div className="col-1 "> {this.props.index + 1} </div>
             <div className="col-1 "> {this.listTableName()}</div>
-            <div className="col-5 text-center"> {this.props.food.tenMonAn}</div>
-            <div className="col-2 text-center"> {this.props.food.soluong}</div>
+            <div className="col-4 text-center"> {this.props.food.tenMonAn}</div>
+            <div className="col-1 text-center"> {this.props.food.soluong}</div>
+            <div className="col-3 text-center">{this.props.food.comment}</div>
 
             <div className="float-md-right mb-3 mr-3">
               {this.showButton()}
