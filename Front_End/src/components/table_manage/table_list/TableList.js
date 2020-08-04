@@ -1,31 +1,49 @@
-import React, { Component } from 'react';
-import ResourceRow from './ResourceRow'
-import ResourceDetail from'../resource_detail/ResourceDetail'
+import React, { Component } from "react";
+import TableRow from "./TableRow";
+import UpdateForm from "../table_detail/UpdateForm";
+import { inject, observer } from "mobx-react";
+import { toJS } from "mobx";
 
-class ResourceList extends Component {
-    render() {
-        return (
-            <div class="table-responsive">
-        <table class="table  align-items-center table-flush accordion table-hover" id="accordionRow">
+class TableList extends Component {
+  componentDidMount() {
+    this.props.tableStore.getTable();
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.update != this.props.update) this.props.tableStore.getTable();
+  }
+
+  render() {
+    const element= this.props.tableStore.listTable.map((table, index)=>{
+      return <TableRow table={table} key={table.id} index={index}/>
+    })
+
+    const element1= this.props.tableStore.listTable.map((table, index)=>{
+      return <UpdateForm table={table} key={table.id} index={index}/>
+    })
+
+    return (
+      <div class="table-responsive">
+        <table
+          class="table  align-items-center table-flush accordion table-hover"
+          id="accordionRow"
+        >
           <thead class="thead-light">
             <tr>
               <th scope="col">Stt</th>
-              <th scope="col">Mã Nguyên Liệu</th>
-              <th scope="col">Nguyên Liệu</th>
-              <th scope="col">Loại nguyên liệu</th>
-              <th scope="col">Giá nhập</th>
-              <th scope="col">Hạn Sử Dụng</th>
-              <th scope="col"></th>
+              <th scope="col">Mã Bàn</th>
+              <th scope="col">Tên bàn</th>
+              <th scope="col">Trạng thái</th>
+              <th scope="col">Hiện trạng</th>
             </tr>
           </thead>
           <tbody>
-                <ResourceRow id={"#a1"}/>
-                <ResourceDetail id={"a1"}/>
-              </tbody>
-              </table>
-              </div>
-        );
-    }
+            {element}
+          </tbody>
+        </table>
+      </div>
+    );
+  }
 }
 
-export default ResourceList;
+export default inject("tableStore")(observer(TableList));

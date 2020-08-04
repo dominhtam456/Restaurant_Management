@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import Footer from './Footer'
 import Info from './Info'
 import Image from './Image'
 
@@ -13,7 +12,6 @@ export default class InsertForm extends Component {
                 <Image />
                 </div>
             </div>
-            <Footer />
             </form>
         )
     }

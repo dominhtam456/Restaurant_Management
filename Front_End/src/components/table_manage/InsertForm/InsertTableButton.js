@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import InsertForm from "./InsertForm";
 
-class InsertResourceButton extends Component {
+class InsertTableButton extends Component {
+  
   render() {
     return (
       <div class="float-md-right mb-3 mr-3">
@@ -29,7 +30,7 @@ class InsertResourceButton extends Component {
                   id="modalAddMaterials"
                   style={{ color: "white" }}
                 >
-                  Thêm Nguyên Liệu
+                  Thêm Bàn
                 </h2>
                 <button
                   type="button"
@@ -99,4 +100,4 @@ class InsertResourceButton extends Component {
   }
 }
 
-export default InsertResourceButton;
+export default InsertTableButton;

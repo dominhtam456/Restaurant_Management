@@ -48,6 +48,10 @@ export default class Info extends Component {
                         <input type="text" className="form-control form-control-sm " id="inputNum" placeholder={0} />
                     </div>
                     </div>
+                    <div className="float-right mt-3">
+                        <button type="submit" className="btn btn-danger">Lưu &amp; thêm mới</button>
+                        <button type="button" className="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                    </div>
                 </div>
         )
     }

@@ -1,10 +1,16 @@
 import React, { Component } from "react";
-import ResourceDetailFooter from "./ResourceDetailFooter";
+import UpdateForm from "./UpdateForm";
+//import DeletePanel from "./DeletePanel";
+import { inject , observer } from 'mobx-react';
 
-export default class ResourceDetail extends Component {
+class ResourceDetail extends Component {
   constructor(props) {
     super(props);
     this.myRef = React.createRef();
+  }
+
+  onclick(){
+    this.props.resourceStore.setcurrentresource(this.props.resource)
   }
 
   componentDidMount() {
@@ -20,7 +26,7 @@ export default class ResourceDetail extends Component {
       <tr className="detail">
         <td colSpan={8} className="hiddenRow">
           <div
-            id={this.props.id}
+            id={`id${this.props.resource.id}`}
             className="collapse"
             data-parent="#accordionRow"
           >
@@ -39,11 +45,15 @@ export default class ResourceDetail extends Component {
                     aria-labelledby="home-tab"
                   >
                     <div className="container border-lightblue">
-                      <h2 className="mt-1">{this.props.id}</h2>
+                      <h2 className="mt-1">{this.props.resource.name}</h2>
                       <div className="row p-2 mt-3 ">
                         <div className="col-4">
                           <div className="card">
-                            <img width={250} height={300} alt="" />
+                            <img
+                              width={250}
+                              height={300}
+                              src={this.props.resource.image}
+                            />
                           </div>
                         </div>
                         <div className="col-4">
@@ -51,35 +61,77 @@ export default class ResourceDetail extends Component {
                             <tbody>
                               <tr className="p-2">
                                 <td>Mã nguyên liệu:</td>
-                                <td>
-                                  {"{"}
-                                  {"{"}foodDetails.monan_NO{"}"}
-                                  {"}"}
-                                </td>
+                                <td>{this.props.resource.no}</td>
                               </tr>
                               <tr className="p-2">
-                                <td>Loại nguyên liệu:</td>
-                                <td>
-                                  {"{"}
-                                  {"{"}foodDetails.tenloai_LOAIMONAN{"}"}
-                                  {"}"}
-                                </td>
+                                <td>Tên nguyên liệu:</td>
+                                <td>{this.props.resource.name}</td>
                               </tr>
                               <tr className="p-2">
                                 <td>Giá nhập:</td>
-                                <td>
-                                  {"{"}
-                                  {"{"}foodDetails.monan_PRICE{"}"}
-                                  {"}"}đ
-                                </td>
+                                <td>{this.props.resource.price}đ</td>
+                              </tr>
+                              <tr className="p-2">
+                                <td>Hạn sử dụng:</td>
+                                <td>{this.props.resource.date}</td>
+                              </tr>
+                              <tr className="p-2">
+                                <td>Loại nguyên liệu:</td>
+                                <td>{this.props.resource.loainguyenlieu_id}</td>
+                              </tr>
+                              <tr className="p-2">
+                                <td>Hiện trạng:</td>
+                                <td>{this.props.resource.isActive}</td>
                               </tr>
                             </tbody>
                           </table>
                         </div>
                       </div>
                     </div>
-                    <div>
-                      <ResourceDetailFooter id={this.props.id} />
+                    <div class="float-md-right mt-3">
+                      <button
+                        type="button"
+                        className="btn btn-success "
+                        data-toggle="modal"
+                        data-target={`#b${this.props.resource.id}`}
+                        onClick ={() => this.onclick()}
+                      >
+                        <i className="fas fa-plus-circle" /> Cập Nhật
+                      </button>
+                      <div
+                        className="modal fade"
+                        id={`b${this.props.resource.id}`}
+                        tabIndex={-1}
+                        role="dialog"
+                        aria-labelledby="modifyFoodsTitle"
+                        aria-hidden="true"
+                      >
+                        <UpdateForm />
+                      </div>
+
+                      {/* <button
+                        type="button"
+                        class="btn btn-danger "
+                        data-toggle="modal"
+                        data-target={`#c${this.props.id}`}
+                      >
+                        <i class="far fa-trash-alt"></i> Xóa
+                      </button>
+                      <div
+                        class="modal fade"
+                        id={`c${this.props.id}`}
+                        tabindex="-1"
+                        role="dialog"
+                        aria-labelledby="modalDeleteMaterials"
+                        aria-hidden="true"
+                      >
+                        <div
+                          class="modal-dialog modal-dialog-scrollable"
+                          role="document"
+                        >
+                          <DeletePanel />
+                        </div>
+                      </div> */}
                     </div>
                   </div>
                   <div
@@ -107,3 +159,4 @@ export default class ResourceDetail extends Component {
     );
   }
 }
+export default inject("resourceStore")(observer(ResourceDetail))

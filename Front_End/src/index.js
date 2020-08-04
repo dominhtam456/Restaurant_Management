@@ -8,6 +8,9 @@ import Table from './store/TableOrderStore';
 import Kitchen from './store/KitchenStore';
 import Statistical from './store/StatisticStore';
 import Login from './store/LoginStore'
+import TableStore from './store/TableStore';
+import FoodStore from './store/FoodStore';
+import ResourceStore from './store/ResourceStore';
 
 
 ReactDOM.render(
@@ -17,6 +20,9 @@ ReactDOM.render(
       kitchenStore={new Kitchen()}
       statisticStore={new Statistical()}
       loginStore={new Login()}>
+      tableManageStore={new TableStore()}
+      foodStore={new FoodStore()}
+      resourceStore={new ResourceStore()}>
       <App />
     </Provider>
   </React.StrictMode>,

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import ResourceDetailFooter from "./ResourceDetailFooter";
+import TableDetailFooter from "./TableDetailFooter";
 
-export default class ResourceDetail extends Component {
+export default class TableDetail extends Component {
   constructor(props) {
     super(props);
     this.myRef = React.createRef();
@@ -20,7 +20,7 @@ export default class ResourceDetail extends Component {
       <tr className="detail">
         <td colSpan={8} className="hiddenRow">
           <div
-            id={this.props.id}
+            id={`id${this.props.table.id}`}
             className="collapse"
             data-parent="#accordionRow"
           >
@@ -39,7 +39,7 @@ export default class ResourceDetail extends Component {
                     aria-labelledby="home-tab"
                   >
                     <div className="container border-lightblue">
-                      <h2 className="mt-1">{this.props.id}</h2>
+                      <h2 className="mt-1">{`id`}</h2>
                       <div className="row p-2 mt-3 ">
                         <div className="col-4">
                           <div className="card">
@@ -50,27 +50,27 @@ export default class ResourceDetail extends Component {
                           <table>
                             <tbody>
                               <tr className="p-2">
-                                <td>Mã nguyên liệu:</td>
+                                <td>Mã bàn:</td>
                                 <td>
-                                  {"{"}
-                                  {"{"}foodDetails.monan_NO{"}"}
-                                  {"}"}
+                                  {this.props.table.id}
                                 </td>
                               </tr>
                               <tr className="p-2">
-                                <td>Loại nguyên liệu:</td>
+                                <td>Tên bàn:</td>
                                 <td>
-                                  {"{"}
-                                  {"{"}foodDetails.tenloai_LOAIMONAN{"}"}
-                                  {"}"}
+                                  {this.props.table.name}
                                 </td>
                               </tr>
                               <tr className="p-2">
-                                <td>Giá nhập:</td>
+                                <td>Trạng thái:</td>
                                 <td>
-                                  {"{"}
-                                  {"{"}foodDetails.monan_PRICE{"}"}
-                                  {"}"}đ
+                                  {this.props.table.status}
+                                </td>
+                              </tr>
+                              <tr className="p-2">
+                                <td>Hiện trạng:</td>
+                                <td>
+                                  {this.props.table.isActive}
                                 </td>
                               </tr>
                             </tbody>
@@ -79,7 +79,7 @@ export default class ResourceDetail extends Component {
                       </div>
                     </div>
                     <div>
-                      <ResourceDetailFooter id={this.props.id} />
+                      <TableDetailFooter id={`a${this.props.id}`} />
                     </div>
                   </div>
                   <div

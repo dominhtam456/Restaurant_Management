@@ -1,10 +1,12 @@
 import React, { Component } from "react";
-import FootDetailFooter from "./FootDetailFooter";
+// import FootDetailFooter from "./FootDetailFooter";
+import UpdateForm from "./UpdateForm";
 
 export default class FoodDetail extends Component {
   constructor(props) {
     super(props);
     this.myRef = React.createRef();
+    this.no = React.createRef();
   }
 
   componentDidMount() {
@@ -20,7 +22,7 @@ export default class FoodDetail extends Component {
       <tr className="detail">
         <td colSpan={8} className="hiddenRow">
           <div
-            id={this.props.id}
+            id={`id${this.props.food.id}`}
             className="collapse"
             data-parent="#accordionRow"
           >
@@ -39,11 +41,15 @@ export default class FoodDetail extends Component {
                     aria-labelledby="home-tab"
                   >
                     <div className="container border-lightblue">
-                      <h2 className="mt-1">{this.props.id}</h2>
+                      <h2 className="mt-1">{this.props.food.name}</h2>
                       <div className="row p-2 mt-3 ">
                         <div className="col-4">
-                          <div className="card">
-                            <img width={250} height={300} />
+                          <div className="card-img-top p-4">
+                            <img
+                              width={250}
+                              height={250}
+                              src={this.props.food.image}
+                            />
                           </div>
                         </div>
                         <div className="col-4">
@@ -51,27 +57,19 @@ export default class FoodDetail extends Component {
                             <tbody>
                               <tr className="p-2">
                                 <td>Mã món ăn:</td>
-                                <td>
-                                  {"{"}
-                                  {"{"}foodDetails.monan_NO{"}"}
-                                  {"}"}
-                                </td>
+                                <td>{this.props.food.no}</td>
                               </tr>
                               <tr className="p-2">
-                                <td>Loại món ăn:</td>
-                                <td>
-                                  {"{"}
-                                  {"{"}foodDetails.tenloai_LOAIMONAN{"}"}
-                                  {"}"}
-                                </td>
+                                <td>Tên món ăn:</td>
+                                <td>{this.props.food.name}</td>
                               </tr>
                               <tr className="p-2">
                                 <td>Giá Bán:</td>
-                                <td>
-                                  {"{"}
-                                  {"{"}foodDetails.monan_PRICE{"}"}
-                                  {"}"}đ
-                                </td>
+                                <td>{this.props.food.price}đ</td>
+                              </tr>
+                              <tr className="p-2">
+                                <td>Đơn vị tính:</td>
+                                <td>{this.props.food.unit}</td>
                               </tr>
                             </tbody>
                           </table>
@@ -80,20 +78,8 @@ export default class FoodDetail extends Component {
                           <table>
                             <tbody>
                               <tr className="p-2">
-                                <td>Đơn vị tính:</td>
-                                <td>
-                                  {"{"}
-                                  {"{"}foodDetails.monan_UNIT{"}"}
-                                  {"}"}
-                                </td>
-                              </tr>
-                              <tr className="p-2">
                                 <td>Trạng thái:</td>
-                                <td>
-                                  {"{"}
-                                  {"{"}foodDetails.monan_STATUS{"}"}
-                                  {"}"}
-                                </td>
+                                <td>{this.props.food.status}</td>
                               </tr>
                               <tr className="p-2">
                                 <td style={{ verticalAlign: "top" }}>
@@ -101,21 +87,62 @@ export default class FoodDetail extends Component {
                                 </td>
                                 <td>
                                   <span>
-                                    - {"{"}
-                                    {"{"}z.nguyenlieu.nguyenlieu_NAME{"}"}
-                                    {"}"}
+                                    - {this.props.food.description}
                                     <br />
                                     <br />
                                   </span>
                                 </td>
+                              </tr>
+                              <tr className="p-2">
+                                <td>Hiện trạng:</td>
+                                <td>{this.props.food.isActive}</td>
                               </tr>
                             </tbody>
                           </table>
                         </div>
                       </div>
                     </div>
-                    <div>
-                      <FootDetailFooter id={this.props.id}/>
+                    <div className="float-md-right mt-3">
+                      <button
+                        type="button"
+                        className="btn btn-success "
+                        data-toggle="modal"
+                        data-target={`#b${this.props.food.id}`}
+                      >
+                        <i className="fas fa-plus-circle" /> Cập Nhật
+                      </button>
+                      {/* Modal */}
+                      <div
+                        className="modal fade"
+                        id={`b${this.props.food.id}`}
+                        tabIndex={-1}
+                        role="dialog"
+                        aria-labelledby="modifyFoodsTitle"
+                        aria-hidden="true"
+                      >
+                        <UpdateForm />
+                      </div>
+                      {/* <button type="button" class="btn btn-danger "><i class="fas fa-lock"></i> Ngừng Kinh Doanh</button> */}
+                      {/* <button
+          type="button"
+          className="btn btn-danger "
+          data-toggle="modal"
+          data-target={`#c${this.props.id}`}
+        >
+          <i className="far fa-trash-alt" /> Xóa
+        </button>
+        <div
+          className="modal fade"
+          id={`c${this.props.id}`}
+          tabIndex={-1}
+          role="dialog"
+          aria-labelledby="modalDeleteMaterials"
+          aria-hidden="true"
+        >
+          <div className="modal-dialog modal-dialog-scrollable" role="document">
+            <DeletePanel />
+          </div>
+        </div> */}
                     </div>
                   </div>
                   <div

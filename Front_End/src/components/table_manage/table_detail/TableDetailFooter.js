@@ -1,22 +1,23 @@
 import React, { Component } from "react";
 import UpdateForm from "./UpdateForm";
-import DeletePanel from "./DeletePanel";
+import DeletePanel from "./DeletePanel";import { inject , observer } from 'mobx-react';
 
-class ResourceDetailFooter extends Component {
+class TableDetailFooter extends Component {
+
   render() {
     return (
-      <div class="float-md-right mt-3">
+      <div class="float-md-right mt-3" >
         <button
           type="button"
           className="btn btn-success "
           data-toggle="modal"
-          data-target={`#b${this.props.id}`}
+          data-target={`#btnupdate`} onClick={()=> this.onclick()}
         >
           <i className="fas fa-plus-circle" /> Cập Nhật
         </button>
         <div
           className="modal fade"
-          id={`b${this.props.id}`}
+          id={`btnupdate`}
           tabIndex={-1}
           role="dialog"
           aria-labelledby="modifyFoodsTitle"
@@ -29,13 +30,13 @@ class ResourceDetailFooter extends Component {
           type="button"
           class="btn btn-danger "
           data-toggle="modal"
-          data-target={`#c${this.props.id}`}
+          data-target={`#btnDelete`}
         >
           <i class="far fa-trash-alt"></i> Xóa
         </button>
         <div
           class="modal fade"
-          id={`c${this.props.id}`}
+          id={`btnDelete`}
           tabindex="-1"
           role="dialog"
           aria-labelledby="modalDeleteMaterials"
@@ -49,5 +50,5 @@ class ResourceDetailFooter extends Component {
     );
   }
 }
+export default inject("tableManageStore")(observer(TableDetailFooter));
 
-export default ResourceDetailFooter;

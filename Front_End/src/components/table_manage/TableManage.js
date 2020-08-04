@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import InsertTableButton from './InsertForm/InsertTableButton'
+import TableList from './table_list/TableList'
 
 class TableManage extends Component {
     render() {
@@ -11,10 +13,10 @@ class TableManage extends Component {
                 <div>
                   <div className="float-left">
                     <h3 className="mb-0 modal-title" style={{ color: "white" }}>
-                      Quản lý bàn
+                      Bàn
                     </h3>
                   </div>
-                  <div className="float-md-right d-inline-block">
+                  {/* <div className="float-md-right d-inline-block">
                     <form>
                       <div className="input-group md-form form-sm form-2 pl-0">
                         <input
@@ -25,16 +27,16 @@ class TableManage extends Component {
                         />
                       </div>
                     </form>
-                  </div>
+                  </div> */}
                 </div>
-                <InsertResourceButton />
+                <InsertTableButton />
               </div>
-              <ResourceList />
+              <TableList />
             </div>
           </div>
         </div>
       </div>
-        );
+      );
     }
 }
 

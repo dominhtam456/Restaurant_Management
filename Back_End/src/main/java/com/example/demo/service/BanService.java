@@ -51,14 +51,13 @@ public interface BanService extends JpaRepository<Ban, Long>{
 	}
 	
 	//INSERT BAN
-	public default boolean InsertBan(Ban o) {
+	public default Ban InsertBan(Ban o) {
 		if(o!=null) {
-			this.save(o);
-			return true;
+			
+			return this.save(o);
 		}else {
-			return false;
+			return null;
 		}
-		
 	}
 	
 	//UPDATE BAN
@@ -67,6 +66,7 @@ public interface BanService extends JpaRepository<Ban, Long>{
 		if(temp!=null) {
 			temp.setName(o.getName());
 			temp.setStatus(o.getStatus());
+			temp.setIsActive(o.getIsActive());
 			this.save(temp);
 			return true;
 		}else {
