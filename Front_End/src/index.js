@@ -19,7 +19,7 @@ ReactDOM.render(
       tableStore={new Table()}
       kitchenStore={new Kitchen()}
       statisticStore={new Statistical()}
-      loginStore={new Login()}>
+      loginStore={new Login()}
       tableManageStore={new TableStore()}
       foodStore={new FoodStore()}
       resourceStore={new ResourceStore()}>
