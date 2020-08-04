@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import { inject , observer } from 'mobx-react';
 
 class FoodRow extends Component {
+  componentDidMount() {
+    this.props.tableStore.getFoods();
+  }
   render() {
     return (
       <tr
@@ -38,7 +41,7 @@ class FoodRow extends Component {
         <td>
           <div className="d-flex align-items-center">
             <span className="mr-2">
-              {this.props.food.isActive}
+              {this.props.food.isActive === 1 ? "Active" : "Deactive"}
             </span>
           </div>
         </td>
@@ -46,4 +49,4 @@ class FoodRow extends Component {
     );
   }
 }
-export default inject("foodStore")(observer(FoodRow))
+export default inject("foodStore","tableStore")(observer(FoodRow))

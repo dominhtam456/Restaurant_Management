@@ -1,8 +1,10 @@
 package com.example.demo.serviceImpl;
 
 import com.example.demo.dao.NhanVienDao;
+import com.example.demo.model.ChucVu;
 import com.example.demo.model.NhanVien;
 import com.example.demo.model.NhanVienDto;
+import com.example.demo.service.ChucVuService;
 import com.example.demo.service.NhanVienService;
 
 import org.springframework.beans.BeanUtils;
@@ -24,6 +26,9 @@ public class NhanVienServiceImp  implements UserDetailsService, NhanVienService 
 	
 	@Autowired
 	private NhanVienDao nhanvienDao;
+	
+	@Autowired
+	private ChucVuService chucvuService;
 
 	@Autowired
 	private BCryptPasswordEncoder bcryptEncoder;
@@ -46,6 +51,11 @@ public class NhanVienServiceImp  implements UserDetailsService, NhanVienService 
 		List<NhanVien> list = new ArrayList<>();
 		nhanvienDao
 		.findAll().iterator().forEachRemaining(list::add);
+		
+		for (NhanVien nhanVien : list) {
+			ChucVu cv = chucvuService.getOne(Long.valueOf(nhanVien.getLoai()));
+			nhanVien.setChucvu(cv.getName());
+		}
 		return list;
 	}
 	

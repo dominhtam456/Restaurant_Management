@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -51,11 +50,9 @@ public class FoodTypeController {
 	}
 
 	// THEM LOAI MON AN
-	@RequestMapping(value = "/InsertLoaiMonAn", method = RequestMethod.POST, produces = {
-			MediaType.APPLICATION_ATOM_XML_VALUE,
-			MediaType.APPLICATION_JSON_VALUE }, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+	@RequestMapping(value = "/InsertLoaiMonAn", method = RequestMethod.POST)
 	@ResponseBody
-	public LoaiMonAn insertLoaiMonAn(@Valid LoaiMonAn loaimonanForm) {
+	public LoaiMonAn insertLoaiMonAn(@Valid @RequestBody LoaiMonAn loaimonanForm) {
 		// @Valid: kiem tra xem co ton tai object trong body
 		LoaiMonAn lma = repositoryLoaiMonAn.save(loaimonanForm);
 		return lma;

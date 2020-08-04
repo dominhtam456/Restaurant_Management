@@ -1,9 +1,17 @@
 import React, { Component } from "react";
 import StaffRow from "./StaffRow";
 import StaffDetail from "../staff_detail/StaffDetail"
+import { inject, observer } from "mobx-react";
+import { toJS } from "mobx";
 
 class StaffList extends Component {
+  componentDidMount() {
+    this.props.staffStore.getStaffs();
+  }
   render() {
+    const element= this.props.staffStore.listStaff.map((user, index)=>{
+      return <StaffRow user={user} key={user.id} index={index}/>
+    })
     return (
       <div class="table-responsive">
         <table class="table  align-items-center table-flush accordion table-hover" id="accordionRow">
@@ -16,7 +24,7 @@ class StaffList extends Component {
             </tr>
           </thead>
           <tbody>
-                <StaffRow id={"#a1"}/>
+                {element}
                 <StaffDetail id={"a1"}/>
               </tbody>
               </table>
@@ -25,4 +33,4 @@ class StaffList extends Component {
   }
 }
 
-export default StaffList;
+export default inject("staffStore")(observer(StaffList));

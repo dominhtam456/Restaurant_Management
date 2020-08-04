@@ -45,9 +45,11 @@ export const addResources = async (resource) => {
         'Authorization': `Bearer ${localStorage.getItem('token')}`
       },
       body: JSON.stringify(resource)
-  });
+  })
   return await response.json();
 }
+  
+
 
 export const addTypeResources = async (resource) => {
   const url = `${URL_API}/InsertLoaiNguyenLieu`;

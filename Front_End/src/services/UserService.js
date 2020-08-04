@@ -23,3 +23,16 @@ export const getUserByEmail = async (email) => {
 //   });
 //   return await response.json();
 // }
+
+export const getAllStaff = async () => {
+  const url = `${URL_API}/GetAllUser`;
+  const response = await fetch(url, {
+      method: 'GET', // *GET, POST, PUT, DELETE, etc.
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      }      
+  });
+  return await response.json();
+}
+

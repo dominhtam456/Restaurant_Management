@@ -95,7 +95,7 @@ export default class FoodDetail extends Component {
                               </tr>
                               <tr className="p-2">
                                 <td>Hiện trạng:</td>
-                                <td>{this.props.food.isActive}</td>
+                                <td>{this.props.food.isActive === 1 ? "Active" : "Deactive"}</td>
                               </tr>
                             </tbody>
                           </table>

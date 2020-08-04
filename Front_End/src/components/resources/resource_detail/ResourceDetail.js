@@ -4,11 +4,6 @@ import UpdateForm from "./UpdateForm";
 import { inject , observer } from 'mobx-react';
 
 class ResourceDetail extends Component {
-  constructor(props) {
-    super(props);
-    this.myRef = React.createRef();
-  }
-
   onclick(){
     this.props.resourceStore.setcurrentresource(this.props.resource)
   }
@@ -20,6 +15,7 @@ class ResourceDetail extends Component {
     // }
     // else this.myRef.current.style="display: content;"
   }
+  
 
   render() {
     return (
@@ -64,20 +60,16 @@ class ResourceDetail extends Component {
                                 <td>{this.props.resource.no}</td>
                               </tr>
                               <tr className="p-2">
-                                <td>Tên nguyên liệu:</td>
-                                <td>{this.props.resource.name}</td>
-                              </tr>
-                              <tr className="p-2">
                                 <td>Giá nhập:</td>
                                 <td>{this.props.resource.price}đ</td>
                               </tr>
                               <tr className="p-2">
                                 <td>Hạn sử dụng:</td>
-                                <td>{this.props.resource.date}</td>
+                                <td>{this.props.resource.date.substr(0,10)}</td>
                               </tr>
                               <tr className="p-2">
                                 <td>Loại nguyên liệu:</td>
-                                <td>{this.props.resource.loainguyenlieu_id}</td>
+                                <td>{this.props.resource.tenloainguyenlieu}</td>
                               </tr>
                               <tr className="p-2">
                                 <td>Hiện trạng:</td>

@@ -6,13 +6,25 @@ import UpdateForm from "./../table_detail/UpdateForm";
 //import DeletePanel from "./../table_detail/DeletePanel";
 
 class TableRow extends Component {
+  constructor(props) {
+    super(props);
+    this.state={
+      tn: "",
+      ht: ""
+    };
+  }
   componentDidMount() {
 
   }
-  onclick(){
-    this.props.tableManageStore.setcurrenttable(this.props.table)
+  async onclick(){
+    await this.props.tableManageStore.setcurrenttable(this.props.table)
   }
-  
+  // async onChangeSelect(e){
+  //   let tn= this.props.table.name;
+  //   console.log(tn);
+  //   let ht = this.props.table.isActive;
+  //   console.log(ht);
+  //   await this.props.tableManageStore.setcurrenttable(this.props.table)}
   render() {
     return (
       <tr
@@ -43,7 +55,7 @@ class TableRow extends Component {
         </td>
         <td>
           <span className="badge badge-dot">
-            {this.props.table.isActive}
+            {this.props.table.isActive ? 'Active' : 'Deactive'}
           </span>
         </td>
         <td>
@@ -52,7 +64,10 @@ class TableRow extends Component {
           type="button"
           className="btn btn-success "
           data-toggle="modal"
-          data-target={`#btnupdate`} onClick={() => this.onclick()}
+          data-target={`#btnupdate`} 
+          onClick={() => this.onclick()}
+          
+          //onClick={(e)=> this.onChangeSelect(e)}
         >
           <i className="fas fa-plus-circle" /> Cập Nhật
         </button>

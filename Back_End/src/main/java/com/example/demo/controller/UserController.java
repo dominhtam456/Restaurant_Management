@@ -25,7 +25,7 @@ public class UserController {
         return new ApiResponse<>(HttpStatus.OK.value(), "User saved successfully.",nhanvienService.saveNhanVien(nhanvien));
     }
 
-    @GetMapping
+    @GetMapping("/GetAllUser")
     public ApiResponse<List<NhanVien>> listNhanVien(){
         return new ApiResponse<>(HttpStatus.OK.value(), "User list fetched successfully.",nhanvienService.findAll());
     }

@@ -64,9 +64,35 @@ public class MonAn implements Serializable{
 		 @Column(name="is_active")
 		 private Integer isActive;
 		 
+		 @Column(name="description")
+		 private String description;
 		
 		
-		 public Integer getIsActive() {
+		 public MonAn(long id, String no, String name, String price, String unit, String image, int loaimonan_id,
+				List<MonAnChiTiet> nguyenlieus, String tenloaimonan, Integer isActive, String description) {
+			super();
+			this.id = id;
+			this.no = no;
+			this.name = name;
+			this.price = price;
+			this.unit = unit;
+			this.image = image;
+			this.loaimonan_id = loaimonan_id;
+			this.nguyenlieus = nguyenlieus;
+			this.tenloaimonan = tenloaimonan;
+			this.isActive = isActive;
+			this.description = description;
+		}
+
+		public String getDescription() {
+			return description;
+		}
+
+		public void setDescription(String description) {
+			this.description = description;
+		}
+
+		public Integer getIsActive() {
 			return isActive;
 		}
 

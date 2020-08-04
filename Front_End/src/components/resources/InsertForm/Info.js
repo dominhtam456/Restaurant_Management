@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { inject, observer } from "mobx-react";
+import { toJS } from "mobx";
 
 class Info extends Component {
   constructor(props) {
@@ -7,27 +8,61 @@ class Info extends Component {
     this.no = React.createRef();
     this.name = React.createRef();
     this.price = React.createRef();
-    this.typename = React.createRef();
+    this.typeId = React.createRef();
     this.date = React.createRef();
-    this.isactive = React.createRef();
     //this.image = React.createRef();
+    
+    this.state=({
+      num:""
+    })
   }
 
-  onCreate() {
-    this.props.resourceStore.pushResource(
+  async onCreate() {
+    await this.props.resourceStore.pushResource(
       this.no.current.value,
       this.name.current.value,
       this.price.current.value,
-      this.typename.value,
       this.date.current.value,
-      this.isactive.value
+      '',
+      this.state.num,
+      '',
+      //this.image.current.value
     );
+    await this.props.resourceStore.getResource();
+  }
+
+  encodeImageFileAsURL = (img) => {
+    var filesSelected = document.getElementById("inputFileToLoad").files;
+    if (filesSelected.length > 0) {
+      var fileToLoad = filesSelected[0];
+
+      var fileReader = new FileReader();
+
+      fileReader.onload = function (fileLoadedEvent) {
+        var srcData = fileLoadedEvent.target.result; // <--- data: base64
+
+        var newImage = document.createElement("img");
+        newImage.src = srcData;
+      };
+    }
+    fileReader.readAsDataURL(fileToLoad);
+  };
+
+  componentDidMount() {
+    this.props.resourceStore.getTypeResource();
+  }
+
+  onChangeSelect(e) {
+    this.typeId=e.target.value;
+    this.setState({
+      num:e.target.value
+    })
   }
 
   render() {
-    const element = this.props.resourceStore.listTypeResource.map(
+    const element = this.props.resourceStore.listTypeResources.map(
       (resource, index) => {
-        return <option value={resource.id}>{resource.name}</option>;
+        return (<option key={index} value={resource.id}>{resource.name}</option>);
       }
     );
     return (
@@ -61,7 +96,7 @@ class Info extends Component {
                 htmlFor="inputName"
                 className="col-sm-4 col-form-label form-control-sm"
               >
-                Tên món ăn:
+                Tên nguyên liệu:
               </label>
               <div className="col-sm-7">
                 <input
@@ -91,7 +126,7 @@ class Info extends Component {
                   className="form-control-sm"
                   id="inputType"
                   required
-                  ref={this.typename}
+                  onChange={(e) => this.onChangeSelect(e)}
                 >
                   {element}
                 </select>
@@ -143,20 +178,6 @@ class Info extends Component {
                 />
               </div>
             </div>
-            <div class="form-group row">
-              <label
-                htmlFor="inputNum"
-                class="col-sm-4 col-form-label form-control-sm"
-              >
-                Hiện trạng:
-              </label>
-              <div class="col-sm-7">
-                <select ref={this.isactive}>
-                  <option value="1">Active</option>
-                  <option value="0">Deactive</option>
-                </select>
-              </div>
-            </div>
           </div>
           <div className="form-group row">
             <label
@@ -175,7 +196,7 @@ class Info extends Component {
               <div class="row">
                 <div class="card-body border">
                   <div class="col-6">
-                    <img width={150} height={150} alt="" />
+                    <img width={150} height={150} id="imgTest" />
                   </div>
                 </div>
                 <div class="col-6"></div>
@@ -183,7 +204,11 @@ class Info extends Component {
               <div class="row mt-1">
                 <div class="file-field">
                   <div class="btn form-control-file btn-sm btn-success ml-2">
-                    <input type="file" />
+                    <input
+                      id="inputFileToLoad"
+                      type="file"
+                      onChange={() => this.encodeImageFileAsURL}
+                    />
                   </div>
                 </div>
               </div>
@@ -192,7 +217,7 @@ class Info extends Component {
         </div>
         <div class="text-right mt-3">
           <button
-            type="submit"
+            type="button"
             class="btn btn-danger"
             onClick={() => this.onCreate()}
             data-dismiss="modal"

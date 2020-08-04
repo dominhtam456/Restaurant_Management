@@ -1,0 +1,39 @@
+package com.example.demo.service;
+
+import java.util.List;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
+
+import com.example.demo.model.Ban;
+import com.example.demo.model.NguyenLieu;
+ 
+ 
+@Repository
+public interface NguyenLieuService extends JpaRepository<NguyenLieu, Long>{
+	@Query("FROM NguyenLieu WHERE name LIKE %:keyword%")
+	public List<NguyenLieu> TimNguyenLieuTheoTen(@Param("keyword") String keyword);
+	
+	//GET DANH SACH NGUYEN LIEU
+		public default List<NguyenLieu> GetAllNguyenLieu(){
+			return this.findAll();
+		}
+		
+	//GET 1 NGUYEN LIEU
+		public default NguyenLieu GetNguyenLieu(long id) {
+			return this.getOne(id);
+			
+		}
+	
+	//INSERT NGUYENLIEU
+		public default NguyenLieu InsertNguyenLieu(NguyenLieu nl) {
+			if(nl!=null) {
+				
+				return this.save(nl);
+			}else {
+				return null;
+			}
+		}
+}
