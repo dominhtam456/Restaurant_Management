@@ -3,12 +3,18 @@ import KitchenDetail from "./KitchenDetail";
 import DescriptionModal from './DescriptionModal'
 import { inject , observer } from 'mobx-react'
 import { toJS } from 'mobx'
+import { withRouter } from 'react-router-dom'
 
 class Kitchen extends Component {
-  componentDidMount() {
-    this.props.kitchenStore.getListUncompledFood();
+  async componentDidMount() {
+    await this.props.loginStore.checkValid();
+    if(!this.props.loginStore.isValid) this.props.history.push('/login')
+    else {
+      this.props.kitchenStore.getListUncompledFood();
+    }
   }
   render() {
+    if(!this.props.loginStore.isValid) return null;
     const element = this.props.kitchenStore.listUncompledFood.map((food, index) => {
       return <KitchenDetail food={food} key={index} index={index}/>
     })
@@ -51,4 +57,4 @@ class Kitchen extends Component {
   }
 }
 
-export default inject("kitchenStore")(observer(Kitchen));
+export default withRouter(inject("kitchenStore","loginStore")(observer(Kitchen)));

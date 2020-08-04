@@ -14,7 +14,8 @@ class TableList extends Component {
     }
 
     async onMergeTable() {
-        this.props.tableStore.mergeTable();
+        const flag = await this.props.tableStore.mergeTable();
+        if(!flag) alert("Chọn ít nhất 2 bàn không cùng nhóm")
     }
 
     async onChangeTable() {

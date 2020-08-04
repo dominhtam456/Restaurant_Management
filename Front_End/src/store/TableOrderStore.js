@@ -21,11 +21,31 @@ export default class Table {
 
     mergeTable = async() => {
         let list = [];
+        if(this.currentTable.length < 2) return false;
+        
+        for(let i=0; i< this.currentTable.length; i++){
+            if(this.currentTable[i].color === 'white') return false;
+        }
+
         this.currentListOrder.forEach(order => {
-            list.push(order[0].hoadonchitiet_id.hoadon_id)
+            if(list.length === 0) list.push(order[0].hoadonchitiet_id.hoadon_id)
+            else{
+                let flag = true;
+                for(let i= 0; i<this.currentListOrder.length; i++){
+                    if(list[i] === order[0].hoadonchitiet_id.hoadon_id){
+                        flag = false;
+                        break;
+                    }
+                }
+                if(flag) list.push(order[0].hoadonchitiet_id.hoadon_id)
+            }
         });
+
+        if(list.length === 1) return false;
         await InvoiceService.mergeTable(list);
         await this.getTable();
+        return true;
+        
         //console.log(toJS(this.currentListOrder))
     }
 
@@ -66,14 +86,7 @@ export default class Table {
             this.flag = false;
         }
         if(check) {
-            let flag = true;
-            this.currentTable.forEach(tbl => {
-                if(tbl.color === table.color){
-                    flag = false;
-                } 
-            })
-
-            if(flag) this.currentTable.push(table);
+            this.currentTable.push(table);
         }
         else {
             this.currentTable.forEach(t => {
@@ -83,7 +96,7 @@ export default class Table {
                 }
             });
         }
-        //console.log(toJS(this.currentListOrder))
+        console.log(toJS(this.currentListOrder))
     }
 
     solvedNotice = async(notice) => {

@@ -13,9 +13,9 @@ class PaymentForm extends Component {
             excessCash: 0
         }
       }
-    print(){
-        this.props.tableStore.payment();
-        //printJS('form-bill', 'html');     
+    async print(){
+        await this.props.tableStore.payment();
+        printJS('form-bill', 'html');     
     }
 
     onLoseFocus() {

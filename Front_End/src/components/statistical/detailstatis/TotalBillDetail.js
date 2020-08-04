@@ -3,7 +3,7 @@ import React, { Component } from "react";
 class TotalBillDetail extends Component {
   render() {
     return (
-        <tbody class="tbody-light"> 
+        <tbody className="tbody-light"> 
           <tr>
             <td style={{ textAlign: "center", width: "30%" }}></td>
             <td style={{ textAlign: "center", width: "30%" }}></td>

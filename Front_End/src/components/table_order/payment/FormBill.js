@@ -17,7 +17,7 @@ export default class FormBill extends Component {
                 <div style={{border: '0.5px dashed'}} />
                 {/* <h5 style={{textAlign: 'center'}}>HÓA ĐƠN CHI TIẾT</h5> */}
                 <p style={{textAlign: 'center', fontSize: 16}}><b>Mã Hóa Đơn: {'{'}{'{'}hdno{'}'}{'}'} </b></p>
-                {/* <p style={{textAlign: 'center', fontSize: 12}}><b>Ngày Lập: {'{'}{'{'}day{'}'}{'}'}</b></p> */}
+                <p style={{textAlign: 'center', fontSize: 12}}><b>Ngày Lập: {'{'}{'{'}day{'}'}{'}'}</b></p>
                 <div className="row">
                     <div className="col-sm-6">
                     <div style={{lineHeight: 10}}>
