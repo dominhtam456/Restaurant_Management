@@ -30,6 +30,11 @@ public class UserController {
         return new ApiResponse<>(HttpStatus.OK.value(), "User list fetched successfully.",nhanvienService.findAll());
     }
 
+    @GetMapping("/isValid")
+    public ApiResponse<Boolean> checkValid(){
+        return new ApiResponse<>(HttpStatus.OK.value(), "success.",true);
+    }
+
     @GetMapping("/{id}")
     public ApiResponse<NhanVien> getOne(@PathVariable int id){
         return new ApiResponse<>(HttpStatus.OK.value(), "User fetched successfully.",nhanvienService.findById(id));

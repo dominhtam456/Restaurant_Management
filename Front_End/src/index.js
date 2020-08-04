@@ -6,13 +6,17 @@ import * as serviceWorker from './serviceWorker';
 import { Provider } from "mobx-react";
 import Table from './store/TableOrderStore';
 import Kitchen from './store/KitchenStore';
+import Statistical from './store/StatisticStore';
+import Login from './store/LoginStore'
 
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider 
       tableStore={new Table()}
-      kitchenStore={new Kitchen()}>
+      kitchenStore={new Kitchen()}
+      statisticStore={new Statistical()}
+      loginStore={new Login()}>
       <App />
     </Provider>
   </React.StrictMode>,

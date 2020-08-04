@@ -1,7 +1,8 @@
 package com.example.demo.controller;
 
-
 import java.sql.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -70,21 +71,19 @@ public class StatisticalController {
 		String fromdate = String.valueOf(fromDate);
 		String todate = String.valueOf(toDate);
 		for (HoaDonChiTiet hoaDonChiTiet : dsAllHDCT) {
-			String date = String.valueOf(repositoryHoaDon
-					.getOne(Long.valueOf(hoaDonChiTiet.getHoadonchitiet_id().getHoadon_id())).getDate());
+			HoaDon hd = repositoryHoaDon.getOne(Long.valueOf(hoaDonChiTiet.getHoadonchitiet_id().getHoadon_id()));
+			String date = String.valueOf(hd.getDate());
 			HoaDonChiTiet kq = KiemTraTonTai(list, hoaDonChiTiet);
 
-			if (date.compareTo(fromdate) >= 0 && date.compareTo(todate) <= 0) {
-				if (kq == null) {
+			if (date.compareTo(fromdate) >= 0 && date.compareTo(todate) <= 0 && hd.getStatus()) {
+				if (kq == null )
+				{
 					hoaDonChiTiet.setTenMonAn(
-							repositoryMonAn.getOne(Long.valueOf(hoaDonChiTiet.getHoadonchitiet_id().getMonan_id()))
-									.getName());
+							repositoryMonAn.getOne(Long.valueOf(hoaDonChiTiet.getHoadonchitiet_id().getMonan_id())).getName());
 					list.add(hoaDonChiTiet);
 				}
 				if (kq != null) {
-					kq.setSoluong(
-							kq.getSoluong() + hoaDonChiTiet.getSoluong());
-
+					kq.setSoluong(kq.getSoluong() + hoaDonChiTiet.getSoluong());
 				}
 
 			}
@@ -166,11 +165,17 @@ public class StatisticalController {
 	// REQUEST THONG ke Hoa Don Theo Ngay
 		@RequestMapping(path = "/ThongKeHoaDon", method = RequestMethod.GET)
 		@ResponseBody
-		public List<HoaDon> ThongKeHoaDon(@RequestParam(value = "fromDate") Date fromDate,
-				@RequestParam(value = "toDate") Date toDate) {
-			// This returns a JSON or XML with the users
-
-			return this.ThongKeHoaDonTheoNgay(fromDate, toDate);
-
+		public List<HoaDon> ThongKeHoaDon(@RequestParam(value = "fromDate") String fromDate,
+				@RequestParam(value = "toDate") String toDate) {
+			// This returns a JSON or XML with the users 
+			List<HoaDon> list = repositoryHoaDon.GetInvoiceByDate(fromDate, toDate);
+			for (HoaDon hoaDon : list) {
+				int sum = 0;
+				for (HoaDonChiTiet hoaDonChiTiet : repositoryHDCT.GetHoaDonChiTietToHoaDonID(hoaDon.getId().intValue())) {
+					sum += (hoaDonChiTiet.getSoluong() * Integer.parseInt(hoaDonChiTiet.getPrice()));
+				}
+				hoaDon.setTongTien(sum);
+			}
+			return list;
 		}
 }

@@ -91,6 +91,11 @@ public interface HoaDonService extends JpaRepository<HoaDon,Long>{
 		@Modifying
 		@Query(value = "update hoadon set status = :status where id = :id", nativeQuery = true)
 		@Transactional
-	   	void UpdateStatusInvoice(@Param("status") int status,@Param("id") Long id);
+		void UpdateStatusInvoice(@Param("status") int status,@Param("id") Long id);
+		   
+		@Modifying
+		@Query(value = "SELECT * FROM hoadon WHERE date BETWEEN :fromDate and :toDate and status=1", nativeQuery = true)
+		@Transactional
+	   	List<HoaDon> GetInvoiceByDate(@Param("fromDate") String fromDate,@Param("toDate") String toDate);
 		
 }

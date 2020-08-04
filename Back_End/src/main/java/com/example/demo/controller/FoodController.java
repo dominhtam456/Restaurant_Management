@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -43,6 +44,7 @@ public class FoodController {
 	// LAY ALL MON AN
 
 	@RequestMapping(path = "/GetAllMonAn", produces = MediaType.APPLICATION_JSON_VALUE)
+	@PreAuthorize("@appAuthorizer.authorize(authentication, 'VIEW', this)")
 	public java.util.List<MonAn> getAllMonAn() {
 		// This returns a JSON or XML with the users
 		for (MonAn monan : repositoryMonAn.findAll()) {

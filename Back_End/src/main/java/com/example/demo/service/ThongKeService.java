@@ -12,6 +12,6 @@ import com.example.demo.model.HoaDonChiTietID;
 public interface ThongKeService extends JpaRepository<HoaDonChiTiet, HoaDonChiTietID> {
 	
 	 @Query(value="SELECT * FROM Hoadonchitiet INNER JOIN Monan ON Hoadonchitiet.monan_id=Monan.id", nativeQuery = true)
-	    List<HoaDonChiTiet> TK();
+	List<HoaDonChiTiet> TK();
 	    
 }

@@ -1,80 +1,104 @@
 import React, { Component } from "react";
+import { inject , observer } from 'mobx-react'
 
 class InsertStatis extends Component {
+  
+  onChangeRadio(e){
+    this.props.statisticStore.setCurrentContent(e.target.value);
+  }
+
+  onChangeFromDate(e){
+    let toDate = Date.parse(this.props.statisticStore.toDate);
+    let fromDate = Date.parse(e.target.value);
+
+    if(fromDate > toDate) {
+      alert('Ngày không hợp lệ');
+      e.target.value = this.props.statisticStore.fromDate;
+    }
+    else this.props.statisticStore.setFromDate(e.target.value);
+  }
+
+  onChangeToDate(e){
+    let toDate = Date.parse(e.target.value);
+    let fromDate = Date.parse(this.props.statisticStore.fromDate);
+
+    if(fromDate > toDate) {
+      alert('Ngày không hợp lệ');
+      e.target.value = this.props.statisticStore.toDate;
+    }
+    else this.props.statisticStore.setToDate(e.target.value);
+  }
+
+  onSearch(){
+    this.props.statisticStore.getListTrendingFood();
+    this.props.statisticStore.getListInvoiceByDate();
+    this.props.statisticStore.getSum();
+  }
+
   render() {
     return (
       <div>
         <form>
-          <div class="row">
-            <div class="col-12">
-              <div class="form-group row">
-                <label for="inputNum" class="col-form-label form-control-sm">
+          <div className="row">
+            <div className="col-12">
+              <div className="form-group row">
+                <label  className="col-form-label form-control-sm">
                   Ngày Bắt Đầu
                 </label>
-                <div class="col-sm-2">
+                <div className="col-sm-2">
                   <input
-                    ng-model="inputStartDate"
                     type="date"
-                    class="form-control form-control-sm "
+                    className="form-control form-control-sm "
                     id="inputNum"
-                    placeholder=""
+                    onChange={(e) => this.onChangeFromDate(e)}
+                    defaultValue={(new Date()).toISOString().slice(0,10)}
                   />
                 </div>
-                <label for="inputNum" class="col-form-label form-control-sm">
+                <label className="col-form-label form-control-sm">
                   Ngày Kết Thúc
                 </label>
-                <div class="col-sm-2">
+                <div className="col-sm-2">
                   <input
-                    ng-model="inputEndDate"
                     type="date"
-                    class="form-control form-control-sm "
+                    className="form-control form-control-sm "
                     id="inputNum"
-                    placeholder="0"
+                    onChange={(e) => this.onChangeToDate(e)}
+                    defaultValue={(new Date()).toISOString().slice(0,10)}
                   />
                 </div>
 
-                <div class="form-check col-2">
-                  <label class="form-check-label">
+                <div className="form-check col-2">
+                  <label className="form-check-label">
                     <input
                       type="radio"
-                      class="form-check-input"
+                      className="form-check-input"
                       name="optradio"
-                      ng-model="radio"
                       value="topFoods"
+                      onChange={(e) => this.onChangeRadio(e)}
                     />
                     Món ăn bán chạy
                   </label>
                 </div>
-                <div class="form-check  col-2">
-                  <label class="form-check-label">
+                <div className="form-check  col-2">
+                  <label className="form-check-label">
                     <input
                       type="radio"
-                      class="form-check-input"
+                      className="form-check-input"
                       name="optradio"
-                      ng-model="radio"
                       value="listBill"
+                      onChange={(e) => this.onChangeRadio(e)}
+                      defaultChecked={true}
                     />
                     Liệt kê hóa đơn
                   </label>
                 </div>
-                <div class="form-check  col-1 p-1">
-                  <label class="form-check-label">
-                    <input
-                      type="radio"
-                      class="form-check-input"
-                      name="optradio"
-                      ng-model="radio"
-                      value="totalSale"
-                    />
-                    Tổng tiền
-                  </label>
-                </div>
+                
               </div>
             </div>
             <button
               type="button"
-              ng-click="View()"
-              class=" btn btn-danger mb-3"
+              className=" btn btn-danger mb-3"
+              onClick={() => this.onSearch()}
             >
               Hiển thị
             </button>
@@ -85,4 +109,4 @@ class InsertStatis extends Component {
   }
 }
 
-export default InsertStatis;
+export default inject("statisticStore")(observer(InsertStatis));

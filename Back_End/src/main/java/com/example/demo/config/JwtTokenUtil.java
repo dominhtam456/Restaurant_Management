@@ -22,50 +22,58 @@ public class JwtTokenUtil implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public String getUsernameFromToken(String token) {
+	public String getUsernameFromToken(final String token) {
         return getClaimFromToken(token, Claims::getSubject);
     }
 
-    public Date getExpirationDateFromToken(String token) {
+    public int GetRoleFromToken(final String token) {
+        return Jwts.parser()
+                .setSigningKey(SIGNING_KEY)
+                .parseClaimsJws(token)
+                .getBody()
+                .get("role", Integer.class);
+    }
+
+    public Date getExpirationDateFromToken(final String token) {
         return getClaimFromToken(token, Claims::getExpiration);
     }
 
-    public <T> T getClaimFromToken(String token, Function<Claims, T> claimsResolver) {
+    public <T> T getClaimFromToken(final String token, final Function<Claims, T> claimsResolver) {
         final Claims claims = getAllClaimsFromToken(token);
         return claimsResolver.apply(claims);
     }
 
-    private Claims getAllClaimsFromToken(String token) {
+    private Claims getAllClaimsFromToken(final String token) {
         return Jwts.parser()
                 .setSigningKey(SIGNING_KEY)
                 .parseClaimsJws(token)
                 .getBody();
     }
 
-    private Boolean isTokenExpired(String token) {
+    private Boolean isTokenExpired(final String token) {
         final Date expiration = getExpirationDateFromToken(token);
         return expiration.before(new Date());
     }
 
-    public String generateToken(NhanVien nhanvien) {
+    public String generateToken(final NhanVien nhanvien) {
         return doGenerateToken(nhanvien.getUsername(),nhanvien.getLoai());
     }
 
-    private String doGenerateToken(String subject, int loainv) {
+    private String doGenerateToken(final String subject, final int loainv) {
 
-        Claims claims = Jwts.claims().setSubject(subject);
+        final Claims claims = Jwts.claims().setSubject(subject);
         claims.put("role", loainv);
 
         return Jwts.builder()
                 .setClaims(claims)
-                .setIssuer("issue")
+                .setIssuer("issuer")
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + ACCESS_TOKEN_VALIDITY_SECONDS*1000))
                 .signWith(SignatureAlgorithm.HS256, SIGNING_KEY)
                 .compact();
     }
 
-    public Boolean validateToken(String token, UserDetails userDetails) {
+    public Boolean validateToken(final String token, final UserDetails userDetails) {
         final String username = getUsernameFromToken(token);
         return (
               username.equals(userDetails.getUsername())

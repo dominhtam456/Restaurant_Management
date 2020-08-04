@@ -8,6 +8,7 @@ import CommonUtil from './../../util'
 import ReadyFoodPanel from './ready_food_panel/ReadyFoodPanel'
 import ProblemPanel from './problem/ProblemPanel'
 import { toJS } from 'mobx'
+import { withRouter } from 'react-router-dom'
 
 
 
@@ -27,7 +28,7 @@ class TableOrder extends Component {
         });
         return str;
     }
-    componentDidMount() {
+    async componentDidMount() {
         const s = document.createElement('script');
         s.type = 'text/javascript';
         s.async = true;
@@ -37,9 +38,13 @@ class TableOrder extends Component {
         setInterval(() => {
             this.props.tableStore.setUpdateCount();
         }, 10000);
+
+        await this.props.loginStore.checkValid();
+        if(!this.props.loginStore.isValid) this.props.history.push('/login')
       }
 
     render() {
+        if(!this.props.loginStore.isValid) return null;
         return (
             <div className="container-fluid mt--7">
                 <div className="row">
@@ -104,4 +109,4 @@ class TableOrder extends Component {
     }
 }
 
-export default inject("tableStore")(observer(TableOrder));
+export default withRouter(inject("tableStore","loginStore")(observer(TableOrder)));

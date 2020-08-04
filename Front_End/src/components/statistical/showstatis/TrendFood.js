@@ -1,26 +1,28 @@
 import React, { Component } from "react"
 import TrendFoodDetail from "../detailstatis/TrendFoodDetail"
+import { inject , observer } from 'mobx-react'
 
 class TrendFood extends Component {
   render() {
+    const element = this.props.statisticStore.listTrendingFood.map((food,index) => {
+        return <TrendFoodDetail food={food} key={index} index={index}/>
+    })
     return (
       <div>
         <table
-          class="table align-items-center table-flush accordion"
+          className="table align-items-center table-flush accordion"
           id="accordionRow"
         >
-          <thead class="list-group-item-info">
-            <th style={{ textAlign:"center", width:"20%"}}>STT</th>
+          <thead className="list-group-item-info">
+            <tr><th style={{ textAlign:"center", width:"20%"}}>STT</th>
             <th style={{ textAlign:"center", width:"60%"}}>Tên Món Ăn</th>
-            <th style={{ textAlign:"center", width:"20%"}}>Số Lượng Bán</th>
+            <th style={{ textAlign:"center", width:"20%"}}>Số Lượng Bán</th></tr>
           </thead>
-          <TrendFoodDetail/>
-          <TrendFoodDetail/>
-          <TrendFoodDetail/>
+            {element}
         </table>
       </div>
     );
   }
 }
 
-export default TrendFood;
+export default inject("statisticStore")(observer(TrendFood));

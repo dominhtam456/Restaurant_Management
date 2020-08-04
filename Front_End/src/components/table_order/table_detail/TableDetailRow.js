@@ -9,14 +9,26 @@ class TableDetailRow extends Component {
         this.commentRef = React.createRef();
     }
     onChangeAmount(e) {
+        if(this.props.order.status !== "queue" && this.props.order.status !== "cancel"){
+            alert("Món ăn đang hoặc đã được thực hiện");
+            return;
+        }
         this.props.tableStore.setAmount(this.props.order, e.target.value)
     }
 
     onClickDelete() {
+        if(this.props.order.status !== "queue" && this.props.order.status !== "cancel"){
+            alert("Món ăn đang hoặc đã được thực hiện");
+            return;
+        }
         this.props.tableStore.deleteOrder(this.props.order)
     }
 
     onLoseFocusComment() {
+        if(this.props.order.status !== "queue" && this.props.order.status !== "cancel"){
+            alert("Món ăn đang hoặc đã được thực hiện");
+            return;
+        }
         this.props.tableStore.updateComment(this.commentRef.current.value, this.props.order.hoadonchitiet_id.monan_id);
     }
 
