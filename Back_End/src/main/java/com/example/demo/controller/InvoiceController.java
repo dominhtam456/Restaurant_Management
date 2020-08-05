@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 import com.example.demo.service.HoaDonService;
 import com.example.demo.service.MergeTableService;
@@ -31,6 +32,7 @@ public class InvoiceController {
 
 	// LAY ALL HOA DON
 	@RequestMapping(path = "/GetAllHoaDon", produces = MediaType.APPLICATION_JSON_VALUE)
+	@PreAuthorize("@appAuthorizer.authorize(authentication, 'VIEW', this)")
 	public java.util.List<HoaDon> GetAllHoaDons() {
 		// This returns a JSON or XML with the users
 		return repositoryHoaDon.GetAllHoaDons();
@@ -38,6 +40,7 @@ public class InvoiceController {
 
 	// LAY 1 HoaDon
 	@RequestMapping(value = "/HoaDon/{id}", method = RequestMethod.GET)
+	@PreAuthorize("@appAuthorizer.authorize(authentication, 'VIEW', this)")
 	public HoaDon FindHoaDonByID(@PathVariable("id") long id) {
 		return repositoryHoaDon.GetHoaDon(id);
 	}
@@ -45,6 +48,7 @@ public class InvoiceController {
 	// THEM HoaDon
 
 	@RequestMapping(value = "/InsertHoaDon", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@PreAuthorize("@appAuthorizer.authorize(authentication, 'VIEW', this)")
 	@ResponseBody
 	public HoaDon InserHoaDon(@Valid @RequestBody HoaDon hd) {
 
@@ -54,6 +58,7 @@ public class InvoiceController {
 
 	// CAP NHAT HoaDon
 	@RequestMapping(value = "/UpdateHoaDon", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@PreAuthorize("@appAuthorizer.authorize(authentication, 'VIEW', this)")
 	public boolean UpdateHoaDon(@Valid @RequestBody HoaDon hdForm) {
 		try {
 			return repositoryHoaDon.UpdateHoaDon(hdForm);
@@ -66,6 +71,7 @@ public class InvoiceController {
 
 	// XOA HoaDon
 	@RequestMapping(value = "/DeleteHoaDon/{id}", method = RequestMethod.POST)
+	@PreAuthorize("@appAuthorizer.authorize(authentication, 'VIEW', this)")
 	public boolean DeleteHoaDon(@PathVariable(value = "id") Long id) {
 		try {
 			return repositoryHoaDon.DeleteHoaDon(id);
@@ -77,12 +83,14 @@ public class InvoiceController {
 
 	// GET HOA DON TO STATUS
 	@RequestMapping(path = "/GetHoaDonToStatus/{status}", produces = MediaType.APPLICATION_JSON_VALUE)
+	@PreAuthorize("@appAuthorizer.authorize(authentication, 'VIEW', this)")
 	public java.util.List<HoaDon> GetHoaDonToStatus(@PathVariable(value = "status") boolean status) {
 		// This returns a JSON or XML with the users
 		return repositoryHoaDon.GetHoaDonToStatus(status);
 	}
 
 	@RequestMapping(value = "/UpdateInvoiceStatus", method = RequestMethod.POST)
+	@PreAuthorize("@appAuthorizer.authorize(authentication, 'VIEW', this)")
 	public boolean UpdateInvoiceStatus(
 		@RequestParam(value = "status") int status,
 		@RequestParam(value = "id") Long id) {
@@ -96,6 +104,7 @@ public class InvoiceController {
 	}
 
 	@RequestMapping(value = "/MergeTable", method = RequestMethod.POST)
+	@PreAuthorize("@appAuthorizer.authorize(authentication, 'VIEW', this)")
 	public boolean MergeTale(@Valid @RequestBody List<Long> list) {
 		try {
 			mergeTableService.mergeTable(list);

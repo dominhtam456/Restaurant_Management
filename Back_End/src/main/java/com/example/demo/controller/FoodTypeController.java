@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -30,6 +31,7 @@ public class FoodTypeController {
 
     // LAY ALL LOAI MON AN
 	@RequestMapping(value = "/GetAllLoaiMonAn", method = RequestMethod.GET)
+	@PreAuthorize("@appAuthorizer.authorize(authentication, 'VIEW', this)")
 	public ResponseEntity<List<LoaiMonAn>> listAllLoaiMonAn() {
 		List<LoaiMonAn> listLoaiMonAn = repositoryLoaiMonAn.findAll();
 		if (listLoaiMonAn.isEmpty()) {
@@ -41,6 +43,7 @@ public class FoodTypeController {
 
 	// LAY 1 LOAI MON AN
 	@RequestMapping(value = "/LoaiMonAn/{id}", method = RequestMethod.GET)
+	@PreAuthorize("@appAuthorizer.authorize(authentication, 'VIEW', this)")
 	public LoaiMonAn findLoaiMonAnByID(@PathVariable("id") long id) {
 		LoaiMonAn loaimonan = repositoryLoaiMonAn.getOne(id);
 		if (loaimonan == null) {
@@ -54,6 +57,7 @@ public class FoodTypeController {
 	@RequestMapping(value = "/InsertLoaiMonAn", method = RequestMethod.POST, produces = {
 			MediaType.APPLICATION_ATOM_XML_VALUE,
 			MediaType.APPLICATION_JSON_VALUE }, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+	@PreAuthorize("@appAuthorizer.authorize(authentication, 'VIEW', this)")
 	@ResponseBody
 	public LoaiMonAn insertLoaiMonAn(@Valid LoaiMonAn loaimonanForm) {
 		// @Valid: kiem tra xem co ton tai object trong body
@@ -63,6 +67,7 @@ public class FoodTypeController {
 
 	// CAP NHAT LOAI MON AN
 	@RequestMapping(value = "/UpdateLoaiMonAn", method = RequestMethod.POST)
+	@PreAuthorize("@appAuthorizer.authorize(authentication, 'VIEW', this)")
 	public ResponseEntity<LoaiMonAn> updateLoaiMonAn(@Valid @RequestBody LoaiMonAn loaimonanForm) {
 		LoaiMonAn lma = repositoryLoaiMonAn.getOne(loaimonanForm.getId());
 		if (lma == null) {
@@ -78,6 +83,7 @@ public class FoodTypeController {
 
 	// XOA LOAI MON AN
 	@RequestMapping(value = "/DeleteLoaiMonAn", method = RequestMethod.POST)
+	@PreAuthorize("@appAuthorizer.authorize(authentication, 'VIEW', this)")
 	public int deleteLoaiMonAn(@Valid @RequestBody LoaiMonAn loaimonan) {
 		// @PathVariable(value=""): lay bien tu url
 		// @RequestBody: lay object duoc gui trong body

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 import com.example.demo.service.HoaDonChiTietService;
 import com.example.demo.service.HoaDonService;
@@ -44,6 +45,7 @@ public class InvoiceDetailController {
 
 	// LAY ALL HOA DON CHI TIET
 	@RequestMapping(path = "/GetAllHoaDonChiTiet", produces = MediaType.APPLICATION_JSON_VALUE)
+	@PreAuthorize("@appAuthorizer.authorize(authentication, 'VIEW', this)")
 	public List<HoaDonChiTiet> GetAllHoaDonChiTiets() {
 		// This returns a JSON or XML with the users
 		List<HoaDonChiTiet> listHDCT = repositoryHDCT.findAll();
@@ -57,6 +59,7 @@ public class InvoiceDetailController {
 
 	// LAY CTHD THEO ID_HOADON
 	@RequestMapping(path = "/GetHDCTByID/{hoadonID}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@PreAuthorize("@appAuthorizer.authorize(authentication, 'VIEW', this)")
 	public List<HoaDonChiTiet> GetHDCTByID(@PathVariable(value = "hoadonID") int hoadonID) {
 		for (HoaDonChiTiet item : repositoryHDCT.GetHoaDonChiTietToHoaDonID(hoadonID)) {
 			item.setTenMonAn(
@@ -68,6 +71,7 @@ public class InvoiceDetailController {
 
 	// LAY 1 Hoa Don Chi Tiet
 	@RequestMapping(value = "/HoaDonChiTiet/{hoadon_ID}&{monan_ID}", method = RequestMethod.GET)
+	@PreAuthorize("@appAuthorizer.authorize(authentication, 'VIEW', this)")
 	public HoaDonChiTiet FindHoaDonChiTietByID(@PathVariable("hoadon_ID") Integer hoadon_ID,
 			@PathVariable("monan_ID") Integer monan_ID) {
 		return repositoryHDCT.GetHoaDonChiTiet(new HoaDonChiTietID(hoadon_ID, monan_ID));
@@ -75,6 +79,7 @@ public class InvoiceDetailController {
 
 	// Them Chi Tiet Hoa Don
 	@RequestMapping(value = "/InsertHoaDonChiTiet", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@PreAuthorize("@appAuthorizer.authorize(authentication, 'VIEW', this)")
 	@ResponseBody
 	public HoaDonChiTiet InserHoaDon(@RequestBody HoaDonChiTiet hdct) {
 		return repositoryHDCT.InSertHDCT(hdct);
@@ -83,6 +88,7 @@ public class InvoiceDetailController {
 
 	// Update chi tiet hao don
 	@RequestMapping(value = "/UpdateHoaDonChiTiet", method = RequestMethod.POST)
+	@PreAuthorize("@appAuthorizer.authorize(authentication, 'VIEW', this)")
 	public boolean UpdateHoaDonChiTiet(@RequestBody HoaDonChiTiet hdctForm) {
 		return repositoryHDCT.UpdateHoaDonChiTiet(hdctForm);
 
@@ -90,12 +96,14 @@ public class InvoiceDetailController {
 
 	// XOA HoaDonChiTiet
 	@RequestMapping(value = "/DeleteHoaDonChiTiet/{hoadon_ID}&{monan_ID}", method = RequestMethod.GET)
+	@PreAuthorize("@appAuthorizer.authorize(authentication, 'VIEW', this)")
 	public boolean DeleteHDCT(@PathVariable("hoadon_ID") Integer hoadon_ID,
 			@PathVariable("monan_ID") Integer monan_ID) {
 		return repositoryHDCT.DeLeTeCTHD(new HoaDonChiTietID(hoadon_ID, monan_ID));
 	}
 
 	@RequestMapping(path = "/GetFoodByStatus/{status}", method = RequestMethod.GET)
+	@PreAuthorize("@appAuthorizer.authorize(authentication, 'VIEW', this)")
 	public List<InvoiceDetailDTO> GetFoodByStatus(@PathVariable(value = "status") String status) {
 		List<HoaDonChiTiet> listHDCT = repositoryHDCT.GetHDCTByStatus(status); 
 		List<InvoiceDetailDTO> response = new ArrayList<>(); 
@@ -121,6 +129,7 @@ public class InvoiceDetailController {
 	}
 
 	@RequestMapping(path = "/GetUncompletedFood", method = RequestMethod.GET)
+	@PreAuthorize("@appAuthorizer.authorize(authentication, 'VIEW', this)")
 	public List<InvoiceDetailDTO> GetUncompletedFood() {
 		List<HoaDonChiTiet> listHDCT = repositoryHDCT.GetUncompletedHDCT(); 
 		List<InvoiceDetailDTO> response = new ArrayList<>(); 
@@ -148,6 +157,7 @@ public class InvoiceDetailController {
 	}
 
 	@RequestMapping(value = "/UpdateHDCTStatus", method = RequestMethod.POST)
+	@PreAuthorize("@appAuthorizer.authorize(authentication, 'VIEW', this)")
 	public Boolean UpdateHDCTStatus(
 		@RequestParam(value = "status") String status,
 		@RequestParam(value = "hoaDonId") Long hoaDonId,
@@ -161,6 +171,7 @@ public class InvoiceDetailController {
 	}
 
 	@RequestMapping(value = "/UpdateHDCTByHoadonId", method = RequestMethod.POST)
+	@PreAuthorize("@appAuthorizer.authorize(authentication, 'VIEW', this)")
 	public Boolean DeleteHDCTByHoadonId(@RequestBody List<HoaDonChiTiet> listHDCT ) {
 		try{
 			repositoryHDCT.UpdateHDCT(listHDCT);

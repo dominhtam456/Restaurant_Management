@@ -25,36 +25,85 @@ public class AppAuthorizerImpl implements AppAuthorizer{
         if (securedPath==null || "".equals(securedPath.trim())) {//login, logout
             return true;
         }
-        String menuCode = securedPath.substring(1);//Bỏ dấu "/" ở đầu Path
-        boolean isAllow = false;
+        // String menuCode = securedPath.substring(1);//Bỏ dấu "/" ở đầu Path
+        // boolean isAllow = false;
         try {
             UsernamePasswordAuthenticationToken user = (UsernamePasswordAuthenticationToken) authentication;
             if (user==null){
-                return isAllow;
+                return false;
             }
             UserDetails userDetails = (UserDetails)user.getPrincipal();
             if (userDetails==null) {
-                return isAllow;
+                return false;
             }
             //Truy vấn vào CSDL theo userId + menuCode + action
             //Nếu có quyền thì
             GrantedAuthority role = userDetails.getAuthorities().iterator().next();
-            logger.info(callerObj.getClass().getName());
             logger.info(callerObj.getClass().getSimpleName());
-            logger.info(callerObj.getClass().getCanonicalName());
             if(role.getAuthority().equals("4")) return true;
-            
-            
 
+            List<String> role_waiter = new ArrayList<String>() { 
+                { 
+                    add("FoodController"); 
+                    add("FoodDetailController"); 
+                    add("HoadonBanController"); 
+                    add("InvoiceController"); 
+                    add("InvoiceDetailController"); 
+                    add("InvoiceStaffController"); 
+                    add("NoticeController"); 
+                    add("TableController"); 
+                } 
+            }; 
 
-            // {
-            //     isAllow = true;
-            // }
+            List<String> role_cashier = new ArrayList<String>() { 
+                { 
+                    //add("FoodController"); 
+                    //add("FoodDetailController"); 
+                    add("HoadonBanController"); 
+                    add("InvoiceController"); 
+                    add("InvoiceDetailController"); 
+                    //add("InvoiceStaffController"); 
+                    //add("NoticeController"); 
+                    add("TableController"); 
+                } 
+            }; 
+
+            List<String> role_chef = new ArrayList<String>() { 
+                { 
+                    //add("FoodController"); 
+                    //add("FoodDetailController"); 
+                    //add("HoadonBanController"); 
+                    //add("InvoiceController"); 
+                    add("InvoiceDetailController"); 
+                    //add("InvoiceStaffController"); 
+                    add("NoticeController"); 
+                    //add("TableController"); 
+                } 
+            }; 
+            
+            switch (role.getAuthority()) {
+                case "1":
+                    if(role_waiter.contains(callerObj.getClass().getSimpleName()))
+                        return true;
+                    return false;
+
+                case "2":
+                    if(role_cashier.contains(callerObj.getClass().getSimpleName()))
+                        return true;
+                    return false;
+
+                case "3":
+                    if(role_chef.contains(callerObj.getClass().getSimpleName()))
+                        return true;
+                    return false;
+                default:
+                    return false;
+            }
+
         } catch (Exception e) {
             logger.error(e.toString(), e);
             throw e;
         }
-        return false;
     }
 
     // Lay ra securedPath duoc Annotate RequestMapping trong Controller

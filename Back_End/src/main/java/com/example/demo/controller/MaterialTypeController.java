@@ -15,6 +15,7 @@ import org.springframework.http.HttpStatus;
 
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 import com.example.demo.service.NguyenLieuService;
 import com.example.demo.service.LoaiNguyenLieuService;
@@ -35,6 +36,7 @@ public class MaterialTypeController {
 
     // LAY ALL LOAI NGUYEN LIEU
 	@RequestMapping(value = "/GetAllLoaiNguyenLieu", method = RequestMethod.GET)
+	@PreAuthorize("@appAuthorizer.authorize(authentication, 'VIEW', this)")
 	public ResponseEntity<List<LoaiNguyenLieu>> listAllLoaiNguyenLieu() {
 		List<LoaiNguyenLieu> listLoaiNguyenLieu = repositoryLoaiNguyenLieu.findAll();
 		if (listLoaiNguyenLieu.isEmpty()) {
@@ -46,7 +48,7 @@ public class MaterialTypeController {
 
 	// LAY 1 LOAI NGUYEN LIEU
 	@RequestMapping(value = "/LoaiNguyenLieu/{id}", method = RequestMethod.GET)
-
+	@PreAuthorize("@appAuthorizer.authorize(authentication, 'VIEW', this)")
 	public LoaiNguyenLieu findLoaiNguyenLieuByID(@PathVariable("id") long id) {
 		LoaiNguyenLieu loainguyenlieu = repositoryLoaiNguyenLieu.getOne(id);
 		if (loainguyenlieu == null) {
@@ -58,6 +60,7 @@ public class MaterialTypeController {
 
 	// THEM LOAI NGUYEN LIEU
 	@RequestMapping(value = "/InsertLoaiNguyenLieu", method = RequestMethod.POST)
+	@PreAuthorize("@appAuthorizer.authorize(authentication, 'VIEW', this)")
 	@ResponseBody
 	public LoaiNguyenLieu insertLoaiNguyenLieu(@Valid @RequestBody LoaiNguyenLieu loainguyenlieuForm) {
 		// @Valid: kiem tra xem co ton tai object trong body
@@ -67,6 +70,7 @@ public class MaterialTypeController {
 
 	// CAP NHAT LOAI NGUYEN LIEU
 	@RequestMapping(value = "/UpdateLoaiNguyenLieu", method = RequestMethod.POST)
+	@PreAuthorize("@appAuthorizer.authorize(authentication, 'VIEW', this)")
 	public ResponseEntity<LoaiNguyenLieu> updateLoaiNguyenLieu(@Valid @RequestBody LoaiNguyenLieu loainguyenlieuForm) {
 		LoaiNguyenLieu lnl = repositoryLoaiNguyenLieu.getOne(loainguyenlieuForm.getId());
 		if (lnl == null) {
@@ -82,6 +86,7 @@ public class MaterialTypeController {
 
 	// XOA LOAI NGUYEN LIEU
 	@RequestMapping(value = "/DeleteLoaiNguyenLieu", method = RequestMethod.POST)
+	@PreAuthorize("@appAuthorizer.authorize(authentication, 'VIEW', this)")
 	public int deleteLoaiNguyenLieu(@Valid @RequestBody LoaiNguyenLieu loainguyenlieu) {
 		// @PathVariable(value=""): lay bien tu url
 		// @RequestBody: lay object duoc gui trong body

@@ -41,6 +41,11 @@ class TableOrder extends Component {
 
         await this.props.loginStore.checkValid();
         if(!this.props.loginStore.isValid) this.props.history.push('/login')
+        const role = JSON.parse(atob(localStorage.getItem('token').split('.')[1])).role;
+        if(role == 3) {
+            alert("Forbidden");
+            this.props.history.push('/kitchen');
+        }
       }
 
     render() {

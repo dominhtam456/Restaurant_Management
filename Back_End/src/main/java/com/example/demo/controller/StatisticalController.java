@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.service.HoaDonChiTietService;
 import com.example.demo.service.HoaDonService;
 import com.example.demo.service.MonAnService;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 import com.example.demo.model.HoaDon;
 import com.example.demo.model.HoaDonChiTiet;
@@ -143,6 +144,7 @@ public class StatisticalController {
 
 	// REQUEST THONG KE MON AN Theo Ngay
 	@RequestMapping(path = "/ThongKeMonAn", method = RequestMethod.GET)
+	@PreAuthorize("@appAuthorizer.authorize(authentication, 'VIEW', this)")
 	@ResponseBody
 	public List<HoaDonChiTiet> ThongKeMonAn(@RequestParam(value = "fromDate") Date fromDate,
 			@RequestParam(value = "toDate") Date toDate) {
@@ -154,6 +156,7 @@ public class StatisticalController {
 
 	// REQUEST THONG ke Tong Tien Theo Ngay
 	@RequestMapping(path = "/ThongKeTongTien", method = RequestMethod.GET)
+	@PreAuthorize("@appAuthorizer.authorize(authentication, 'VIEW', this)")
 	@ResponseBody
 	public String ThongKeTongTien(@RequestParam(value = "fromDate") Date fromDate,
 			@RequestParam(value = "toDate") Date toDate) {
@@ -163,19 +166,20 @@ public class StatisticalController {
 
 	}
 	// REQUEST THONG ke Hoa Don Theo Ngay
-		@RequestMapping(path = "/ThongKeHoaDon", method = RequestMethod.GET)
-		@ResponseBody
-		public List<HoaDon> ThongKeHoaDon(@RequestParam(value = "fromDate") String fromDate,
-				@RequestParam(value = "toDate") String toDate) {
-			// This returns a JSON or XML with the users 
-			List<HoaDon> list = repositoryHoaDon.GetInvoiceByDate(fromDate, toDate);
-			for (HoaDon hoaDon : list) {
-				int sum = 0;
-				for (HoaDonChiTiet hoaDonChiTiet : repositoryHDCT.GetHoaDonChiTietToHoaDonID(hoaDon.getId().intValue())) {
-					sum += (hoaDonChiTiet.getSoluong() * Integer.parseInt(hoaDonChiTiet.getPrice()));
-				}
-				hoaDon.setTongTien(sum);
+	@RequestMapping(path = "/ThongKeHoaDon", method = RequestMethod.GET)
+	@PreAuthorize("@appAuthorizer.authorize(authentication, 'VIEW', this)")
+	@ResponseBody
+	public List<HoaDon> ThongKeHoaDon(@RequestParam(value = "fromDate") String fromDate,
+			@RequestParam(value = "toDate") String toDate) {
+		// This returns a JSON or XML with the users 
+		List<HoaDon> list = repositoryHoaDon.GetInvoiceByDate(fromDate, toDate);
+		for (HoaDon hoaDon : list) {
+			int sum = 0;
+			for (HoaDonChiTiet hoaDonChiTiet : repositoryHDCT.GetHoaDonChiTietToHoaDonID(hoaDon.getId().intValue())) {
+				sum += (hoaDonChiTiet.getSoluong() * Integer.parseInt(hoaDonChiTiet.getPrice()));
 			}
-			return list;
+			hoaDon.setTongTien(sum);
 		}
+		return list;
+	}
 }

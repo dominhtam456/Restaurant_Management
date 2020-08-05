@@ -31,7 +31,25 @@ class Login extends Component {
                     isLogged: true
                 })
                 localStorage.setItem('token', data.result.token)
-                this.props.history.push('/table')
+
+                switch (JSON.parse(atob(localStorage.getItem('token').split('.')[1])).role) {
+                    case 1:
+                        this.props.history.push('/table')
+                        break;
+                    case 2:
+                        this.props.history.push('/table')
+                        break;
+                    case 3:
+                        this.props.history.push('/kitchen')
+                        break;
+                    case 4:
+                        this.props.history.push('/statistical')
+                        break;
+                    default:
+                        break;
+                }
+                
+                
             }
         })
 

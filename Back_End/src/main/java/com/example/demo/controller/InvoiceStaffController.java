@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,6 +32,7 @@ public class InvoiceStaffController {
     InvoiceStaffService invoiceStaffService;
 
     @RequestMapping(path = "/GetAllStaffInvoice", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("@appAuthorizer.authorize(authentication, 'VIEW', this)")
 	public java.util.List<InvoiceStaff> getAllNguyenLieu() {
 		return invoiceStaffService.findAll();
     }
@@ -38,6 +40,7 @@ public class InvoiceStaffController {
     @RequestMapping(value = "/InsertStaffInvoice", method = RequestMethod.POST, 
         produces = MediaType.APPLICATION_JSON_VALUE,
         consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("@appAuthorizer.authorize(authentication, 'VIEW', this)")
     public InvoiceStaff insertNguyenLieu(@RequestBody InvoiceStaff invoiceStaff) {
         return invoiceStaffService.save(invoiceStaff);
     }

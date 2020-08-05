@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 import com.example.demo.service.BanService;
 
@@ -28,6 +29,7 @@ public class TableController {
 
 	// LAY ALL BAN
 	@RequestMapping(path = "/GetAllBan", produces = MediaType.APPLICATION_JSON_VALUE)
+	@PreAuthorize("@appAuthorizer.authorize(authentication, 'VIEW', this)")
 	public java.util.List<Ban> GetAllBans() {
 		// This returns a JSON or XML with the users
 		return repositoryBan.GetAllBans();
@@ -35,12 +37,14 @@ public class TableController {
 
 	// LAY 1 BAN
 	@RequestMapping(value = "/Ban/{id}", method = RequestMethod.GET)
+	@PreAuthorize("@appAuthorizer.authorize(authentication, 'VIEW', this)")
 	public Ban FindBanByID(@PathVariable("id") long id) {
 		return repositoryBan.GetBan(id);
 	}
 
 	// THEM BAN
 	@RequestMapping(value = "/InsertBan", method = RequestMethod.POST)
+	@PreAuthorize("@appAuthorizer.authorize(authentication, 'VIEW', this)")
 	public Ban InsertBan(@RequestBody Ban banForm) {
 
 		try {
@@ -54,6 +58,7 @@ public class TableController {
 
 	// CAP NHAT BAN
 	@RequestMapping(value = "/UpdateBan", method = RequestMethod.POST)
+	@PreAuthorize("@appAuthorizer.authorize(authentication, 'VIEW', this)")
 	public boolean UpdateBan(@RequestBody Ban banForm) {
 		try {
 			return repositoryBan.UpdateBan(banForm);
@@ -66,6 +71,7 @@ public class TableController {
 
 	// XOA BAN
 	@RequestMapping(value = "/DeleteBan/{id}", method = RequestMethod.POST)
+	@PreAuthorize("@appAuthorizer.authorize(authentication, 'VIEW', this)")
 	public boolean DeleteBan(@PathVariable(value = "id") Long id) {
 		try {
 			return repositoryBan.DeleteBan(id);
@@ -77,6 +83,7 @@ public class TableController {
 
 	// TIM KIEM
 	@RequestMapping(value = "/SearchBans/{key}", method = RequestMethod.GET)
+	@PreAuthorize("@appAuthorizer.authorize(authentication, 'VIEW', this)")
 	public List<Ban> SearchBans(@PathVariable(value = "key") String key) {
 		try {
 			return repositoryBan.SearchBans(key);
@@ -89,6 +96,7 @@ public class TableController {
 	// CAP NHAT TRANG THAI BAN
 
 	@RequestMapping(value = "/UpdateStatusBan/{status}", method = RequestMethod.POST)
+	@PreAuthorize("@appAuthorizer.authorize(authentication, 'VIEW', this)")
 	public Boolean UpdateStatusBan(@RequestBody List<Ban> listTable, @PathVariable(value = "status") String status) {
 		try{
 			for (Ban ban : listTable) {

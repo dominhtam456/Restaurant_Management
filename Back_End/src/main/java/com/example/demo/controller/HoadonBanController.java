@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 import com.example.demo.service.BanService;
 import com.example.demo.service.BepService;
@@ -33,6 +34,7 @@ public class HoadonBanController {
 	BanService repositoryBan;
 
     @RequestMapping(path = "/get", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("@appAuthorizer.authorize(authentication, 'VIEW', this)")
 	public java.util.List<HoadonBan> getAllMonAn() {
 		return hoadonBanService.findAll();
     }
@@ -40,6 +42,7 @@ public class HoadonBanController {
     @RequestMapping(value = "/InsertHoaDonBan", method = RequestMethod.POST, 
         produces = MediaType.APPLICATION_JSON_VALUE,
         consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("@appAuthorizer.authorize(authentication, 'VIEW', this)")
     public Boolean insertNguyenLieu(@RequestBody List<HoadonBan> listHDB) {
         try{
             for (HoadonBan hoadonBan : listHDB) {
@@ -52,6 +55,7 @@ public class HoadonBanController {
     }
 
     @RequestMapping(value = "/updateHDB", method = RequestMethod.POST)
+    @PreAuthorize("@appAuthorizer.authorize(authentication, 'VIEW', this)")
     public Boolean updateHDB(
         @RequestParam(value = "fromTable") Long fromTable,
         @RequestParam(value = "toTable") Long toTable,
