@@ -72,6 +72,7 @@ public class FoodController {
 
 	// THEM MON AN
 	@RequestMapping(value = "/InsertMonAn", method = RequestMethod.POST)
+	@ResponseBody
 	public MonAn insertMonAn(@RequestBody MonAn monanForm) {
 		if (String.valueOf(monanForm.getLoaimonan_id()) == "null") {
 			return null;
@@ -86,22 +87,16 @@ public class FoodController {
 	}
 
 	// CAP NHAT MON AN
-	@RequestMapping(value = "/UpdateMonAn", method = RequestMethod.POST)
-	public ResponseEntity<MonAn> updateMonAn(@Valid @RequestBody MonAn monanForm) {
+	@RequestMapping(value = "/UpdateMonAn", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+	public ResponseEntity<MonAn> updateMonAn(@Valid MonAn monanForm) {
 		MonAn ma = repositoryMonAn.getOne(monanForm.getId());
 		if (ma == null) {
 			return ResponseEntity.notFound().build();
 		}
-		
-		ma.setNo(monanForm.getNo());
+
 		ma.setName(monanForm.getName());
 		ma.setPrice(monanForm.getPrice());
 		ma.setUnit(monanForm.getUnit());
-		ma.setLoaimonan_id(monanForm.getLoaimonan_id());
-		ma.setImage(monanForm.getImage());
-		ma.setIsActive(monanForm.getIsActive());
-		ma.setDescription(monanForm.getDescription());
-		ma.setStatus(monanForm.getStatus());
 
 		MonAn updatedMonAn = repositoryMonAn.save(ma);// update trong database
 		return ResponseEntity.ok(updatedMonAn);

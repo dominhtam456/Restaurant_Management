@@ -86,7 +86,7 @@ public class FoodController {
 	}
 
 	// CAP NHAT MON AN
-	@RequestMapping(value = "/UpdateMonAn", method = RequestMethod.POST)
+	@RequestMapping(value = "/UpdateMonAn", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
 	public ResponseEntity<MonAn> updateMonAn(@Valid @RequestBody MonAn monanForm) {
 		MonAn ma = repositoryMonAn.getOne(monanForm.getId());
 		if (ma == null) {

@@ -35,10 +35,10 @@ public class UserController {
         return new ApiResponse<>(HttpStatus.OK.value(), "success.",true);
     }
 
-    @GetMapping("/GetUser/{id}")
-    public ApiResponse<NhanVien> getOne(@PathVariable int id){
-        return new ApiResponse<>(HttpStatus.OK.value(), "User fetched successfully.",nhanvienService.findById(id));
-    }
+//    @GetMapping("/{id}")
+//    public ApiResponse<NhanVien> getOne(@PathVariable int id){
+//        return new ApiResponse<>(HttpStatus.OK.value(), "User fetched successfully.",nhanvienService.findById(id));
+//    }
 
     @GetMapping("/email/{username}")
     public NhanVien getByUsername(@PathVariable String username){

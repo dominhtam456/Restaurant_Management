@@ -27,7 +27,7 @@ public interface MonAnService extends JpaRepository<MonAn, Long>{
 			
 		}
 		
-	//INSERT BAN
+	//INSERT MONAN
 		public default MonAn InsertMonAn(MonAn ma) {
 			if(ma!=null) {
 				return this.save(ma);
@@ -36,7 +36,7 @@ public interface MonAnService extends JpaRepository<MonAn, Long>{
 			}
 		}
 		
-	//UPDATE BAN
+	//UPDATE MONAN
 		public default boolean UpdateMonAn(MonAn ma) {
 			MonAn temp=this.getOne(ma.getId());
 			if(temp!=null) {
@@ -47,6 +47,8 @@ public interface MonAnService extends JpaRepository<MonAn, Long>{
 				temp.setLoaimonan_id(ma.getLoaimonan_id());
 				temp.setImage(ma.getImage());
 				temp.setIsActive(ma.getIsActive());
+				temp.setDescription(ma.getDescription());
+				temp.setStatus(ma.getStatus());
 				this.save(temp);
 				return true;
 			}else {

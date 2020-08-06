@@ -31,7 +31,8 @@ export default class FoodStore {
             "nguyenlieus": [null],
             "tenloaimonan": null,
             "isActive": 1,
-            "description": desc
+            "description": desc,
+            "status": "Còn"
         }
         await FoodService.addFoods(food);
         //  console.log(toJS(food))
@@ -44,6 +45,25 @@ export default class FoodStore {
         }
         await FoodService.addTypeFoods(type);
         // console.log(type)
+    }
+
+    updateFood = async (no, name, price, unit, typeid, isactive, desc, sta) => {
+        let food = {
+            "id": this.currentFood.id,
+            "no": no,
+            "name": name,
+            "price": price,
+            "unit": unit,
+            "image": null,
+            "loaimonan_id": typeid,
+            "nguyenlieus": [null],
+            "tenloaimonan": null,
+            "isActive": isactive,
+            "description": desc,
+            "status": sta
+        }
+        await FoodService.updateFoods(food);
+        //  console.log(toJS(food))
     }
     
 }
@@ -58,4 +78,5 @@ decorate(FoodStore, {
     getTypeFood: action,
     pushFood: action,
     pushTypeFood: action,
+    updateFood: action,
 })

@@ -70,9 +70,9 @@ class UpdateForm extends Component {
     //console.log(e.target.value)
   }
 
-  initState(){
+  // initState(){
     
-  }
+  // }
 
   render() {
     if(!this.props.resourceStore.currentResource.id) return null;
@@ -86,8 +86,7 @@ class UpdateForm extends Component {
     })
 
     return (
-      <div className="modal-dialog modal-dialog-centered" role="document">
-        <div className="modal-dialog">
+      <div className="modal-dialog modal-lg" role="document">
         <div className="modal-content">
           <div className="modal-header bg-primary">
             <h2
@@ -107,7 +106,7 @@ class UpdateForm extends Component {
             </button>
           </div>
           <div className="modal-body">
-            <form ng-submit="updateFood()">
+            <form >
               <div className="container">
                 <div className="row">
                   <div className="col-6">
@@ -204,7 +203,7 @@ class UpdateForm extends Component {
                         Hiện trạng:
                       </label>
                       <div className="col-sm-7">
-                        <select ref={this.state.act}  onChange={(e) => this.onChangeActive(e)}>
+                        <select ref={this.state.act} className="form-control-sm" onChange={(e) => this.onChangeActive(e)}>
                           <option value="1" selected={act === 1 ? true: false}>Active</option>
                           <option value="0" selected={act === 0 ? true: false}>Deactive</option>
                         </select>
@@ -246,14 +245,13 @@ class UpdateForm extends Component {
                   </div>
                 </div>
               </div>
-              <div className="text-right mt-3" class="modal-footer">
-                <button type="submit" className="btn btn-danger" onClick={() => this.onupdate()}>
+              <div className="text-right mt-3" >
+                <button type="button" className="btn btn-danger" data-dismiss="modal" onClick={() => this.onupdate()}>
                   Lưu
                 </button>
                 <button
                   //type="button"
                   type="cancel"
-                  class="btn btn-default"
                   className="btn btn-secondary"
                   //data-dismiss="modal"
                 >
@@ -262,7 +260,6 @@ class UpdateForm extends Component {
               </div>
             </form>
           </div>
-        </div>
         </div>
       </div>
     );
