@@ -7,6 +7,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Propagation;
+import org.hibernate.annotations.common.util.impl.LoggerFactory;
+import org.jboss.logging.Logger;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -15,6 +17,8 @@ import com.example.demo.model.HoaDonChiTiet;
 import com.example.demo.model.HoaDonChiTietID;
 
 public interface HoaDonChiTietService extends JpaRepository<HoaDonChiTiet, HoaDonChiTietID> {
+
+	public final Logger logger = LoggerFactory.logger(HoaDonChiTietService.class); 
 
 	// GET DANH SACH Hoa Don Chi Tiet
 	public default List<HoaDonChiTiet> GetAllHoaDonChiTiets() {
@@ -30,14 +34,12 @@ public interface HoaDonChiTietService extends JpaRepository<HoaDonChiTiet, HoaDo
 	
 	// Them chi tiet hoa don
 	public default HoaDonChiTiet InSertHDCT(HoaDonChiTiet o) {
-		
-		if (o != null) {
+		try{
 			return save(o);
-			
-		} else {
-			return null;
-		}
 
+		} catch(Exception e){
+			throw e;
+		}
 	}
   
 	// Update Hoa Don Chi Tiet
@@ -121,11 +123,13 @@ public interface HoaDonChiTietService extends JpaRepository<HoaDonChiTiet, HoaDo
 		@Transactional
 		public default void UpdateHDCT(List<HoaDonChiTiet> hdct){
 			if(hdct.size() != 0){
+				int i= 0;
 				this.DeleteHDCTByHoadonId(hdct.get(0).getHoadonchitiet_id().getHoadon_id());
 				for (HoaDonChiTiet hd : hdct) {
-					HoaDonChiTietID hdctId = new HoaDonChiTietID(hdct.get(0).getHoadonchitiet_id().getHoadon_id(), hd.getHoadonchitiet_id().getMonan_id());
+					HoaDonChiTietID hdctId = new HoaDonChiTietID(i ,hdct.get(0).getHoadonchitiet_id().getHoadon_id(), hd.getHoadonchitiet_id().getMonan_id());
 					hd.setHoadonchitiet_id(hdctId);
 					this.InSertHDCT(hd);
+					i++;
 				}
 			}
 		}

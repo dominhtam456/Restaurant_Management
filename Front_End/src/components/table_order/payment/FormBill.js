@@ -1,8 +1,37 @@
 import React, { Component } from 'react'
+import { inject , observer } from 'mobx-react'
+import { observable, computed, action, decorate, toJS } from "mobx"
+import CommonUtil from './../../../util'
 
-export default class FormBill extends Component {
+ class FormBill extends Component {
+    getListStaff() {
+        
+        if(!this.props.tableStore.currentInvoice.nhanvien) return;
+        let list = "";
+        this.props.tableStore.currentInvoice.nhanvien.forEach(nv => {
+            list += nv.nhanvien.fullname;
+        });
+        return list;
+    }
 
     render() {
+        if(!this.props.tableStore.currentListOrder[0]) return null;
+        const invoice = this.props.tableStore.currentInvoice;
+        const totalMoney = this.props.tableStore.totalMoney;
+
+        const element = this.props.tableStore.currentListOrder[0].map((od, index) => {
+            console.log(toJS(od));
+            return(
+                <tr style={{lineHeight: '1em'}} key={index}>
+                    <td>{index + 1}</td>
+                    <td>{od.tenMonAn}</td>
+                    <td>{od.soluong}</td>
+                    <td>{CommonUtil.formatVND(od.price)}</td>
+                    <td>{CommonUtil.formatVND(od.thanhTien)}</td>
+                </tr>
+            )
+        })
+        
         return (
             <div style={{display: "none"}}>
             <form id="form-bill" >
@@ -16,19 +45,17 @@ export default class FormBill extends Component {
                 </div>
                 <div style={{border: '0.5px dashed'}} />
                 {/* <h5 style={{textAlign: 'center'}}>HÓA ĐƠN CHI TIẾT</h5> */}
-                <p style={{textAlign: 'center', fontSize: 16}}><b>Mã Hóa Đơn: {'{'}{'{'}hdno{'}'}{'}'} </b></p>
-                <p style={{textAlign: 'center', fontSize: 12}}><b>Ngày Lập: {'{'}{'{'}day{'}'}{'}'}</b></p>
+                <p style={{textAlign: 'center', fontSize: 16}}><b>Mã Hóa Đơn: {invoice.no} </b></p>
+                <p style={{textAlign: 'center', fontSize: 12}}><b>Ngày Lập: {invoice.date}</b></p>
                 <div className="row">
                     <div className="col-sm-6">
                     <div style={{lineHeight: 10}}>
-                        <p>Tổng Tiền Hàng: {'{'}{'{'}total| number{'}'}{'}'} đ</p>
-                        <p>Giảm Giá: 0 đ</p>
-                        <p style={{fontSize: 20}}><b>Khách Cần Trả: {'{'}{'{'}total| number{'}'}{'}'} đ</b></p>
-                        <p>Khách Thanh Toán:{'{'}{'{'}excesscash| number{'}'}{'}'} đ</p>
-                        <p>Tiền thừa trả khách: {'{'}{'{'}excesscash - total| number{'}'}{'}'} đ</p>
-                        <p>Thuế: 0%</p>
+                        <p>Tổng Tiền Hàng: {totalMoney}đ</p>
+                        <p style={{fontSize: 20}}><b>Khách Cần Trả: {CommonUtil.formatVND(totalMoney)}</b></p>
+                        {/* <p>Khách Thanh Toán:{'{'}{'{'}excesscash| number{'}'}{'}'} đ</p>
+                        <p>Tiền thừa trả khách: {'{'}{'{'}excesscash - total| number{'}'}{'}'} đ</p> */}
                         <hr />
-                        <p>Thu Ngân: Nguyen Van A</p>
+                        <p>Phục vụ : {this.getListStaff()}</p>
                     </div>
                     </div>
                     <div className="col-sm-6">
@@ -50,15 +77,7 @@ export default class FormBill extends Component {
                     </tr>
                     </thead>
                     <tbody>
-                    <tr style={{lineHeight: '1em'}}>
-                        <td>{'{'}{'{'}$index+1{'}'}{'}'}</td>
-                        <td>{'{'}{'{'}y.monan_NAME{'}'}{'}'}</td>
-                        <td>
-                        {'{'}{'{'}y.hoadonchitiet_SOLUONG{'}'}{'}'}
-                        </td>
-                        <td>{'{'}{'{'}y.hoadonchitiet_PRICE| number{'}'}{'}'}</td>
-                        <td>{'{'}{'{'}y.hoadonchitiet_PRICE*y.hoadonchitiet_SOLUONG| number{'}'}{'}'}</td>
-                    </tr>
+                    {element}
                     </tbody>
                 </table>
                 </div>
@@ -70,3 +89,4 @@ export default class FormBill extends Component {
         )
     }
 }
+export default inject("tableStore")(observer(FormBill));

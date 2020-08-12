@@ -160,3 +160,29 @@ export const mergeTable = async (listHDId) => {
   return await response.json();
 }
 
+export const getTableByActive = async (isActive) => {
+  var url = new URL(`${URL_API}/GetTabeByStatus/${isActive}`)
+
+  const response = await fetch(url, {
+      method: 'GET', // *GET, POST, PUT, DELETE, etc.
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      }
+  });
+  return await response.json();
+}
+
+export const getInvoiceById = async (id) => {
+  var url = new URL(`${URL_API}/HoaDon/${id}`)
+
+  const response = await fetch(url, {
+      method: 'GET', // *GET, POST, PUT, DELETE, etc.
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      }
+  });
+  return await response.json();
+}
+

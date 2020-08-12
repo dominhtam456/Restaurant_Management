@@ -166,7 +166,7 @@ public class InvoiceDetailController {
 			repositoryHDCT.UpdateHDCTStatus(status, hoaDonId,monAnId);
 			return true;
 		}catch(Exception e){
-			return false;
+			throw e;
 		}
 	}
 

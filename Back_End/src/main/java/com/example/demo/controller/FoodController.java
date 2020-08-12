@@ -2,8 +2,11 @@ package com.example.demo.controller;
 
 import javax.validation.Valid;
 
+import java.io.ObjectInputFilter.Status;
 import java.util.List;
 
+import org.hibernate.annotations.common.util.impl.LoggerFactory;
+import org.jboss.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -26,6 +29,9 @@ import com.example.demo.model.MonAn;
 @RestController
 @RequestMapping("/api")
 public class FoodController {
+
+	private final Logger logger = LoggerFactory.logger(FoodController.class);
+
 
     @Autowired
     MonAnService repositoryMonAn;
@@ -54,6 +60,18 @@ public class FoodController {
 			monan.setTenloaimonan(GetTenLoaiMonAn(monan.getLoaimonan_id()));
 		}
 		return repositoryMonAn.findAll();
+	}
+
+	@RequestMapping(path = "/GetFoodByActive/{status}", produces = MediaType.APPLICATION_JSON_VALUE)
+	@PreAuthorize("@appAuthorizer.authorize(authentication, 'VIEW', this)")
+	public java.util.List<MonAn> GetFoodByStatus(@PathVariable("status") int status) {
+		// This returns a JSON or XML with the users
+		//java.util.List<MonAn> listFood = repositoryMonAn.GetFoodByStatus(status);
+		for (MonAn monan : repositoryMonAn.GetFoodByStatus(status)) {
+			// Set ten loai nguyen lieu
+			monan.setTenloaimonan(GetTenLoaiMonAn(monan.getLoaimonan_id()));
+		}
+		return repositoryMonAn.GetFoodByStatus(status);
 	}
 
 	// LAY 1 MON AN

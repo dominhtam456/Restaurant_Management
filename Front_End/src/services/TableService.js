@@ -70,6 +70,7 @@ export const updateTables = async (table) => {
   return await response.json();
 }
 
+
 export const deleteTables = async (table) => {
   var url = new URL(`${URL_API}/UpdateBan`);
   // params = {id, name, isActive}
@@ -86,3 +87,15 @@ export const deleteTables = async (table) => {
   return await response.json();
 }
 
+export const getTableByActive = async (isActive) => {
+  var url = new URL(`${URL_API}/GetTabeByStatus/${isActive}`)
+
+  const response = await fetch(url, {
+      method: 'GET', // *GET, POST, PUT, DELETE, etc.
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      }
+  });
+  return await response.json();
+}

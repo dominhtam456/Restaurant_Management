@@ -35,6 +35,13 @@ public class TableController {
 		return repositoryBan.GetAllBans();
 	}
 
+	@RequestMapping(path = "/GetTabeByStatus/{status}", produces = MediaType.APPLICATION_JSON_VALUE)
+	@PreAuthorize("@appAuthorizer.authorize(authentication, 'VIEW', this)")
+	public java.util.List<Ban> GetTabeByStatus(@PathVariable("status") int status) {
+		// This returns a JSON or XML with the users
+		return repositoryBan.GetTabeByStatus(status);
+	}
+
 	// LAY 1 BAN
 	@RequestMapping(value = "/Ban/{id}", method = RequestMethod.GET)
 	@PreAuthorize("@appAuthorizer.authorize(authentication, 'VIEW', this)")
