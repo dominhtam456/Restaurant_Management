@@ -18,6 +18,7 @@ export default class Table {
     listNotice = [];
     currentListNotice = [];
     flag = false;
+    currentInvoice = {};
 
     mergeTable = async() => {
         let list = [];
@@ -148,6 +149,7 @@ export default class Table {
     }
 
     payment = async () => {
+        this.currentInvoice = await InvoiceService.getInvoiceById(this.currentListOrder[0][0].hoadonchitiet_id.hoadon_id)
         if(this.currentListOrder.length == 1){
             await InvoiceService.updateInvoiceStatus(1, this.currentListOrder[0][0].hoadonchitiet_id.hoadon_id);
             let lst = [];
@@ -162,10 +164,26 @@ export default class Table {
             });
 
             await TableService.updateTableStatus("Trong", lst);
+            await this.refactorListOrder();
+            await this.update();
             await this.getTable();
             await this.getListOrder();
+            return true;
         }
+        return false;
         //console.log(toJS(this.currentListOrder))
+    }
+
+    refactorListOrder = async() => {
+        for(let i = 0; i< this.currentListOrder[0].length - 1; i++){
+            for(let j = i+1; j< this.currentListOrder[0].length; j++){
+                if(this.currentListOrder[0][i].hoadonchitiet_id.monan_id === this.currentListOrder[0][j].hoadonchitiet_id.monan_id){
+                    this.currentListOrder[0][i].soluong += this.currentListOrder[0][j].soluong;
+                    this.currentListOrder[0][i].thanhTien = this.currentListOrder[0][i].soluong * this.currentListOrder[0][i].price
+                    this.currentListOrder[0].splice(j, 1);
+                }
+            }
+        }
     }
 
     calTotalMoney = () => {
@@ -185,7 +203,7 @@ export default class Table {
     deleteOrder = (order) => {
         if(this.currentListOrder.length > 0){
             for(let i=0; i<this.currentListOrder[0].length; i++){
-                if(order.hoadonchitiet_id.monan_id == this.currentListOrder[0][i].hoadonchitiet_id.monan_id){
+                if(order.hoadonchitiet_id.id == this.currentListOrder[0][i].hoadonchitiet_id.id){
                     this.currentListOrder[0].splice(i, 1);
                     this.totalMoney = this.calTotalMoney();
                     return;
@@ -245,10 +263,11 @@ export default class Table {
     // }
 
     setCurrentListOrder = (food) => {
-        if(!this.currentTable[0].id) return;
+        if(!this.currentTable[0]) return;
         if(this.currentListOrder.length === 0) this.currentListOrder[0] = [];
         for(let i=0; i<this.currentListOrder[0].length; i++){
-            if(food.id == this.currentListOrder[0][i].hoadonchitiet_id.monan_id){
+            let order = this.currentListOrder[0][i];
+            if(food.id == order.hoadonchitiet_id.monan_id && (order.status === "queue" || order.status === "cancel")){
                 this.currentListOrder[0][i].soluong++;
                 return;
             }
@@ -289,16 +308,17 @@ export default class Table {
     }
 
     getTable = async () => {
-        const data = await TableService.getTables();
+        const data = await TableService.getTableByActive(1);
         this.listTable = data;
     }
 
     getFoods = async () => {
-        const data = await FoodService.getFoods();
+        const data = await FoodService.getFoodByActive(1);
         this.listFood = data;
     }
 
     update = async () => {
+        console.log(toJS(this.currentListOrder[0]))
         await InvoiceService.updateHDCT(this.currentListOrder[0]);
     }
 
@@ -370,6 +390,7 @@ decorate(Table, {
     listReadyFood: observable,
     listNotice: observable,
     currentListNotice: observable,
+    currentInvoice: observable,
 
     getTable: action,
     getFoods: action,
@@ -385,5 +406,6 @@ decorate(Table, {
     getListReadyFood: action,
     update: action,
     solvedNotice: action,
-    mergeTable: action
+    mergeTable: action,
+    refactorListOrder: action
 })

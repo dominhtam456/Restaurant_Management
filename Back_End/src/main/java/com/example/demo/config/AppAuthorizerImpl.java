@@ -57,8 +57,8 @@ public class AppAuthorizerImpl implements AppAuthorizer{
 
             List<String> role_cashier = new ArrayList<String>() { 
                 { 
-                    //add("FoodController"); 
-                    //add("FoodDetailController"); 
+                    add("FoodController"); 
+                    add("FoodDetailController"); 
                     add("HoadonBanController"); 
                     add("InvoiceController"); 
                     add("InvoiceDetailController"); 

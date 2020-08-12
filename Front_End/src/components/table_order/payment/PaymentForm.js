@@ -5,6 +5,8 @@ import TableDetail from './TableDetail'
 import { inject , observer } from 'mobx-react'
 import CommonUtil from './../../../util'
 
+
+
 class PaymentForm extends Component {
     constructor(props) {
         super(props);
@@ -14,9 +16,13 @@ class PaymentForm extends Component {
         }
       }
     async print(){
+        await this.props.tableStore.refactorListOrder();
+        printJS('form-bill', 'html'); 
         await this.props.tableStore.payment();
-        printJS('form-bill', 'html');     
+        
+          
     }
+
 
     onLoseFocus() {
         let excessCash = this.payCash.current.value - this.props.tableStore.totalMoney;
@@ -81,7 +87,7 @@ class PaymentForm extends Component {
                             </div>
                         </div>
                         <div className="modal-footer">
-                            <button type="button" className="btn btn-danger" onClick={() => this.print() } data-dismiss="modal" >Thanh Toán</button>
+                            <button type="button" className="btn btn-danger" onClick={() =>this.print() } data-dismiss="modal" >Thanh Toán</button>
                             
                         </div>
                         

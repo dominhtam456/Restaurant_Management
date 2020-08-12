@@ -65,37 +65,37 @@ export default class Sidebar extends Component {
                       </li>
                       <li className="nav-item">
                         {role == 4 ?
-                        <Link to='/table' className="nav-link text-white" >
+                        <Link to='/food' className="nav-link text-white" >
                           <i className="fas fa-vector-square text-danger " /> Món ăn
                         </Link> : ''}
                       </li>
                       <li className="nav-item">
                         {role == 4 ?
-                        <Link to='/table' className="nav-link text-white" >
+                        <Link to='/resources' className="nav-link text-white" >
                           <i className="fas fa-vector-square text-danger " /> Nguyên liệu
                         </Link> : ''}
                       </li>
                       <li className="nav-item">
                         {role == 4 ?
-                        <Link to='/table' className="nav-link text-white" >
+                        <Link to='/table_manage' className="nav-link text-white" >
                           <i className="fas fa-vector-square text-danger " /> Bàn
                         </Link> : ''}
                       </li>
                       <li className="nav-item">
                         {role == 4 ?
-                        <Link to='/table' className="nav-link text-white" >
+                        <Link to='/staff_manage' className="nav-link text-white" >
                           <i className="fas fa-vector-square text-danger " /> Nhân viên
                         </Link> : ''}
                       </li>
                       <li className="nav-item">
                         {role == 4 ?
-                        <Link to='/table' className="nav-link text-white" >
+                        <Link to='/statistical' className="nav-link text-white" >
                           <i className="fas fa-vector-square text-danger " /> Thống kê
                         </Link> : ''}
                       </li>
                       <li className="nav-item">
-                        {role == 3 ?
-                        <Link to='/table' className="nav-link text-white" >
+                        {role == 3 || role == 4 ?
+                        <Link to='/kitchen' className="nav-link text-white" >
                           <i className="fas fa-vector-square text-danger " /> Bếp
                         </Link> : ''}
                       </li>

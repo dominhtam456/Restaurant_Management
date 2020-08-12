@@ -16,6 +16,9 @@ public interface BanService extends JpaRepository<Ban, Long>{
 	//SEARCH BAN SU DUNG QUERY 
 	@Query("FROM Ban WHERE name LIKE %:keyword%")
 	public List<Ban> SearchBans(@Param("keyword") String keyword);
+
+	@Query(value = "select * FROM ban WHERE is_active = :isActive", nativeQuery = true)
+	public List<Ban> GetTabeByStatus(@Param("isActive") int isActive);
 	//CAP NHAT TRANG THAI BAN
 	/*
 	 * @Modifying

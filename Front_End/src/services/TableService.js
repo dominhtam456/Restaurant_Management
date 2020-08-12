@@ -78,11 +78,24 @@ export const updateHDB = async (fromTable, toTable, hoadon_id) => {
   Object.keys(params).forEach(key => url.searchParams.append(key, params[key]))
   
   const response = await fetch(url, {
-      method: 'POST', // *GET, POST, PUT, DELETE, etc.
+    method: 'POST', // *GET, POST, PUT, DELETE, etc.
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${localStorage.getItem('token')}` 
+    }      
+  });
+  return await response.json();
+}
+
+export const getTableByActive = async (isActive) => {
+  var url = new URL(`${URL_API}/GetTabeByStatus/${isActive}`)
+
+  const response = await fetch(url, {
+      method: 'GET', // *GET, POST, PUT, DELETE, etc.
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('token')}` 
-      }      
-    });
-    return await response.json();
-  }
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      }
+  });
+  return await response.json();
+}
