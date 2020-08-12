@@ -1,12 +1,11 @@
 import React, { Component } from "react";
 // import FootDetailFooter from "./FootDetailFooter";
 import UpdateForm from "./UpdateForm";
+import { inject , observer} from 'mobx-react'
 
-export default class FoodDetail extends Component {
-  constructor(props) {
-    super(props);
-    this.myRef = React.createRef();
-    this.no = React.createRef();
+class FoodDetail extends Component {
+  onclick(){
+    this.props.foodStore.setcurrentfood(this.props.food);
   }
 
   componentDidMount() {
@@ -60,16 +59,16 @@ export default class FoodDetail extends Component {
                                 <td>{this.props.food.no}</td>
                               </tr>
                               <tr className="p-2">
-                                <td>Tên món ăn:</td>
-                                <td>{this.props.food.name}</td>
-                              </tr>
-                              <tr className="p-2">
                                 <td>Giá Bán:</td>
                                 <td>{this.props.food.price}đ</td>
                               </tr>
                               <tr className="p-2">
                                 <td>Đơn vị tính:</td>
                                 <td>{this.props.food.unit}</td>
+                              </tr>
+                              <tr className="p-2">
+                                <td>Tên loại món ăn:</td>
+                                <td>{this.props.food.tenloaimonan}</td>
                               </tr>
                             </tbody>
                           </table>
@@ -95,7 +94,7 @@ export default class FoodDetail extends Component {
                               </tr>
                               <tr className="p-2">
                                 <td>Hiện trạng:</td>
-                                <td>{this.props.food.isActive}</td>
+                                <td>{this.props.food.isActive === 1 ? "Active" : "Deactive"}</td>
                               </tr>
                             </tbody>
                           </table>
@@ -108,6 +107,7 @@ export default class FoodDetail extends Component {
                         className="btn btn-success "
                         data-toggle="modal"
                         data-target={`#b${this.props.food.id}`}
+                        onClick ={() => this.onclick()}
                       >
                         <i className="fas fa-plus-circle" /> Cập Nhật
                       </button>
@@ -170,3 +170,4 @@ export default class FoodDetail extends Component {
     );
   }
 }
+export default inject("foodStore")(observer(FoodDetail))

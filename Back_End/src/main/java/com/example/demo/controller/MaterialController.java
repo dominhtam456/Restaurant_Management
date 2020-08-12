@@ -9,6 +9,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -69,14 +70,12 @@ public class MaterialController {
 	}
 
 	// THEM NGUYEN LIEU
-	@RequestMapping(value = "/InsertNguyenLieu", method = RequestMethod.POST, produces = {
-			MediaType.APPLICATION_ATOM_XML_VALUE,
-			MediaType.APPLICATION_JSON_VALUE }, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+	@RequestMapping(value = "/InsertNguyenLieu", method = RequestMethod.POST)
 	@PreAuthorize("@appAuthorizer.authorize(authentication, 'VIEW', this)")
 	@ResponseBody
-	public NguyenLieu insertNguyenLieu(NguyenLieu nguyenlieuForm) {
+	public NguyenLieu insertNguyenLieu(@RequestBody NguyenLieu nguyenlieuForm) {
 		try {
-			return repositoryNguyenLieu.save(nguyenlieuForm);
+			return repositoryNguyenLieu.InsertNguyenLieu(nguyenlieuForm);
 		} catch (Exception e) {
 			// TODO: handle exception
 			return null;
@@ -85,17 +84,20 @@ public class MaterialController {
 	}
 
 	// CAP NHAT NGUYEN LIEU
-	@RequestMapping(value = "/UpdateNguyenLieu", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+	@RequestMapping(value = "/UpdateNguyenLieu", method = RequestMethod.POST)
 	@PreAuthorize("@appAuthorizer.authorize(authentication, 'VIEW', this)")
-	public ResponseEntity<NguyenLieu> updateNguyenLieu(@Valid NguyenLieu nguyenlieuForm) {
+	public ResponseEntity<NguyenLieu> updateNguyenLieu(@Valid @RequestBody NguyenLieu nguyenlieuForm) {
 		NguyenLieu nl = repositoryNguyenLieu.getOne(nguyenlieuForm.getId());
 		if (nl == null) {
 			return ResponseEntity.notFound().build();
 		}
-
+		nl.setNo(nguyenlieuForm.getNo());
 		nl.setName(nguyenlieuForm.getName());
 		nl.setPrice(nguyenlieuForm.getPrice());
 		nl.setDate(nguyenlieuForm.getDate());
+		nl.setImage(nguyenlieuForm.getImage());
+		nl.setLoainguyenlieu_id(nguyenlieuForm.getLoainguyenlieu_id());
+		nl.setIsActive(nguyenlieuForm.getIsActive());
 
 		NguyenLieu updatedNguyenLieu = repositoryNguyenLieu.save(nl);// update trong database
 		return ResponseEntity.ok(updatedNguyenLieu);

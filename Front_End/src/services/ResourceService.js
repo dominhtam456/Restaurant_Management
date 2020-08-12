@@ -45,9 +45,11 @@ export const addResources = async (resource) => {
         'Authorization': `Bearer ${localStorage.getItem('token')}`
       },
       body: JSON.stringify(resource)
-  });
+  })
   return await response.json();
 }
+  
+
 
 export const addTypeResources = async (resource) => {
   const url = `${URL_API}/InsertLoaiNguyenLieu`;
@@ -93,3 +95,15 @@ export const updateResources = async (resource) => {
 //   });
 //   return await response.json();
 // }
+
+export const searchResource = async (name) => {
+  const url = `${URL_API}/SearchResources/${name}`;
+  const response = await fetch(url, {
+      method: 'GET', // *GET, POST, PUT, DELETE, etc.
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      }      
+  });
+  return await response.json();
+}

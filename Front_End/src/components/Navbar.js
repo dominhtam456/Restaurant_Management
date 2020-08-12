@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
+import { inject , observer} from 'mobx-react'
+import { toJS } from 'mobx'
 
-export default class Navbar extends Component {
+class Navbar extends Component {
 
     w3_open() {
         document.getElementById("main").style.marginLeft = "15%";
@@ -15,6 +17,7 @@ export default class Navbar extends Component {
             backgroundColor: 'white', 
             display: 'none'
           }
+          
         return (
             <div>
                 {/* Navbar */}
@@ -38,14 +41,14 @@ export default class Navbar extends Component {
                                     <img alt="Image placeholder" src={process.env.PUBLIC_URL + "/img/icons/avatar.png"} />
                                 </span>
                                 <div className="media-body ml-2 d-none d-lg-block">
-                                    <span className="mb-0 text-sm  font-weight-bold text-dark">Tâm </span>
+                                    <span className="mb-0 text-sm  font-weight-bold text-dark"> Admin </span>
                                 </div>
                             </div>
                             </a>
                             
                             <div className="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
                             <div className="dropdown-divider" />
-                            <a href="#!login" className="dropdown-item">
+                            <a href="login" className="dropdown-item">
                                 <i className="ni ni-user-run" />
                                 <span>Logout</span>
                             </a>
@@ -62,3 +65,4 @@ export default class Navbar extends Component {
         )
     }
 }
+export default inject("staffStore")(observer(Navbar))

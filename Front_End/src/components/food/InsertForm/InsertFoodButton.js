@@ -1,7 +1,22 @@
 import React, { Component } from "react";
 import InsertForm from "./InsertForm";
+import { inject, observer } from "mobx-react";
 
-export default class InsertFoodButton extends Component {
+class InsertFoodButton extends Component {
+  constructor(props) {
+    super(props);
+    this.name = React.createRef();
+    this.desc = React.createRef();
+  }
+
+  onclick() {
+    this.props.foodStore.pushTypeFood(
+      this.name.current.value,
+      this.desc.current.value
+    );
+    this.props.foodStore.getTypeFood();
+  }
+
   render() {
     return (
       <div className="float-md-right mb-3 mr-3">
@@ -87,6 +102,14 @@ export default class InsertFoodButton extends Component {
                               >
                                 Thêm Loại Món Ăn
                               </h5>
+                              <button
+                                type="button"
+                                className="close"
+                                data-dismiss="modal"
+                                aria-label="Close"
+                              >
+                                <span aria-hidden="true">×</span>
+                              </button>
                             </div>
                             <div className="modal-body">
                               <form className="mt-2">
@@ -106,6 +129,7 @@ export default class InsertFoodButton extends Component {
                                             className="form-control form-control-sm"
                                             id="inputName"
                                             placeholder="eg. Món chiên"
+                                            ref={this.name}
                                           />
                                           <p className="text-danger">
                                             {"{"}
@@ -129,7 +153,7 @@ export default class InsertFoodButton extends Component {
                                             type="text"
                                             className="form-control form-control-sm"
                                             id="inputName"
-                                            placeholder="eg. Món chiên"
+                                            ref={this.desc}
                                           />
                                           <p className="text-danger">
                                             {"{"}
@@ -146,8 +170,10 @@ export default class InsertFoodButton extends Component {
                                 </div>
                                 <div className="modal-footer">
                                   <button
-                                    type="submit"
+                                    type="button"
                                     className="btn btn-danger"
+                                    data-dismiss="modal"
+                                    onClick={() => this.onclick()}
                                   >
                                     Lưu
                                   </button>
@@ -190,3 +216,4 @@ export default class InsertFoodButton extends Component {
     );
   }
 }
+export default inject("foodStore")(observer(InsertFoodButton));

@@ -28,12 +28,7 @@ class ResourceRow extends Component {
         </td>
         <td>
           <span className="badge badge-dot">
-            {this.props.resource.date}
-          </span>
-        </td>
-        <td>
-          <span className="badge badge-dot">
-            {this.props.resource.isActive}
+            {this.props.resource.isActive === 1 ? "Active" : "Deactive"}
           </span>
         </td>
       </tr>

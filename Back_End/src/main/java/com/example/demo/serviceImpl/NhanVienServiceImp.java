@@ -1,8 +1,10 @@
 package com.example.demo.serviceImpl;
 
 import com.example.demo.dao.NhanVienDao;
+import com.example.demo.model.ChucVu;
 import com.example.demo.model.NhanVien;
 import com.example.demo.model.NhanVienDto;
+import com.example.demo.service.ChucVuService;
 import com.example.demo.service.NhanVienService;
 
 import org.springframework.beans.BeanUtils;
@@ -24,6 +26,9 @@ public class NhanVienServiceImp  implements UserDetailsService, NhanVienService 
 	
 	@Autowired
 	private NhanVienDao nhanvienDao;
+	
+	@Autowired
+	private ChucVuService chucvuService;
 
 	@Autowired
 	private BCryptPasswordEncoder bcryptEncoder;
@@ -46,6 +51,11 @@ public class NhanVienServiceImp  implements UserDetailsService, NhanVienService 
 		List<NhanVien> list = new ArrayList<>();
 		nhanvienDao
 		.findAll().iterator().forEachRemaining(list::add);
+		
+		for (NhanVien nhanVien : list) {
+			ChucVu cv = chucvuService.getOne(Long.valueOf(nhanVien.getLoai()));
+			nhanVien.setChucvu(cv.getName());
+		}
 		return list;
 	}
 	
@@ -67,13 +77,14 @@ public class NhanVienServiceImp  implements UserDetailsService, NhanVienService 
 	}
 
 	@Override
-    public NhanVienDto updateNhanVien(NhanVienDto nhanvienDto) {
+    public NhanVien updateNhanVien(NhanVienDto nhanvienDto) {
         NhanVien nhanvien = findById(nhanvienDto.getId());
         if(nhanvien != null) {
             BeanUtils.copyProperties(nhanvienDto, nhanvien, "password");
+            nhanvien.setIsactive(nhanvienDto.getIsActive());
             nhanvienDao.save(nhanvien);
         }
-        return nhanvienDto;
+        return nhanvien;
     }
 	
 	 @Override
@@ -86,8 +97,15 @@ public class NhanVienServiceImp  implements UserDetailsService, NhanVienService 
 		    newNhanVien.setPassword(bcryptEncoder.encode(nhanvien.getPassword()));
 			newNhanVien.setLoai(nhanvien.getLoai());
 			newNhanVien.setImg(nhanvien.getImg());
+			newNhanVien.setIsactive(nhanvien.getIsActive());
 	        return nhanvienDao.save(newNhanVien);
 	    }
+
+	@Override
+	public List<NhanVien> findByName(String fullname) {
+		// TODO Auto-generated method stub
+		return nhanvienDao.TimNhanVienTheoTen(fullname);
+	}
 	 
 	 
 }

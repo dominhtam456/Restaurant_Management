@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { inject , observer } from 'mobx-react'
+import { toJS } from 'mobx';
 
 class UpdateForm extends Component {
   constructor(props) {
@@ -7,37 +8,93 @@ class UpdateForm extends Component {
     this.no = React.createRef();
     this.name = React.createRef();
     this.price = React.createRef();
-    this.typename = React.createRef();  
+    this.typeid = React.createRef();  
     this.date = React.createRef();
-    this.isactive = React.createRef();
     //this.image = React.createRef();
+    this.state=({
+      num:"", 
+      dat:"",
+      act:""
+    });
+    this.isactive = React.createRef();
     }
 
-  onupdate(){
-    this.props.resourceStore.pushResource(this.no.current.value,
+    async componentDidMount(){
+      await this.props.resourceStore.getTypeResource();
+    }
+
+    // encodeImageFileAsURL = (element) => {
+    //   var file = element.files[0];
+    //   var reader = new FileReader();
+    //   reader.onloadend = function() {
+    //     console.log('RESULT', reader.result)
+    //   }
+    //   reader.readAsDataURL(file);
+    // }
+
+  async onupdate(){
+    //console.log(this.state.num)
+  
+    if(this.state.num === "") await this.setState({num:this.props.resourceStore.currentResource.loainguyenlieu_id});
+    if(this.state.act === "") await this.setState({act:this.props.resourceStore.currentResource.isActive});
+    if(this.state.dat === "") await this.setState({dat:this.props.resourceStore.currentResource.date.substr(0,10)});
+
+    await this.props.resourceStore.updateResource(this.no.current.value,
                                           this.name.current.value, 
                                           this.price.current.value, 
-                                          this.typename.value,
-                                          this.date.current.value, 
-                                          this.isactive.value)
+                                          this.state.dat, 
+                                          this.state.num,
+                                          this.state.act);
+    await this.props.resourceStore.getResource();
 }
-  render() {
-    const listType= this.props.resourceStore.listTypeResource.map((resource, index)=>{
-      return <option value={resource.id}>
-                {resource.name}
-              </option>
+  onChangeSelect(e) {
+    this.typeid=e.target.value;
+    this.setState({
+      num:e.target.value
     })
+    //console.log(e.target.value)
+  }
+  onChangeDate(e) {
+    this.date=e.target.value;
+    this.setState({
+      dat:e.target.value
+    })
+    //console.log(e.target.value)
+  }
+
+  onChangeActive(e){
+    this.isactive=e.target.value;
+    this.setState({
+      act:e.target.value
+    })
+    //console.log(e.target.value)
+  }
+
+  // initState(){
     
+  // }
+
+  render() {
+    if(!this.props.resourceStore.currentResource.id) return null;
+    //console.log("date",toJS(this.props.resourceStore.currentResource.date));
+    let act = this.props.resourceStore.currentResource.isActive;
+    //console.log(act);
+    let type = this.props.resourceStore.currentResource.loainguyenlieu_id;
+
+    const listType= this.props.resourceStore.listTypeResources.map((resource, index)=>{
+      return <option key={index} value={resource.id} selected={type === resource.id ? true: false} >{resource.name}</option>
+    })
+
     return (
       <div className="modal-dialog modal-lg" role="document">
         <div className="modal-content">
           <div className="modal-header bg-primary">
             <h2
               className="modal-title"
-              id="modifyFoodsTitle"
+              id="resourceTile"
               style={{ color: "white" }}
             >
-              Cập Nhật Thông Tin Món Ăn
+              Cập Nhật Thông Tin Nguyên Liệu
             </h2>
             <button
               type="button"
@@ -49,7 +106,7 @@ class UpdateForm extends Component {
             </button>
           </div>
           <div className="modal-body">
-            <form ng-submit="updateFood()">
+            <form >
               <div className="container">
                 <div className="row">
                   <div className="col-6">
@@ -66,6 +123,7 @@ class UpdateForm extends Component {
                           className="form-control form-control-sm"
                           id="input1"
                           ref={this.no}
+                          defaultValue={this.props.resourceStore.currentResource.no}
                         />
                       </div>
                     </div>
@@ -82,6 +140,7 @@ class UpdateForm extends Component {
                           className="form-control form-control-sm"
                           id="inputName"
                           ref={this.name}
+                          defaultValue={this.props.resourceStore.currentResource.name}
                         />
                       </div>
                     </div>
@@ -93,7 +152,7 @@ class UpdateForm extends Component {
                         Loại nguyên liệu:
                       </label>
                       <div className="col-sm-7">
-                        <select className="form-control-sm" id="inputType" ref={this.typename}>
+                        <select className="form-control-sm" id="inputType" onChange={(e) => this.onChangeSelect(e)}>
                           {listType}
                         </select>
                       </div>
@@ -113,6 +172,7 @@ class UpdateForm extends Component {
                           id="inputNum"
                           placeholder={0}
                           ref={this.price}
+                          defaultValue={this.props.resourceStore.currentResource.price}
                         />
                       </div>
                     </div>
@@ -129,8 +189,9 @@ class UpdateForm extends Component {
                           type="date"
                           class="form-control form-control-sm "
                           id="inputNum"
-                          placeholder={0}
-                          ref={this.date}
+                          placeholder="dd/MM/yyyy"
+                          defaultValue={this.props.resourceStore.currentResource.date.substr(0,10)}
+                          onChange={(e)=> this.onChangeDate(e)}
                         />
                       </div>
                     </div>
@@ -142,9 +203,9 @@ class UpdateForm extends Component {
                         Hiện trạng:
                       </label>
                       <div className="col-sm-7">
-                        <select ref={this.isactive}>
-                          <option value="1">Active</option>
-                          <option value="0">Deactive</option>
+                        <select ref={this.state.act} className="form-control-sm" onChange={(e) => this.onChangeActive(e)}>
+                          <option value="1" selected={act === 1 ? true: false}>Active</option>
+                          <option value="0" selected={act === 0 ? true: false}>Deactive</option>
                         </select>
                       </div>
                     </div>
@@ -167,7 +228,7 @@ class UpdateForm extends Component {
                         <div class="row">
                           <div class="card-body border">
                             <div class="col-6">
-                              <img width={150} height={150} alt="" />
+                              <img width={150} height={150}  />
                             </div>
                           </div>
                           <div class="col-6"></div>
@@ -175,7 +236,7 @@ class UpdateForm extends Component {
                         <div class="row mt-1">
                           <div class="file-field">
                             <div class="btn form-control-file btn-sm btn-success ml-2">
-                              <input type="file" />
+                              <input type="file" onChange={()=> this.encodeImageFileAsURL} />
                             </div>
                           </div>
                         </div>
@@ -184,14 +245,16 @@ class UpdateForm extends Component {
                   </div>
                 </div>
               </div>
-              <div className="text-right mt-3">
-                <button type="submit" className="btn btn-danger" onClick={() => this.onupdate()}>
+              <div className="text-right mt-3" >
+                <button type="button" className="btn btn-danger" data-dismiss="modal" onClick={() => this.onupdate()}>
                   Lưu
                 </button>
                 <button
                   type="button"
-                  className="btn btn-secondary"
+                  //type="cancel"
                   data-dismiss="modal"
+                  className="btn btn-secondary"
+                  //data-dismiss="modal"
                 >
                   Đóng
                 </button>

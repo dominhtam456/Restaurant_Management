@@ -1,7 +1,77 @@
 import React, { Component } from "react";
+import { inject , observer} from 'mobx-react'
+import { toJS } from 'mobx';
 
-export default class UpdateForm extends Component {
+class UpdateForm extends Component {
+  constructor(props) {
+    super(props);
+    this.no = React.createRef();
+    this.name = React.createRef();
+    this.price = React.createRef();
+    this.typeid = React.createRef();  
+    this.unit = React.createRef();
+    //this.image = React.createRef();
+    this.state=({
+      num:"",
+      act:"",
+      sta:"",
+    });
+    this.isactive = React.createRef();
+    this.desc = React.createRef();
+    this.sta = React.createRef();
+    }
+
+    async componentDidMount(){
+      await this.props.foodStore.getTypeFood();
+    }
+
+    async onupdate(){
+      if(this.state.num === "") await this.setState({num:this.props.foodStore.currentFood.loaimonan_id});
+      if(this.state.act === "") await this.setState({act:this.props.foodStore.currentFood.isActive});
+      if(this.state.sta === "") await this.setState({sta:this.props.foodStore.currentFood.status});
+
+      await this.props.foodStore.updateFood(this.no.current.value, 
+                                      this.name.current.value,
+                                      this.price.current.value,
+                                      this.unit.current.value,
+                                      this.state.num,
+                                      this.state.act,
+                                      this.desc.current.value,
+                                      this.state.sta);
+      await this.props.foodStore.getFood();
+    }
+
+    onChangeSelect(e) {
+      this.typeid=e.target.value;
+      this.setState({
+        num:e.target.value
+      })
+      //console.log(e.target.value)
+    }
+    onChangeSta(e) {
+      this.sta=e.target.value;
+      this.setState({
+        sta:e.target.value
+      })
+      //console.log(e.target.value)
+    }
+  
+    onChangeActive(e){
+      this.isactive=e.target.value;
+      this.setState({
+        act:e.target.value
+      })
+      //console.log(e.target.value)
+    }
+
   render() {
+    let status = this.props.foodStore.currentFood.status;
+    let act = this.props.foodStore.currentFood.isActive;
+    let type = this.props.foodStore.currentFood.loaimonan_id;
+    const listType= this.props.foodStore.listTypeFoods.map((food, index)=>{
+      return <option key={index} value={food.id} selected={type === food.id ? true: false} >{food.name}</option>
+    })
+    // console.log("aaa",toJS(this.props.foodStore.currentFood.id));
     return (
       <div className="modal-dialog modal-lg" role="document">
         <div className="modal-content">
@@ -23,7 +93,7 @@ export default class UpdateForm extends Component {
             </button>
           </div>
           <div className="modal-body">
-            <form ng-submit="updateFood()">
+            <form >
               <div className="container">
                 <div className="row">
                   <div className="col-6">
@@ -39,6 +109,8 @@ export default class UpdateForm extends Component {
                           type="text"
                           className="form-control form-control-sm"
                           id="input1"
+                          ref={this.no}
+                          defaultValue={this.props.foodStore.currentFood.no}
                         />
                       </div>
                     </div>
@@ -54,6 +126,8 @@ export default class UpdateForm extends Component {
                           type="text"
                           className="form-control form-control-sm"
                           id="inputName"
+                          ref={this.name}
+                          defaultValue={this.props.foodStore.currentFood.name}
                         />
                       </div>
                     </div>
@@ -65,12 +139,8 @@ export default class UpdateForm extends Component {
                         Loại món ăn:
                       </label>
                       <div className="col-sm-7">
-                        <select className="form-control-sm" id="inputType">
-                          <option value="{{x.id}}">
-                            {"{"}
-                            {"{"}x.loaimonan_NAME{"}"}
-                            {"}"}
-                          </option>
+                        <select className="form-control-sm" id="inputType" onChange={(e) => this.onChangeSelect(e)}>
+                          {listType}
                         </select>
                       </div>
                     </div>
@@ -86,6 +156,8 @@ export default class UpdateForm extends Component {
                           type="text"
                           className="form-control form-control-sm "
                           id="inputNum"
+                          ref={this.price}
+                          defaultValue={this.props.foodStore.currentFood.price}
                         />
                       </div>
                     </div>
@@ -101,6 +173,25 @@ export default class UpdateForm extends Component {
                           type="text"
                           className="form-control form-control-sm "
                           id="inputUnit"
+                          ref={this.unit}
+                          defaultValue={this.props.foodStore.currentFood.unit}
+                        />
+                      </div>
+                    </div>
+                    <div className="form-group row">
+                      <label
+                        htmlFor="inputUnit"
+                        className="col-sm-4 col-form-label form-control-sm"
+                      >
+                        Thành phần:
+                      </label>
+                      <div className="col-sm-7">
+                        <textarea
+                          type="text"
+                          className="form-control form-control-sm "
+                          id="inputUnit"
+                          ref={this.desc}
+                          defaultValue={this.props.foodStore.currentFood.description}
                         />
                       </div>
                     </div>
@@ -112,9 +203,23 @@ export default class UpdateForm extends Component {
                         Trạng thái:
                       </label>
                       <div className="col-sm-7">
-                        <select className="form-control-sm" id="inputType">
-                          <option value="Còn">Còn</option>
-                          <option value="Không">Không</option>
+                        <select className="form-control-sm" id="inputType" onChange={(e) => this.onChangeSta(e)}>
+                          <option value="Còn" selected={status === "Còn" ? true: false}>Còn</option>
+                          <option value="Không" selected={status === "Không" ? true: false}>Không </option>
+                        </select>
+                      </div>
+                    </div>
+                    <div className="form-group row">
+                      <label
+                        htmlFor="inputUnit"
+                        className="col-sm-4 col-form-label form-control-sm"
+                      >
+                        Hiện trạng:
+                      </label>
+                      <div className="col-sm-7">
+                        <select ref={this.state.act} className="form-control-sm" onChange={(e) => this.onChangeActive(e)}>
+                          <option value="1" selected={act === 1 ? true: false}>Active</option>
+                          <option value="0" selected={act === 0 ? true: false}>Deactive</option>
                         </select>
                       </div>
                     </div>
@@ -131,7 +236,7 @@ export default class UpdateForm extends Component {
                         <div class="row">
                           <div class="card-body border">
                             <div class="col-6">
-                              <img width={150} height={150} alt="" />
+                              <img width={150} height={150} alt="" src={this.props.foodStore.image}/>
                             </div>
                           </div>
                           <div class="col-6"></div>
@@ -149,7 +254,7 @@ export default class UpdateForm extends Component {
                 </div>
               </div>
               <div className="text-right mt-3">
-                <button type="submit" className="btn btn-danger">
+                <button type="button" className="btn btn-danger" data-dismiss="modal" onClick={() => this.onupdate()}>
                   Lưu
                 </button>
                 <button
@@ -167,3 +272,4 @@ export default class UpdateForm extends Component {
     );
   }
 }
+export default inject("foodStore","tableStore")(observer(UpdateForm))

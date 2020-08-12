@@ -42,7 +42,7 @@ public class FoodDetailController {
 	
 	
 	// INSERT MON AN CHI TIET
-	@RequestMapping(value = "/InsertMonAnChiTiet", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@RequestMapping(value = "/InsertMonAnChiTiet", method = RequestMethod.POST)
 	@PreAuthorize("@appAuthorizer.authorize(authentication, 'VIEW', this)")
 	@ResponseBody
 	public MonAnChiTiet InserMACT(@Valid @RequestBody MonAnChiTiet mact) {

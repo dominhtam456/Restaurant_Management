@@ -8,11 +8,11 @@ class ResourceList extends Component {
     this.props.resourceStore.getResource();
   }
     render() {
-      const element= this.props.resourceStore.listResource.map((resource, index)=>{
-        return <ResourceRow resource={resource} key={resource.id} index={index}/>
-      })
+    const element= this.props.resourceStore.listResources.map((resource, index)=>{
+      return <ResourceRow resource={resource} key={resource.id} index={index}/>
+    })
       
-    const element1= this.props.resourceStore.listResource.map((resource, index)=>{
+    const element1= this.props.resourceStore.listResources.map((resource, index)=>{
       return <ResourceDetail resource={resource} key={resource.id} index={index}/>
     })
         return (
@@ -23,13 +23,12 @@ class ResourceList extends Component {
               <th scope="col">Stt</th>
               <th scope="col">Mã Nguyên Liệu</th>
               <th scope="col">Nguyên Liệu</th>
-              <th scope="col">Hạn Sử Dụng</th>
               <th scope="col">Hiện trạng</th>
             </tr>
           </thead>
           <tbody>
                 {element}
-        {element1}
+                {element1}
               </tbody>
               </table>
               </div>

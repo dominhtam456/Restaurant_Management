@@ -1,0 +1,66 @@
+package com.example.demo.service;
+
+
+import java.util.List;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
+import org.springframework.data.repository.query.Param;
+
+import com.example.demo.model.Ban;
+import com.example.demo.model.MonAn;
+
+@Repository
+public interface MonAnService extends JpaRepository<MonAn, Long>{
+	
+	//TIM MON AN THEO TEN
+	@Query("FROM MonAn WHERE name LIKE %:keyword%")
+	public List<MonAn> TimMonAnTheoTen(@Param("keyword") String keyword);
+	
+	//GET DANH SACH MON AN
+		public default List<MonAn> GetAllMonAn(){
+			return this.findAll();
+		}
+		
+	//GET 1 MON AN
+		public default Ban GetMonAn(long id) {
+			return this.getOne(id);
+			
+		}
+		
+	//INSERT BAN
+		public default Ban InsertBan(Ban o) {
+			if(o!=null) {
+				
+				return this.save(o);
+			}else {
+				return null;
+			}
+		}
+		
+	//UPDATE BAN
+		public default boolean UpdateBan(Ban o) {
+			Ban temp=this.getOne(o.getId());
+			if(temp!=null) {
+				temp.setName(o.getName());
+				temp.setStatus(o.getStatus());
+				temp.setIsActive(o.getIsActive());
+				this.save(temp);
+				return true;
+			}else {
+				return false;
+			}
+		}
+		
+	//DELETE BAN
+		public default boolean 	DeleteBan(long id) {
+			Ban temp=this.getOne(id);
+			if(temp!=null) {
+				this.delete(temp);
+				return true;
+			}else {
+				return false;
+			}
+		}
+}

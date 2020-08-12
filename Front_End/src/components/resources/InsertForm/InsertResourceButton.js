@@ -11,6 +11,7 @@ class InsertResourceButton extends Component {
     }
   onclick(){
     this.props.resourceStore.pushTypeResource(this.name.current.value, this.unit.current.value);
+    this.props.resourceStore.getTypeResource();
   }
   render() {
     return (
@@ -156,8 +157,9 @@ class InsertResourceButton extends Component {
                                 </div>
                                 <div className="modal-footer">
                                   <button
-                                    type="submit"
+                                    type="button"
                                     className="btn btn-danger"
+                                    data-dismiss="modal"
                                     onClick={() => this.onclick()}
                                   >
                                     Lưu

@@ -12,6 +12,7 @@
     "print-js": "^1.0.63",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-file-base64": "^1.0.3",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.1"

@@ -94,7 +94,7 @@ export default class Sidebar extends Component {
                         </Link> : ''}
                       </li>
                       <li className="nav-item">
-                        {role == 3 || role == 4 ?
+                        {role == 3 || role == 4?
                         <Link to='/kitchen' className="nav-link text-white" >
                           <i className="fas fa-vector-square text-danger " /> Bếp
                         </Link> : ''}

@@ -1,5 +1,7 @@
 package com.example.demo.model;
 
+import javax.persistence.Column;
+
 public class NhanVienDto {
 	
 	private long id;
@@ -10,7 +12,14 @@ public class NhanVienDto {
     private String password;
     private int loai;
     private String img;
-
+    private int isActive;
+    
+	public int getIsActive() {
+		return isActive;
+	}
+	public void setIsActive(int isActive) {
+		this.isActive = isActive;
+	}
 	public long getId() {
 		return id;
 	}

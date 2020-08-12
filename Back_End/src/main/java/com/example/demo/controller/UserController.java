@@ -21,16 +21,22 @@ public class UserController {
     @Autowired
     private NhanVienService nhanvienService;
     
-    @PostMapping
+    @PostMapping("/InsertNhanVien")
     @PreAuthorize("@appAuthorizer.authorize(authentication, 'VIEW', this)")
     public ApiResponse<NhanVien> saveNhanVien(@RequestBody NhanVienDto nhanvien){
         return new ApiResponse<>(HttpStatus.OK.value(), "User saved successfully.",nhanvienService.saveNhanVien(nhanvien));
     }
 
-    @GetMapping
+    @GetMapping("/GetAllUser")
     @PreAuthorize("@appAuthorizer.authorize(authentication, 'VIEW', this)")
     public ApiResponse<List<NhanVien>> listNhanVien(){
         return new ApiResponse<>(HttpStatus.OK.value(), "User list fetched successfully.",nhanvienService.findAll());
+    }
+    
+    @GetMapping("/GetUserByName/{key}")
+    @PreAuthorize("@appAuthorizer.authorize(authentication, 'VIEW', this)")
+    public ApiResponse<List<NhanVien>> SearchStaff(@PathVariable String fullname){
+    	return new ApiResponse<>(HttpStatus.OK.value(), "User list fetched succesfully.", nhanvienService.findByName(fullname));
     }
 
     @GetMapping("/isValid")
@@ -38,7 +44,8 @@ public class UserController {
         return new ApiResponse<>(HttpStatus.OK.value(), "success.",true);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/GetUser/{id}")
+    //@GetMapping("/{id}")
     @PreAuthorize("@appAuthorizer.authorize(authentication, 'VIEW', this)")
     public ApiResponse<NhanVien> getOne(@PathVariable int id){
         return new ApiResponse<>(HttpStatus.OK.value(), "User fetched successfully.",nhanvienService.findById(id));
@@ -50,9 +57,9 @@ public class UserController {
         return nhanvienService.findOne(username);
     }
 
-    @PutMapping("/{id}")
+    @PostMapping("/UpdateNhanVien")
     @PreAuthorize("@appAuthorizer.authorize(authentication, 'VIEW', this)")
-    public ApiResponse<NhanVienDto> update(@RequestBody NhanVienDto nhanvienDto) {
+    public ApiResponse<NhanVienDto> updateNhanVien(@RequestBody NhanVienDto nhanvienDto) {
         return new ApiResponse<>(HttpStatus.OK.value(), "User updated successfully.",nhanvienService.updateNhanVien(nhanvienDto));
     }
     

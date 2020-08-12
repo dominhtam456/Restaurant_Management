@@ -8,7 +8,7 @@ class MenuList extends Component {
         this.props.tableStore.getFoods();
     }
     render() {
-        //console.log(toJS(this.props.tableStore.listFood))
+        // console.log(toJS(this.props.tableStore.listFood))
         const element = this.props.tableStore.listFood.map((food, index) => {
             return <MenuElement key={food.id} food={food}/>
         })

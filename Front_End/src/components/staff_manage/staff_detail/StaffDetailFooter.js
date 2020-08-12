@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import UpdateForm from './UpdateForm';
-import DeletePanel from './DeletePanel';
+// import UpdateForm from './UpdateForm';
+// import DeletePanel from './DeletePanel';
 
 class StaffDetailFooter extends Component {
     render() {

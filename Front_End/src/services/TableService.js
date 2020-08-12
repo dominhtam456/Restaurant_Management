@@ -26,16 +26,30 @@ export const updateTableStatus = async (status, listTable) => {
   return await response.json();
 }
 
-
 export const addTables = async (table) => {
   const url = `${URL_API}/InsertBan`;
+  const response = await fetch(url, {
+    method: 'POST', // *GET, POST, PUT, DELETE, etc.
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${localStorage.getItem('token')}`
+    },
+    body: JSON.stringify(table)
+});
+return await response.json();
+}
+
+export const updateHDB = async (fromTable, toTable, hoadon_id) => {
+  var url = new URL(`${URL_API}/updateHDB`),
+  params = {fromTable, toTable, hoadon_id}
+  Object.keys(params).forEach(key => url.searchParams.append(key, params[key]))
   const response = await fetch(url, {
       method: 'POST', // *GET, POST, PUT, DELETE, etc.
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${localStorage.getItem('token')}`
       },
-      body: JSON.stringify(table)
+      body: JSON.stringify(fromTable, toTable, hoadon_id)
   });
   return await response.json();
 }

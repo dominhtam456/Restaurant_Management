@@ -41,7 +41,18 @@ public class NhanVien implements Serializable {
 	 private String img;
 	 
 	 @Column(name="is_active")
-	 private Integer isActive; 
+	 private int isActive; 
+
+	 @Transient
+	 private String chucvu;
+	 
+	public String getChucvu() {
+		return chucvu;
+	}
+
+	public void setChucvu(String chucvu) {
+		this.chucvu = chucvu;
+	}
 
 	public NhanVien() {
 		 

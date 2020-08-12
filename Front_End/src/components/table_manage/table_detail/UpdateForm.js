@@ -7,14 +7,29 @@ class UpdateForm extends Component {
     super(props);
     this.name = React.createRef();
     this.isActive = React.createRef();
+    this.state={
+      tn: "",
+      ht: ""
     }
+  }
 
   async onUpdate(){
     await this.props.tableManageStore.updateTable(this.name.current.value, this.isActive.value);
     await this.props.tableStore.getTable();
   }
+
+  onChangeSelect(e){
+    let tn= this.props.table.name;
+    console.log("tn",tn);
+    let ht = e.target.isActive;
+    this.setState({
+      tn:tn,
+      ht:ht
+    })}
   
   render() {
+    let act = this.props.tableManageStore.currentTable.isActive;
+    console.log(toJS(this.props.tableManageStore.currentTable))
     return (
       <div className="modal-dialog modal-lg" role="document">
         <div className="modal-content">
@@ -53,19 +68,20 @@ class UpdateForm extends Component {
                           className="form-control form-control-sm"
                           id="inputName"
                           ref={this.name}
+                          defaultValue={this.props.tableManageStore.currentTable.name}
                         />
                       </div>
                     </div>
                     <div className="form-group row">
                       <label
-                        htmlFor="inputName"
                         className="col-sm-5 col-form-label form-control-sm"
                       >
                         Hiện trạng:
                       </label>
-                      <select name="isActive" id="ht" ref={select => this.isActive = select}>
-                        <option value="1">Active</option>
-                        <option value="0">Deactive</option>
+                      <select name="isActive" id="ht" ref={select => this.isActive = select}
+                       >
+                        <option value="1" selected={act === 1 ? true: false}>Active</option>
+                        <option value="0" selected={act === 0 ? true: false}>Deactive</option>
                       </select>
                     </div>
                     <div className="form-group row">
