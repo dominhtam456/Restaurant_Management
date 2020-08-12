@@ -13,6 +13,12 @@ export default class StaffStore{
         // console.log(data)
     }
 
+    getStaffByName = async (name) => {
+        const data = await UserService.searchStaff(name);
+        this.listStaff = data.result;
+        console.log(data);
+    }
+
     getRole = async () => {
         const data = await UserService.getRole();
         this.listRole = data;
@@ -67,4 +73,5 @@ decorate (StaffStore, {
     pushStaff: action,
     getRole: action,
     updateStaff: action,
+    getStaffByName: action
 })

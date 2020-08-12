@@ -104,15 +104,7 @@ public class NhanVienServiceImp  implements UserDetailsService, NhanVienService 
 	@Override
 	public List<NhanVien> findByName(String fullname) {
 		// TODO Auto-generated method stub
-		List<NhanVien> list = new ArrayList<>();
-		nhanvienDao
-		.TimNhanVienTheoTen(fullname).iterator().forEachRemaining(list::add);
-		
-//		for (NhanVien nhanVien : list) {
-//			ChucVu cv = chucvuService.getOne(Long.valueOf(nhanVien.getLoai()));
-//			nhanVien.setChucvu(cv.getName());
-//		}
-		return list;
+		return nhanvienDao.TimNhanVienTheoTen(fullname);
 	}
 	 
 	 

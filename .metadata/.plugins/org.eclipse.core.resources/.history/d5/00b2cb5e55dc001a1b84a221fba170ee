@@ -15,6 +15,6 @@ public interface NhanVienDao extends CrudRepository<NhanVien, Integer>{
 	  NhanVien findByUsername(String username);
 	  
 	//TIM MON AN THEO TEN
-	@Query("FROM NhanVien WHERE name LIKE %:keyword%")
+	@Query("FROM NhanVien WHERE fullname LIKE %:keyword%")
 	public List<NhanVien> TimNhanVienTheoTen(@Param("keyword") String keyword);
 }

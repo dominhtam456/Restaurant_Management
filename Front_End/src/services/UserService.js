@@ -74,8 +74,8 @@ export const updateStaff = async (staff) => {
   return await response.json();
 }
 
-export const searchStaff = async () => {
-  const url = `${URL_API}/GetAllUser`;
+export const searchStaff = async (name) => {
+  const url = `${URL_API}/GetUserByName/${name}`;
   const response = await fetch(url, {
       method: 'GET', // *GET, POST, PUT, DELETE, etc.
       headers: {

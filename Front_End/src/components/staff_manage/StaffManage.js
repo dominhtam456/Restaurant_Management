@@ -9,9 +9,9 @@ class StaffManage extends Component {
     super(props);
     this.name = React.createRef();
   }
-  // async onclick() {
-  //   await this.props.staffStore.getFoodByName(this.name.current.value);
-  // }
+  async onclick() {
+    await this.props.staffStore.getStaffByName(this.name.current.value);
+  }
   render() {
     return (
       <div className="container-fluid mt--7">
@@ -35,7 +35,7 @@ class StaffManage extends Component {
                           aria-label="Search"
                           ref={this.name}
                         />
-                        <button type="button" className="fas fa-search"></button>
+                        <button type="button" className="fas fa-search" onClick={() => this.onclick()}></button>
                       </div>
                     </form>
                   </div>

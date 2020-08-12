@@ -14,8 +14,12 @@ class Info extends Component {
     //this.image = React.createRef();
     
     this.state=({
-      num:"",
+      num: 1,
       img: "",
+      isAlertNo: false,
+      isAlertName: false,
+      isAlertPrice: false,
+      isAlertDate: false,
     })
   }
 
@@ -49,10 +53,47 @@ class Info extends Component {
     })
   }
 
+  onBlurRSid() {
+    if (this.no.current.value === "") this.setState({ isAlertNo: true });
+    else this.setState({ isAlertNo: false });
+  }
+  onBlurRName(){
+    if (this.name.current.value === "") this.setState({ isAlertName: true});
+    else this.setState({ isAlertName: false});
+  }
+  onBlurRPri(){
+    if (this.price.current.value === "") this.setState({isAlertPrice: true});
+    else this.setState({ isAlertPrice: false });
+  }
+  onBlurRDate(){
+    if (this.unit.current.value === "") this.setState({ isAlertUnit: true});
+    else this.setState({ isAlertUnit: false });
+  }
+
   render() {
+    const alertResoucreId = (
+      <span style={{ fontSize: "10px", color: "red" }}>
+        Không được để trống mã nguyên liệu
+      </span>
+    );
+    const alertResoucreName = (
+      <span style={{ fontSize: "10px", color: "red" }}>
+        Không được để trống tên nguyên liệu
+      </span>
+    );
+    const alertResoucrePrice = (
+      <span style={{ fontSize: "10px", color: "red" }}>
+        Giá tiền không được để trống
+      </span>
+    )
+    const alertResoucreDate = (
+      <span style={{ fontSize: "10px", color: "red" }}>
+        Hạn sử dụng không được để trống
+      </span>
+    )
     const element = this.props.resourceStore.listTypeResources.map(
       (resource, index) => {
-        return (<option key={index} value={resource.id}>{resource.name}</option>);
+        return (<option key={index} value={resource.id} selected={index === 0? true : false}>{resource.name}</option>);
       }
     );
     return (
@@ -73,11 +114,10 @@ class Info extends Component {
                   class="form-control form-control-sm"
                   id="input1"
                   ref={this.no}
+                  onBlur={() => this.onBlurRSid()}
                   required
                 />
-                <span style={{ fontSize: "10px", color: "red" }}>
-                  Không được để trống mã nguyên liệu
-                </span>
+                {this.state.isAlertNo ? alertResoucreId : ""}
               </div>
             </div>
 
@@ -95,11 +135,10 @@ class Info extends Component {
                   className="form-control form-control-sm"
                   id="inputName"
                   ref={this.name}
+                  onBlur={() => this.onBlurRName()}
                   required
                 />
-                <span style={{ fontSize: 10, color: "red" }}>
-                  Không được để trống tên món ăn
-                </span>
+                {this.state.isAlertName ? alertResoucreName : ""}
               </div>
             </div>
 
@@ -121,9 +160,6 @@ class Info extends Component {
                   {element}
                 </select>
                 <div>
-                  <span style={{ fontSize: 10, color: "red" }}>
-                    Không được để trống loại món ăn
-                  </span>
                   <span className="fas fa-plus-square mt-0 ">
                     <a data-toggle="modal" data-target="#addType">
                       Thêm loại
@@ -147,7 +183,9 @@ class Info extends Component {
                   id="inputNum"
                   placeholder={0}
                   ref={this.price}
+                  onBlur={() => this.onBlurRPri()}
                 />
+                {this.state.isAlertPrice ? alertResoucrePrice : ""}
               </div>
             </div>
             <div class="form-group row">
@@ -165,7 +203,9 @@ class Info extends Component {
                   id="inputNum"
                   placeholder="dd/MM/yyyy"
                   ref={this.date}
+                  onBlur={() => this.onBlurRDate()}
                 />
+                {this.state.isAlertDate ? alertResoucreDate : ""}
               </div>
             </div>
           </div>

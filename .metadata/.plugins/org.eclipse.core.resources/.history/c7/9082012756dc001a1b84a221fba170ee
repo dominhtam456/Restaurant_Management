@@ -35,8 +35,8 @@ public class UserController {
     
     @GetMapping("/GetUserByName/{key}")
     @PreAuthorize("@appAuthorizer.authorize(authentication, 'VIEW', this)")
-    public ApiResponse<List<NhanVien>> findByName(@PathVariable String key){
-    	return new ApiResponse<>(HttpStatus.OK.value(), "User list fetched succesfully.", nhanvienService.findByName(key));
+    public ApiResponse<List<NhanVien>> SearchStaff(@PathVariable String fullname){
+    	return new ApiResponse<>(HttpStatus.OK.value(), "User list fetched succesfully.", nhanvienService.findByName(fullname));
     }
 
     @GetMapping("/isValid")

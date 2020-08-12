@@ -12,7 +12,7 @@ class Info extends Component {
     this.typeId = React.createRef();
     this.desc = React.createRef();
     this.state = {
-      num: "",
+      num: 1,
       isAlertNo: false,
       isAlertName: false,
       isAlertPrice: false,
@@ -31,7 +31,7 @@ class Info extends Component {
       this.state.num,
       this.desc.current.value
     );
-    await this.props.tableStore.getFoods();
+    await this.props.foodStore.getFood();
   }
 
   onChangeSelect(e) {
@@ -63,30 +63,29 @@ class Info extends Component {
     this.props.tableStore.getFoods();
   }
   render() {
-    const alertResoucreId = (
+    const alertFoodId = (
       <span style={{ fontSize: "10px", color: "red" }}>
         Không được để trống mã món ăn
       </span>
     );
-    const alertResoucreName = (
+    const alertFoodName = (
       <span style={{ fontSize: "10px", color: "red" }}>
         Không được để trống tên món ăn
       </span>
     );
-    const alertResoucrePrice = (
+    const alertFoodPrice = (
       <span style={{ fontSize: "10px", color: "red" }}>
         Giá tiền không được để trống
       </span>
     )
-    const alertResoucreUnit = (
+    const alertFoodUnit = (
       <span style={{ fontSize: "10px", color: "red" }}>
         Đơn vị không được để trống
       </span>
     )
-    let type = this.props.foodStore.currentFood.loaimonan_id;
     const typeFood = this.props.foodStore.listTypeFoods.map((food, index) => {
       return (
-        <option key={index} value={food.id} selected="0">
+        <option key={index} value={food.id} selected={index === 0? true : false}>
           {food.name}
         </option>
       );
@@ -112,7 +111,7 @@ class Info extends Component {
                   onBlur={() => this.onBlurRSid()}
                   required
                 />
-                {this.state.isAlertNo ? alertResoucreId : ""}
+                {this.state.isAlertNo ? alertFoodId : ""}
               </div>
             </div>
 
@@ -133,7 +132,7 @@ class Info extends Component {
                   onBlur={() => this.onBlurRName()}
                   required
                 />
-                {this.state.isAlertName ? alertResoucreName : ""}
+                {this.state.isAlertName ? alertFoodName : ""}
               </div>
             </div>
 
@@ -181,7 +180,7 @@ class Info extends Component {
                   required
                   onBlur={() => this.onBlurRPri()}
                 />
-                {this.state.isAlertPrice ? alertResoucrePrice : ""}
+                {this.state.isAlertPrice ? alertFoodPrice : ""}
               </div>
             </div>
             <div class="form-group row">
@@ -199,7 +198,7 @@ class Info extends Component {
                   ref={this.unit}
                   onBlur={() => this.onBlurRUni()}
                 />
-                {this.state.isAlertUnit ? alertResoucreUnit : ""}
+                {this.state.isAlertUnit ? alertFoodUnit : ""}
               </div>
             </div>
             <div class="form-group row">
