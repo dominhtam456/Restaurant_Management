@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename type &apos;com.example.demo.controller.Role&apos; to &apos;RoleController&apos;&#x0D;&#x0A;- Original project: &apos;Back_End&apos;&#x0D;&#x0A;- Original element: &apos;com.example.demo.controller.Role&apos;&#x0D;&#x0A;- Renamed element: &apos;com.example.demo.controller.RoleController&apos;&#x0D;&#x0A;- Update references to refactored element&#x0D;&#x0A;- Update textual occurrences in comments and strings" description="Rename type &apos;Role&apos;" flags="589830" id="org.eclipse.jdt.ui.rename.type" input="/src\/main\/java&lt;com.example.demo.controller{Role.java[Role" matchStrategy="1" name="RoleController" qualified="false" references="true" similarDeclarations="false" stamp="1596821643839" textual="false" version="1.0"/>
+</session>

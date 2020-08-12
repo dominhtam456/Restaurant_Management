@@ -12,6 +12,9 @@ class StaffList extends Component {
     const element= this.props.staffStore.listStaff.map((user, index)=>{
       return <StaffRow user={user} key={user.id} index={index}/>
     })
+    const element1= this.props.staffStore.listStaff.map((user, index)=>{
+      return <StaffDetail user={user} key={user.id} index={index}/>
+    })
     return (
       <div class="table-responsive">
         <table class="table  align-items-center table-flush accordion table-hover" id="accordionRow">
@@ -21,11 +24,12 @@ class StaffList extends Component {
               <th scope="col">Mã nhân viên</th>
               <th scope="col">Tên nhân viên</th>
               <th scope="col">Chức vụ</th>
+              <th scope="col">Hiện trạng</th>
             </tr>
           </thead>
           <tbody>
                 {element}
-                <StaffDetail id={"a1"}/>
+                {element1}
               </tbody>
               </table>
               </div>

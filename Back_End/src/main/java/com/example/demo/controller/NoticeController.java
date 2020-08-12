@@ -6,6 +6,7 @@ import java.util.List;
 import com.example.demo.model.Notice;
 import com.example.demo.model.NoticeDTO;
 import com.example.demo.service.NoticeService;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -26,6 +27,7 @@ public class NoticeController {
     NoticeService noticeService;
 
     @RequestMapping(path = "/updateStatusNotice", method = RequestMethod.POST)
+    @PreAuthorize("@appAuthorizer.authorize(authentication, 'VIEW', this)")
     public Boolean UpdateStatusNotice(
             @RequestParam(value = "hoadonId") Integer hoadonId,
             @RequestParam(value = "monanId") Integer monanId,
@@ -40,6 +42,7 @@ public class NoticeController {
     }
 
     @RequestMapping(path = "/notice/{status}", method = RequestMethod.GET)
+    @PreAuthorize("@appAuthorizer.authorize(authentication, 'VIEW', this)")
     public List<NoticeDTO> GetNoticeByStatus(@PathVariable("status") String status){
         List<Notice> list = noticeService.findByStatus(status);
         List<NoticeDTO> response = new ArrayList<>();
@@ -57,6 +60,7 @@ public class NoticeController {
     @RequestMapping(value = "/addNotice", method = RequestMethod.POST, 
         produces = MediaType.APPLICATION_JSON_VALUE,
         consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("@appAuthorizer.authorize(authentication, 'VIEW', this)")
     public Notice addNotice(@RequestBody Notice notice) {
         try {
             return noticeService.save(notice);

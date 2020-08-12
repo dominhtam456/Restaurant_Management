@@ -8,13 +8,31 @@ import { withRouter } from 'react-router-dom'
 
 class Statistical extends Component {
 
+  checkRole() {
+    const role = JSON.parse(atob(localStorage.getItem('token').split('.')[1])).role;
+    if(role == 1 || role == 2) {
+      alert("Forbidden");
+      this.props.history.push('/table');
+      return false
+    }
+
+    if(role == 3) {
+      alert("Forbidden");
+      this.props.history.push('/kitchen');
+      return false;
+    }
+    return true;
+  }
+
   async componentDidMount(){
     await this.props.loginStore.checkValid();
     if(!this.props.loginStore.isValid) this.props.history.push('/login')
     else{
-      this.props.statisticStore.getListTrendingFood();
-      this.props.statisticStore.getListInvoiceByDate();
-      this.props.statisticStore.getSum();
+      if(this.checkRole()){
+        this.props.statisticStore.getListTrendingFood();
+        this.props.statisticStore.getListInvoiceByDate();
+        this.props.statisticStore.getSum();
+      }
     }
   }
 

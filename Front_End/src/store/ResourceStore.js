@@ -4,13 +4,17 @@ import CommonUtil from './../util'
 
 export default class ResourceStore {
     listResources = [];
-    currentListResource = [];
+    //currentListResource = [];
     listTypeResources = [];
     currentResource={};
 
     getResource = async () => {
         const data = await ResourceService.getResources();
         this.listResources = data;
+    }
+
+    getResourceByName = async (name) => {
+        this.listResources = await ResourceService.searchResource(name);
     }
 
     // getCurrentListResource = async (resource) => {
@@ -79,7 +83,7 @@ export default class ResourceStore {
             "isActive": isactive,
             "tenloainguyenlieu": null
         }
-        await ResourceService.addResources(resource);
+        await ResourceService.updateResources(resource);
         //console.log(resource);
     }
 
@@ -98,7 +102,7 @@ export default class ResourceStore {
 decorate(ResourceStore, {
     listResources: observable,
     listTypeResources: observable,
-    currentListResource: observable,
+    //currentListResource: observable,
     currentResource: observable,
 
     pushResource: action,
@@ -106,4 +110,5 @@ decorate(ResourceStore, {
     getResource: action,
     getTypeResource: action,
     getCurrentListResource: action,
+    getResourceByName: action,
 })

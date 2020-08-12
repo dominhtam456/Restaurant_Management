@@ -15,6 +15,10 @@ export default class FoodStore {
         this.listFoods = data;
     }
 
+    getFoodByName = async (name) => {
+        this.listFoods = await FoodService.searchFood(name);
+    }
+
     getTypeFood = async () => {
         const data = await FoodService.getTypeFoods();
         this.listTypeFoods = data;
@@ -79,4 +83,5 @@ decorate(FoodStore, {
     pushFood: action,
     pushTypeFood: action,
     updateFood: action,
+    getFoodByName: action,
 })

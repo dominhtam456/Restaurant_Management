@@ -41,7 +41,7 @@ public class NhanVien implements Serializable {
 	 private String img;
 	 
 	 @Column(name="is_active")
-	 private Integer isActive; 
+	 private int isActive; 
 
 	 @Transient
 	 private String chucvu;

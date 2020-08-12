@@ -58,7 +58,7 @@ public class FoodController {
 
 	// LAY 1 MON AN
 	@RequestMapping(value = "/MonAn/{id}", method = RequestMethod.GET)
-
+	@PreAuthorize("@appAuthorizer.authorize(authentication, 'VIEW', this)")
 	public MonAn findMonAnByID(@PathVariable("id") long id) {
 		MonAn monan = repositoryMonAn.getOne(id);
 		if (monan == null) {
@@ -72,6 +72,8 @@ public class FoodController {
 
 	// THEM MON AN
 	@RequestMapping(value = "/InsertMonAn", method = RequestMethod.POST)
+	@PreAuthorize("@appAuthorizer.authorize(authentication, 'VIEW', this)")
+	@ResponseBody
 	public MonAn insertMonAn(@RequestBody MonAn monanForm) {
 		if (String.valueOf(monanForm.getLoaimonan_id()) == "null") {
 			return null;
@@ -87,6 +89,7 @@ public class FoodController {
 
 	// CAP NHAT MON AN
 	@RequestMapping(value = "/UpdateMonAn", method = RequestMethod.POST)
+	@PreAuthorize("@appAuthorizer.authorize(authentication, 'VIEW', this)")
 	public ResponseEntity<MonAn> updateMonAn(@Valid @RequestBody MonAn monanForm) {
 		MonAn ma = repositoryMonAn.getOne(monanForm.getId());
 		if (ma == null) {
@@ -109,6 +112,7 @@ public class FoodController {
 
 	// XOA MON AN
 	@RequestMapping(value = "/MonAn/{id}", method = RequestMethod.POST)
+	@PreAuthorize("@appAuthorizer.authorize(authentication, 'VIEW', this)")
 	public ResponseEntity<MonAn> deleteMonAn(@PathVariable(value = "id") Long id) {
 		MonAn ma = repositoryMonAn.getOne(id);
 		if (ma == null) {
@@ -121,6 +125,7 @@ public class FoodController {
 	// TIM KIEM
 	@CrossOrigin
 	@RequestMapping(value = "/SearchFoods/{key}", method = RequestMethod.GET)
+	@PreAuthorize("@appAuthorizer.authorize(authentication, 'VIEW', this)")
 	public List<MonAn> SearchFoods(@PathVariable(value = "key") String key) {
 		try {
 			for (MonAn monan : repositoryMonAn.TimMonAnTheoTen(key)) {

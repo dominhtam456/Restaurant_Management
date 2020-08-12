@@ -10,17 +10,23 @@ class Info extends Component {
     this.price = React.createRef();
     this.unit = React.createRef();
     this.typeId = React.createRef();
-    this.desc= React.createRef();
-    this.state=({
-      num:""
-    })
+    this.desc = React.createRef();
+    this.state = {
+      num: "",
+      isAlertNo: false,
+      isAlertName: false,
+      isAlertPrice: false,
+      isAlertUnit: false,
+    };
   }
 
-  async onCreate(){
+  async onCreate() {
+    if(this.state.num === "") await this.setState({num:this.props.foodStore.currentFood.loaimonan_id});
+
     await this.props.foodStore.pushFood(
       this.no.current.value,
-      this.name.current.value, 
-      this.price.current.value, 
+      this.name.current.value,
+      this.price.current.value,
       this.unit.current.value,
       this.state.num,
       this.desc.current.value
@@ -29,10 +35,27 @@ class Info extends Component {
   }
 
   onChangeSelect(e) {
-    this.typeId=e.target.value;
+    this.typeId = e.target.value;
     this.setState({
-      num:e.target.value
-    })
+      num: e.target.value,
+    });
+  }
+
+  onBlurRSid() {
+    if (this.no.current.value === "") this.setState({ isAlertNo: true });
+    else this.setState({ isAlertNo: false });
+  }
+  onBlurRName(){
+    if (this.name.current.value === "") this.setState({ isAlertName: true});
+    else this.setState({ isAlertName: false});
+  }
+  onBlurRPri(){
+    if (this.price.current.value === "") this.setState({isAlertPrice: true});
+    else this.setState({ isAlertPrice: false });
+  }
+  onBlurRUni(){
+    if (this.unit.current.value === "") this.setState({ isAlertUnit: true});
+    else this.setState({ isAlertUnit: false });
   }
 
   componentDidMount() {
@@ -40,9 +63,30 @@ class Info extends Component {
     this.props.tableStore.getFoods();
   }
   render() {
+    const alertResoucreId = (
+      <span style={{ fontSize: "10px", color: "red" }}>
+        Không được để trống mã món ăn
+      </span>
+    );
+    const alertResoucreName = (
+      <span style={{ fontSize: "10px", color: "red" }}>
+        Không được để trống tên món ăn
+      </span>
+    );
+    const alertResoucrePrice = (
+      <span style={{ fontSize: "10px", color: "red" }}>
+        Giá tiền không được để trống
+      </span>
+    )
+    const alertResoucreUnit = (
+      <span style={{ fontSize: "10px", color: "red" }}>
+        Đơn vị không được để trống
+      </span>
+    )
+    let type = this.props.foodStore.currentFood.loaimonan_id;
     const typeFood = this.props.foodStore.listTypeFoods.map((food, index) => {
       return (
-        <option key={index} value={food.id}>
+        <option key={index} value={food.id} selected="0">
           {food.name}
         </option>
       );
@@ -65,11 +109,10 @@ class Info extends Component {
                   class="form-control form-control-sm"
                   id="input1"
                   ref={this.no}
+                  onBlur={() => this.onBlurRSid()}
                   required
                 />
-                <span style={{ fontSize: "10px", color: "red" }}>
-                  Không được để trống mã nguyên liệu
-                </span>
+                {this.state.isAlertNo ? alertResoucreId : ""}
               </div>
             </div>
 
@@ -87,11 +130,10 @@ class Info extends Component {
                   className="form-control form-control-sm"
                   id="inputName"
                   ref={this.name}
+                  onBlur={() => this.onBlurRName()}
                   required
                 />
-                <span style={{ fontSize: 10, color: "red" }}>
-                  Không được để trống tên món ăn
-                </span>
+                {this.state.isAlertName ? alertResoucreName : ""}
               </div>
             </div>
 
@@ -113,9 +155,6 @@ class Info extends Component {
                   {typeFood}
                 </select>
                 <div>
-                  <span style={{ fontSize: 10, color: "red" }}>
-                    Không được để trống loại món ăn
-                  </span>
                   <span className="fas fa-plus-square mt-0 ">
                     <a data-toggle="modal" data-target="#addType">
                       Thêm loại
@@ -139,7 +178,10 @@ class Info extends Component {
                   id="inputNum"
                   placeholder={0}
                   ref={this.price}
+                  required
+                  onBlur={() => this.onBlurRPri()}
                 />
+                {this.state.isAlertPrice ? alertResoucrePrice : ""}
               </div>
             </div>
             <div class="form-group row">
@@ -155,7 +197,9 @@ class Info extends Component {
                   class="form-control form-control-sm "
                   id="inputNum"
                   ref={this.unit}
+                  onBlur={() => this.onBlurRUni()}
                 />
+                {this.state.isAlertUnit ? alertResoucreUnit : ""}
               </div>
             </div>
             <div class="form-group row">
@@ -233,4 +277,4 @@ class Info extends Component {
     );
   }
 }
-export default inject("foodStore","tableStore")(observer(Info));
+export default inject("foodStore", "tableStore")(observer(Info));

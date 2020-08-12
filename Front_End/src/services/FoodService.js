@@ -65,3 +65,15 @@ export const updateFoods = async (food) => {
   });
   return await response.json();
 }
+
+export const searchFood = async (name) => {
+  const url = `${URL_API}/SearchFoods/${name}`;
+  const response = await fetch(url, {
+      method: 'GET', // *GET, POST, PUT, DELETE, etc.
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      }      
+  });
+  return await response.json();
+}

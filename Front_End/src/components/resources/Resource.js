@@ -1,8 +1,17 @@
 import React, { Component } from "react";
 import InsertResourceButton from "./InsertForm/InsertResourceButton";
 import ResourceList from "./resource_list/ResourceList";
+import { inject , observer} from "mobx-react"
 
-export default class Food extends Component {
+class Resource extends Component {
+  constructor(props) {
+    super(props);
+    this.name = React.createRef();
+  }
+  async onclick(){
+    // console.log(this.name.current.value)
+    await this.props.resourceStore.getResourceByName(this.name.current.value);
+  }
   render() {
     return (
       <div className="container-fluid mt--7">
@@ -24,7 +33,10 @@ export default class Food extends Component {
                           type="text"
                           placeholder="Search"
                           aria-label="Search"
+                          id="search"
+                          ref={this.name}
                         />
+                        <button type="button" className="fas fa-search" onClick={() => this.onclick()}></button>
                       </div>
                     </form>
                   </div>
@@ -39,3 +51,4 @@ export default class Food extends Component {
     );
   }
 }
+export default inject("resourceStore")(observer(Resource))

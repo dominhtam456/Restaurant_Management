@@ -91,7 +91,7 @@ class UpdateForm extends Component {
           <div className="modal-header bg-primary">
             <h2
               className="modal-title"
-              id="modifyFoodsTitle"
+              id="resourceTile"
               style={{ color: "white" }}
             >
               Cập Nhật Thông Tin Nguyên Liệu
@@ -250,8 +250,9 @@ class UpdateForm extends Component {
                   Lưu
                 </button>
                 <button
-                  //type="button"
-                  type="cancel"
+                  type="button"
+                  //type="cancel"
+                  data-dismiss="modal"
                   className="btn btn-secondary"
                   //data-dismiss="modal"
                 >

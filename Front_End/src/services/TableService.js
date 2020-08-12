@@ -84,4 +84,5 @@ export const deleteTables = async (table) => {
       body: JSON.stringify(table)
   });
   return await response.json();
-}     
+}
+

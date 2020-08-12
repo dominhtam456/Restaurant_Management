@@ -245,7 +245,7 @@ export default class Table {
     // }
 
     setCurrentListOrder = (food) => {
-        if(!this.currentTable[0].id) return;
+        if(!this.currentTable[0]) return;
         if(this.currentListOrder.length === 0) this.currentListOrder[0] = [];
         for(let i=0; i<this.currentListOrder[0].length; i++){
             if(food.id == this.currentListOrder[0][i].hoadonchitiet_id.monan_id){

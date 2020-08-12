@@ -13,6 +13,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 import com.example.demo.service.MonAnChiTietService;
 
@@ -34,13 +35,15 @@ public class FoodDetailController {
 	
 	// GET 1 MON AN CHI TIET
 	@RequestMapping(path = "/GetMonAnChiTiet/{monanID}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@PreAuthorize("@appAuthorizer.authorize(authentication, 'VIEW', this)")
 	public List<MonAnChiTiet> GetMonAnChiTiet(@PathVariable(value = "monanID") int monanID) {
 		return repositoryMonAnChiTiet.GetMonAnChiTietByMonAnID(monanID);
 	}
 	
 	
 	// INSERT MON AN CHI TIET
-	@RequestMapping(value = "/InsertMonAnChiTiet", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@RequestMapping(value = "/InsertMonAnChiTiet", method = RequestMethod.POST)
+	@PreAuthorize("@appAuthorizer.authorize(authentication, 'VIEW', this)")
 	@ResponseBody
 	public MonAnChiTiet InserMACT(@Valid @RequestBody MonAnChiTiet mact) {
 

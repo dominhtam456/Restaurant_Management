@@ -38,7 +38,7 @@ class UpdateForm extends Component {
                                       this.state.act,
                                       this.desc.current.value,
                                       this.state.sta);
-      await this.props.tableStore.getFoods();
+      await this.props.foodStore.getFood();
     }
 
     onChangeSelect(e) {

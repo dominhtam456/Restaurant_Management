@@ -29,7 +29,7 @@ class InsertStaffButton extends Component {
                   id="modalAddMaterials"
                   style={{ color: "white" }}
                 >
-                  Thêm Nguyên Liệu
+                  Thêm Nhân Viên
                 </h2>
                 <button
                   type="button"

@@ -47,7 +47,7 @@ class ResourceDetail extends Component {
                           <div className="card">
                             <img
                               width={250}
-                              height={300}
+                              height={250}
                               src={this.props.resource.image}
                             />
                           </div>
@@ -73,7 +73,7 @@ class ResourceDetail extends Component {
                               </tr>
                               <tr className="p-2">
                                 <td>Hiện trạng:</td>
-                                <td>{this.props.resource.isActive}</td>
+                                <td>{this.props.resource.isActive === 1 ? "Active" : "Deactive"}</td>
                               </tr>
                             </tbody>
                           </table>
@@ -95,7 +95,7 @@ class ResourceDetail extends Component {
                         id={`b${this.props.resource.id}`}
                         tabIndex={-1}
                         role="dialog"
-                        aria-labelledby="modifyFoodsTitle"
+                        aria-labelledby="resourceTile"
                         aria-hidden="true"
                       >
                         <UpdateForm />

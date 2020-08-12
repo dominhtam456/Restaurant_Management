@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -43,6 +44,7 @@ public class MaterialController {
 
 	// LAY ALL NGUYEN LIEU
 	@RequestMapping(path = "/GetAllNguyenLieu", produces = MediaType.APPLICATION_JSON_VALUE)
+	@PreAuthorize("@appAuthorizer.authorize(authentication, 'VIEW', this)")
 	public java.util.List<NguyenLieu> getAllNguyenLieu() {
 		// This returns a JSON or XML with the users
 		for (NguyenLieu nguyenLieu : repositoryNguyenLieu.findAll()) {
@@ -55,7 +57,7 @@ public class MaterialController {
 
 	// LAY 1 NGUYEN LIEU
 	@RequestMapping(value = "/NguyenLieu/{id}", method = RequestMethod.GET)
-
+	@PreAuthorize("@appAuthorizer.authorize(authentication, 'VIEW', this)")
 	public NguyenLieu findNguyenLieuByID(@PathVariable("id") long id) {
 		NguyenLieu nguyenlieu = repositoryNguyenLieu.getOne(id);
 		if (nguyenlieu == null) {
@@ -69,7 +71,9 @@ public class MaterialController {
 
 	// THEM NGUYEN LIEU
 	@RequestMapping(value = "/InsertNguyenLieu", method = RequestMethod.POST)
-	public NguyenLieu InsertNguyenLieu(@RequestBody NguyenLieu nguyenlieuForm) {
+	@PreAuthorize("@appAuthorizer.authorize(authentication, 'VIEW', this)")
+	@ResponseBody
+	public NguyenLieu insertNguyenLieu(@RequestBody NguyenLieu nguyenlieuForm) {
 		try {
 			return repositoryNguyenLieu.InsertNguyenLieu(nguyenlieuForm);
 		} catch (Exception e) {
@@ -80,8 +84,9 @@ public class MaterialController {
 	}
 
 	// CAP NHAT NGUYEN LIEU
-	@RequestMapping(value = "/UpdateNguyenLieu", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-	public ResponseEntity<NguyenLieu> updateNguyenLieu(@RequestBody NguyenLieu nguyenlieuForm) {
+	@RequestMapping(value = "/UpdateNguyenLieu", method = RequestMethod.POST)
+	@PreAuthorize("@appAuthorizer.authorize(authentication, 'VIEW', this)")
+	public ResponseEntity<NguyenLieu> updateNguyenLieu(@Valid @RequestBody NguyenLieu nguyenlieuForm) {
 		NguyenLieu nl = repositoryNguyenLieu.getOne(nguyenlieuForm.getId());
 		if (nl == null) {
 			return ResponseEntity.notFound().build();
@@ -100,6 +105,7 @@ public class MaterialController {
 
 	// XOA NGUYEN LIEU
 	@RequestMapping(value = "/NguyenLieu/{id}", method = RequestMethod.POST)
+	@PreAuthorize("@appAuthorizer.authorize(authentication, 'VIEW', this)")
 	public ResponseEntity<NguyenLieu> deleteNguyenLieu1(@PathVariable(value = "id") Long id) {
 		NguyenLieu nl = repositoryNguyenLieu.getOne(id);
 		if (nl == null) {
@@ -111,6 +117,7 @@ public class MaterialController {
 
 	// TIM KIEM
 	@RequestMapping(value = "/SearchResources/{key}", method = RequestMethod.GET)
+	@PreAuthorize("@appAuthorizer.authorize(authentication, 'VIEW', this)")
 	public List<NguyenLieu> SearchResources(@PathVariable(value = "key") String key) {
 		try {
 			return repositoryNguyenLieu.TimNguyenLieuTheoTen(key);

@@ -1,10 +1,15 @@
 import React, { Component } from "react";
-import StaffDetailFooter from "./StaffDetailFooter";
+import UpdateForm from "./UpdateForm";
+import { inject , observer} from "mobx-react";
 
-export default class StaffDetail extends Component {
+class StaffDetail extends Component {
   constructor(props) {
     super(props);
     this.myRef = React.createRef();
+  }
+
+  onclick(){
+    this.props.staffStore.setcurrentstaff(this.props.user)
   }
 
   componentDidMount() {
@@ -20,7 +25,7 @@ export default class StaffDetail extends Component {
       <tr className="detail">
         <td colSpan={8} className="hiddenRow">
           <div
-            id={this.props.id}
+            id={`id${this.props.user.id}`}
             className="collapse"
             data-parent="#accordionRow"
           >
@@ -39,11 +44,11 @@ export default class StaffDetail extends Component {
                     aria-labelledby="home-tab"
                   >
                     <div className="container border-lightblue">
-                      <h2 className="mt-1">{this.props.id}</h2>
+                      <h2 className="mt-1">{this.props.user.fullname}</h2>
                       <div className="row p-2 mt-3 ">
                         <div className="col-4">
                           <div className="card">
-                            <img width={250} height={300} alt="" />
+                            <img width={250} height={250} alt="" />
                           </div>
                         </div>
                         <div className="col-4">
@@ -52,49 +57,31 @@ export default class StaffDetail extends Component {
                               <tr className="p-2">
                                 <td>Mã nhân viên:</td>
                                 <td>
-                                  {"{"}
-                                  {"{"}foodDetails.monan_NO{"}"}
-                                  {"}"}
-                                </td>
-                              </tr>
-                              <tr className="p-2">
-                                <td>Tên nhân viên:</td>
-                                <td>
-                                  {"{"}
-                                  {"{"}foodDetails.tenloai_LOAIMONAN{"}"}
-                                  {"}"}
+                                  {this.props.user.no}
                                 </td>
                               </tr>
                               <tr className="p-2">
                                 <td>Số điện thoại:</td>
                                 <td>
-                                  {"{"}
-                                  {"{"}foodDetails.monan_PRICE{"}"}
-                                  {"}"}
+                                  {this.props.user.phone}
                                 </td>
                               </tr>
                               <tr className="p-2">
                                 <td>Email:</td>
                                 <td>
-                                  {"{"}
-                                  {"{"}foodDetails.monan_PRICE{"}"}
-                                  {"}"}
+                                  {this.props.user.username}
                                 </td>
                               </tr>
                               <tr className="p-2">
                                 <td>Chức vụ:</td>
                                 <td>
-                                  {"{"}
-                                  {"{"}foodDetails.monan_PRICE{"}"}
-                                  {"}"}
+                                  {this.props.user.chucvu}
                                 </td>
                               </tr>
                               <tr className="p-2">
                                 <td>Trạng thái:</td>
                                 <td>
-                                  {"{"}
-                                  {"{"}foodDetails.monan_PRICE{"}"}
-                                  {"}"}
+                                  {this.props.user.isactive === 1 ? "Active" : "Deactive"}
                                 </td>
                               </tr>
                             </tbody>
@@ -103,7 +90,27 @@ export default class StaffDetail extends Component {
                       </div>
                     </div>
                     <div>
-                      <StaffDetailFooter id={this.props.id} />
+                    <div class="float-md-right mt-3">
+            <button
+              type="button"
+              className="btn btn-success "
+              data-toggle="modal"
+              data-target={`#b${this.props.user.id}`}
+              onClick ={() => this.onclick()}
+            >
+              <i className="fas fa-plus-circle" /> Cập Nhật
+            </button>
+            <div
+              className="modal fade"
+              id={`b${this.props.user.id}`}
+              tabIndex={-1}
+              role="dialog"
+              aria-labelledby="modifyFoodsTitle"
+              aria-hidden="true"
+            >
+              <UpdateForm />
+            </div>
+            </div>
                     </div>
                   </div>
                   <div
@@ -131,3 +138,4 @@ export default class StaffDetail extends Component {
     );
   }
 }
+export default inject("staffStore")(observer(StaffDetail))

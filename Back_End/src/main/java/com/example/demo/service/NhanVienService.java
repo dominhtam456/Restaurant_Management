@@ -15,8 +15,9 @@ public interface NhanVienService {
 
     NhanVien findOne(String username);
 
-    NhanVienDto updateNhanVien(NhanVienDto nhanvienDto);
+    NhanVien updateNhanVien(NhanVienDto nhanvienDto);
 
 	NhanVien findById(long id);
 
+	List<NhanVien> findByName(String fullname);
 }

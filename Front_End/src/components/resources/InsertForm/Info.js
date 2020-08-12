@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { inject, observer } from "mobx-react";
 import { toJS } from "mobx";
+import FileBase64 from 'react-file-base64';
 
 class Info extends Component {
   constructor(props) {
@@ -13,8 +14,14 @@ class Info extends Component {
     //this.image = React.createRef();
     
     this.state=({
-      num:""
+      num:"",
+      img: "",
     })
+  }
+
+  getFiles(files){
+    this.setState({img: files.base64})
+    //console.log(files.base64);
   }
 
   async onCreate() {
@@ -30,23 +37,6 @@ class Info extends Component {
     );
     await this.props.resourceStore.getResource();
   }
-
-  encodeImageFileAsURL = (img) => {
-    var filesSelected = document.getElementById("inputFileToLoad").files;
-    if (filesSelected.length > 0) {
-      var fileToLoad = filesSelected[0];
-
-      var fileReader = new FileReader();
-
-      fileReader.onload = function (fileLoadedEvent) {
-        var srcData = fileLoadedEvent.target.result; // <--- data: base64
-
-        var newImage = document.createElement("img");
-        newImage.src = srcData;
-      };
-    }
-    fileReader.readAsDataURL(fileToLoad);
-  };
 
   componentDidMount() {
     this.props.resourceStore.getTypeResource();
@@ -196,7 +186,7 @@ class Info extends Component {
               <div class="row">
                 <div class="card-body border">
                   <div class="col-6">
-                    <img width={150} height={150} id="imgTest" />
+                    <img width={150} height={150} id="imgTest" src={this.state.img}/>
                   </div>
                 </div>
                 <div class="col-6"></div>
@@ -204,11 +194,14 @@ class Info extends Component {
               <div class="row mt-1">
                 <div class="file-field">
                   <div class="btn form-control-file btn-sm btn-success ml-2">
-                    <input
+                    {/* <input
                       id="inputFileToLoad"
                       type="file"
                       onChange={() => this.encodeImageFileAsURL}
-                    />
+                    /> */}
+                    <FileBase64
+                      multiple={ false }
+                      onDone={ this.getFiles.bind(this) } />
                   </div>
                 </div>
               </div>

@@ -77,13 +77,14 @@ public class NhanVienServiceImp  implements UserDetailsService, NhanVienService 
 	}
 
 	@Override
-    public NhanVienDto updateNhanVien(NhanVienDto nhanvienDto) {
+    public NhanVien updateNhanVien(NhanVienDto nhanvienDto) {
         NhanVien nhanvien = findById(nhanvienDto.getId());
         if(nhanvien != null) {
             BeanUtils.copyProperties(nhanvienDto, nhanvien, "password");
+            nhanvien.setIsactive(nhanvienDto.getIsActive());
             nhanvienDao.save(nhanvien);
         }
-        return nhanvienDto;
+        return nhanvien;
     }
 	
 	 @Override
@@ -96,8 +97,15 @@ public class NhanVienServiceImp  implements UserDetailsService, NhanVienService 
 		    newNhanVien.setPassword(bcryptEncoder.encode(nhanvien.getPassword()));
 			newNhanVien.setLoai(nhanvien.getLoai());
 			newNhanVien.setImg(nhanvien.getImg());
+			newNhanVien.setIsactive(nhanvien.getIsActive());
 	        return nhanvienDao.save(newNhanVien);
 	    }
+
+	@Override
+	public List<NhanVien> findByName(String fullname) {
+		// TODO Auto-generated method stub
+		return nhanvienDao.TimNhanVienTheoTen(fullname);
+	}
 	 
 	 
 }

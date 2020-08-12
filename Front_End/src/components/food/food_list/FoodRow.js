@@ -3,7 +3,7 @@ import { inject , observer } from 'mobx-react';
 
 class FoodRow extends Component {
   componentDidMount() {
-    this.props.tableStore.getFoods();
+    this.props.foodStore.getFood();
   }
   render() {
     return (
@@ -31,11 +31,6 @@ class FoodRow extends Component {
         <td>
           <span className="badge badge-dot">
             {this.props.food.price}đ
-          </span>
-        </td>
-        <td>
-          <span className="mr-2">
-            {this.props.food.status}
           </span>
         </td>
         <td>

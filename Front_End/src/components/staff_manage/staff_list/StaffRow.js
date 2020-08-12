@@ -6,7 +6,7 @@ class StaffRow extends Component {
         return (
             <tr
         data-toggle="collapse"
-        data-target={this.props.user.id}
+        data-target={`#id${this.props.user.id}`}
         className="clickable"
         aria-expanded="false"
       >
@@ -28,6 +28,11 @@ class StaffRow extends Component {
         <td>
           <span className="badge badge-dot">
             {this.props.user.chucvu}
+          </span>
+        </td>
+        <td>
+          <span className="badge badge-dot">
+            {this.props.user.isactive === 1 ? "Active" : "Deactive"}
           </span>
         </td>
       </tr>

@@ -4,21 +4,23 @@ import FoodDetail from "../food_detail/FoodDetail";
 import { inject, observer } from "mobx-react";
 import { toJS } from "mobx";
 
+
 class FoodList extends Component {
   componentDidMount() {
-    this.props.tableStore.getFoods();
+    // this.props.tableStore.getFoods();
+    this.props.foodStore.getFood();
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.update != this.props.update) this.props.tableStore.getFoods();
+    if (prevProps.update != this.props.update) this.props.foodStore.getFood();
   }
 
   render() {
-    const element = this.props.tableStore.listFood.map((food, index) => {
+    const element = this.props.foodStore.listFoods.map((food, index) => {
       return <FoodRow food={food} key={food.no} index={index} />;
     });
 
-    const element1 = this.props.tableStore.listFood.map((food, index) => {
+    const element1 = this.props.foodStore.listFoods.map((food, index) => {
       return <FoodDetail food={food} key={food.no} index={index} />;
     });
     return (
@@ -33,7 +35,6 @@ class FoodList extends Component {
               <th scope="col">Mã Món Ăn</th>
               <th scope="col">Tên Món Ăn</th>
               <th scope="col">Giá bán </th>
-              <th scope="col">Trạng thái</th>
               <th scope="col">Hiện trạng</th>
             </tr>
           </thead>
@@ -46,4 +47,4 @@ class FoodList extends Component {
     );
   }
 }
-export default inject("tableStore")(observer(FoodList));
+export default inject("foodStore")(observer(FoodList));

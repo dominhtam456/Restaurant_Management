@@ -6,11 +6,22 @@ import { toJS } from 'mobx'
 import { withRouter } from 'react-router-dom'
 
 class Kitchen extends Component {
+  checkRole() {
+    const role = JSON.parse(atob(localStorage.getItem('token').split('.')[1])).role;
+    if(role == 1 || role == 2) {
+      alert("Forbidden");
+      this.props.history.push('/table');
+      return false;
+    }
+    return true;
+  }
+
   async componentDidMount() {
     await this.props.loginStore.checkValid();
     if(!this.props.loginStore.isValid) this.props.history.push('/login')
     else {
-      this.props.kitchenStore.getListUncompledFood();
+      if(this.checkRole())
+        this.props.kitchenStore.getListUncompledFood();
     }
   }
   render() {

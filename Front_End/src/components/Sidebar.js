@@ -27,6 +27,8 @@ export default class Sidebar extends Component {
     let date = new Date();
     let year = date.getFullYear();
 
+    const role = JSON.parse(atob(localStorage.getItem('token').split('.')[1])).role;
+
     return (
             <div>
               <nav id="mySidebar" style={{width: "15%"}} className=" w3-bar-block  w3-animate-left navbar navbar-vertical fixed-left navbar-expand-md navbar-light bg-white nav-custom">
@@ -56,39 +58,46 @@ export default class Sidebar extends Component {
                     {/* Navigation */}
                     <ul className="navbar-nav nav-sidebar-custom ">
                       <li className="nav-item">
+                        {role == 1 || role == 4 || role == 2 ?
                         <Link to='/table' className="nav-link text-white" >
                           <i className="fas fa-vector-square text-danger " /> Đặt bàn
-                        </Link>
+                        </Link> : ''}
                       </li>
                       <li className="nav-item">
+                        {role == 4 ?
                         <Link to='/food' className="nav-link text-white" >
-                          <i className="fab fa-elementor text-success" /> Món ăn
-                        </Link>
+                          <i className="fas fa-vector-square text-danger " /> Món ăn
+                        </Link> : ''}
                       </li>
                       <li className="nav-item">
+                        {role == 4 ?
                         <Link to='/resources' className="nav-link text-white" >
-                          <i className="fab fa-elementor text-success" /> Nguyên Liệu
-                        </Link>
+                          <i className="fas fa-vector-square text-danger " /> Nguyên liệu
+                        </Link> : ''}
                       </li>
                       <li className="nav-item">
+                        {role == 4 ?
                         <Link to='/table_manage' className="nav-link text-white" >
-                          <i className="fab fa-elementor text-success" /> Bàn
-                        </Link>
+                          <i className="fas fa-vector-square text-danger " /> Bàn
+                        </Link> : ''}
                       </li>
                       <li className="nav-item">
+                        {role == 4 ?
                         <Link to='/staff_manage' className="nav-link text-white" >
-                          <i className="fab fa-elementor text-success" /> Nhân viên
-                        </Link>
+                          <i className="fas fa-vector-square text-danger " /> Nhân viên
+                        </Link> : ''}
                       </li>
                       <li className="nav-item">
+                        {role == 4 ?
                         <Link to='/statistical' className="nav-link text-white" >
-                          <i className="fas fa-elementor text-success " /> Thống Kê
-                        </Link>
+                          <i className="fas fa-vector-square text-danger " /> Thống kê
+                        </Link> : ''}
                       </li>
                       <li className="nav-item">
+                        {role == 3 || role == 4?
                         <Link to='/kitchen' className="nav-link text-white" >
-                          <i className="fab fa-elementor text-success"/> Bếp
-                        </Link>
+                          <i className="fas fa-vector-square text-danger " /> Bếp
+                        </Link> : ''}
                       </li>
                     </ul>
                     {/* Divider */}
