@@ -11,7 +11,7 @@ class Info extends Component {
     this.price = React.createRef();
     this.typeId = React.createRef();
     this.date = React.createRef();
-    //this.image = React.createRef();
+    this.image = React.createRef();
     
     this.state=({
       num: 1,
@@ -24,8 +24,12 @@ class Info extends Component {
   }
 
   getFiles(files){
-    this.setState({img: files.base64})
-    //console.log(files.base64);
+    this.image = files.base64;
+    this.setState({
+      img: files.base64
+    })
+
+    //console.log(this.image);
   }
 
   async onCreate() {
@@ -34,10 +38,9 @@ class Info extends Component {
       this.name.current.value,
       this.price.current.value,
       this.date.current.value,
-      '',
+      this.state.img,
       this.state.num,
       '',
-      //this.image.current.value
     );
     await this.props.resourceStore.getResource();
   }
@@ -203,7 +206,7 @@ class Info extends Component {
                   id="inputNum"
                   placeholder="dd/MM/yyyy"
                   ref={this.date}
-                  onBlur={() => this.onBlurRDate()}
+                  // onBlur={() => this.onBlurRDate()}
                 />
                 {this.state.isAlertDate ? alertResoucreDate : ""}
               </div>
@@ -225,11 +228,10 @@ class Info extends Component {
             <div class="container">
               <div class="row">
                 <div class="card-body border">
-                  <div class="col-6">
-                    <img width={150} height={150} id="imgTest" src={this.state.img}/>
+                  <div  className="card-img-top p-4">
+                    <img width={250} height={250} id="imgTest" src={this.state.img}/>
                   </div>
                 </div>
-                <div class="col-6"></div>
               </div>
               <div class="row mt-1">
                 <div class="file-field">

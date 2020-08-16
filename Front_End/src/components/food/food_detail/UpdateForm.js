@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { inject , observer} from 'mobx-react'
 import { toJS } from 'mobx';
+import FileBase64 from 'react-file-base64';
 
 class UpdateForm extends Component {
   constructor(props) {
@@ -10,15 +11,22 @@ class UpdateForm extends Component {
     this.price = React.createRef();
     this.typeid = React.createRef();  
     this.unit = React.createRef();
-    //this.image = React.createRef();
+    this.image = React.createRef();
     this.state=({
       num:"",
       act:"",
       sta:"",
+      img:""
     });
     this.isactive = React.createRef();
     this.desc = React.createRef();
-    this.sta = React.createRef();
+    }
+
+    getFiles(files) {
+      this.image = files.base64;
+      this.setState({
+        img: files.base64,
+      });
     }
 
     async componentDidMount(){
@@ -28,16 +36,15 @@ class UpdateForm extends Component {
     async onupdate(){
       if(this.state.num === "") await this.setState({num:this.props.foodStore.currentFood.loaimonan_id});
       if(this.state.act === "") await this.setState({act:this.props.foodStore.currentFood.isActive});
-      if(this.state.sta === "") await this.setState({sta:this.props.foodStore.currentFood.status});
 
       await this.props.foodStore.updateFood(this.no.current.value, 
                                       this.name.current.value,
                                       this.price.current.value,
                                       this.unit.current.value,
+                                      this.state.img,
                                       this.state.num,
                                       this.state.act,
-                                      this.desc.current.value,
-                                      this.state.sta);
+                                      this.desc.current.value);
       await this.props.foodStore.getFood();
     }
 
@@ -45,13 +52,6 @@ class UpdateForm extends Component {
       this.typeid=e.target.value;
       this.setState({
         num:e.target.value
-      })
-      //console.log(e.target.value)
-    }
-    onChangeSta(e) {
-      this.sta=e.target.value;
-      this.setState({
-        sta:e.target.value
       })
       //console.log(e.target.value)
     }
@@ -65,7 +65,6 @@ class UpdateForm extends Component {
     }
 
   render() {
-    let status = this.props.foodStore.currentFood.status;
     let act = this.props.foodStore.currentFood.isActive;
     let type = this.props.foodStore.currentFood.loaimonan_id;
     const listType= this.props.foodStore.listTypeFoods.map((food, index)=>{
@@ -197,20 +196,6 @@ class UpdateForm extends Component {
                     </div>
                     <div className="form-group row">
                       <label
-                        htmlFor="inputType"
-                        className="col-sm-4 col-form-label form-control-sm"
-                      >
-                        Trạng thái:
-                      </label>
-                      <div className="col-sm-7">
-                        <select className="form-control-sm" id="inputType" onChange={(e) => this.onChangeSta(e)}>
-                          <option value="Còn" selected={status === "Còn" ? true: false}>Còn</option>
-                          <option value="Không" selected={status === "Không" ? true: false}>Không </option>
-                        </select>
-                      </div>
-                    </div>
-                    <div className="form-group row">
-                      <label
                         htmlFor="inputUnit"
                         className="col-sm-4 col-form-label form-control-sm"
                       >
@@ -235,16 +220,22 @@ class UpdateForm extends Component {
                       <div class="container">
                         <div class="row">
                           <div class="card-body border">
-                            <div class="col-6">
-                              <img width={150} height={150} alt="" src={this.props.foodStore.image}/>
+                          <div className="card-img-top p-4">
+                              <img
+                                width={250}
+                                height={250}
+                                src={this.state.img === "" ? this.props.foodStore.currentFood.image : this.state.img}
+                              />
                             </div>
                           </div>
-                          <div class="col-6"></div>
                         </div>
                         <div class="row mt-1">
                           <div class="file-field">
                             <div class="btn form-control-file btn-sm btn-success ml-2">
-                              <input type="file" />
+                            <FileBase64
+                                multiple={false}
+                                onDone={this.getFiles.bind(this)}
+                              />
                             </div>
                           </div>
                         </div>

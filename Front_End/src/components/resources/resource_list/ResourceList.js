@@ -7,6 +7,15 @@ class ResourceList extends Component {
   componentDidMount() {
     this.props.resourceStore.getResource();
   }
+  merge(element, element1) {
+    let element3 = [];
+      for(let i=0; i<element.length; i++){
+        element3.push(element[i]);
+        element3.push(element1[i]);
+      }
+      
+      return element3;
+  }
     render() {
     const element= this.props.resourceStore.listResources.map((resource, index)=>{
       return <ResourceRow resource={resource} key={resource.id} index={index}/>
@@ -15,6 +24,7 @@ class ResourceList extends Component {
     const element1= this.props.resourceStore.listResources.map((resource, index)=>{
       return <ResourceDetail resource={resource} key={resource.id} index={index}/>
     })
+    const element2 = this.merge(element,element1);
         return (
             <div class="table-responsive">
         <table class="table  align-items-center table-flush accordion table-hover" id="accordionRow">
@@ -27,8 +37,7 @@ class ResourceList extends Component {
             </tr>
           </thead>
           <tbody>
-                {element}
-                {element1}
+                {element2}
               </tbody>
               </table>
               </div>

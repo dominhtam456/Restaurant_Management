@@ -1,27 +1,21 @@
 import React, { Component } from "react";
 import TableRow from "./TableRow";
-import UpdateForm from "../table_detail/UpdateForm";
 import { inject, observer } from "mobx-react";
 import { toJS } from "mobx";
 
 class TableList extends Component {
   componentDidMount() {
-    this.props.tableStore.getTable();
+    this.props.tableManageStore.getTable();
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.update != this.props.update) this.props.tableStore.getTable();
+    if (prevProps.update != this.props.update) this.props.tableManageStore.getTable();
   }
 
   render() {
-    const element= this.props.tableStore.listTable.map((table, index)=>{
+    const element= this.props.tableManageStore.listTable.map((table, index)=>{
       return <TableRow table={table} key={table.id} index={index}/>
     })
-
-    const element1= this.props.tableStore.listTable.map((table, index)=>{
-      return <UpdateForm table={table} key={table.id} index={index}/>
-    })
-
     return (
       <div class="table-responsive">
         <table
@@ -46,4 +40,4 @@ class TableList extends Component {
   }
 }
 
-export default inject("tableStore")(observer(TableList));
+export default inject("tableManageStore")(observer(TableList));

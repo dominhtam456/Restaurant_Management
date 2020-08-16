@@ -24,8 +24,8 @@ export const getEachResourcesDetail = async (no) => {
   return await response.json();
 }
 
-export const getTypeResources = async () => {
-  const url = `${URL_API}/GetAllLoaiNguyenLieu`;
+export const getTypeResources = async (isActive) => {
+  const url = `${URL_API}/GetAllMByStatus/${isActive}`;
   const response = await fetch(url, {
       method: 'GET', // *GET, POST, PUT, DELETE, etc.
       headers: {

@@ -8,6 +8,15 @@ class StaffList extends Component {
   componentDidMount() {
     this.props.staffStore.getStaffs();
   }
+  merge(element, element1) {
+    let element3 = [];
+      for(let i=0; i<element.length; i++){
+        element3.push(element[i]);
+        element3.push(element1[i]);
+      }
+      
+      return element3;
+  }
   render() {
     const element= this.props.staffStore.listStaff.map((user, index)=>{
       return <StaffRow user={user} key={user.id} index={index}/>
@@ -15,6 +24,7 @@ class StaffList extends Component {
     const element1= this.props.staffStore.listStaff.map((user, index)=>{
       return <StaffDetail user={user} key={user.id} index={index}/>
     })
+    const element2 = this.merge(element,element1);
     return (
       <div class="table-responsive">
         <table class="table  align-items-center table-flush accordion table-hover" id="accordionRow">
@@ -28,8 +38,7 @@ class StaffList extends Component {
             </tr>
           </thead>
           <tbody>
-                {element}
-                {element1}
+                {element2}
               </tbody>
               </table>
               </div>

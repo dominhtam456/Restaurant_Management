@@ -12,6 +12,8 @@ import TableStore from './store/TableStore';
 import FoodStore from './store/FoodStore';
 import ResourceStore from './store/ResourceStore';
 import StaffStore from './store/StaffStore';
+import FoodTypeStore from './store/FoodTypeStore';
+import ResourceTypeStore from './store/ResourceTypeStore';
 
 
 ReactDOM.render(
@@ -24,7 +26,9 @@ ReactDOM.render(
       tableManageStore={new TableStore()}
       foodStore={new FoodStore()}
       resourceStore={new ResourceStore()}
-      staffStore={new StaffStore()}>
+      staffStore={new StaffStore()}
+      foodTypeStore={new FoodTypeStore()}
+      resourceTypeStore={new ResourceTypeStore()}>
       <App />
     </Provider>
   </React.StrictMode>,

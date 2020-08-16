@@ -3,6 +3,13 @@ import * as TableService from './../services/TableService';
 
 export default class TableStore {
     currentTable={};
+    listTable = [];
+
+    getTable = async () => {
+        const data = await TableService.getTables();
+        this.listTable= data;
+        // console.log(data)
+    }
 
     setcurrenttable = async (table) => {
         this.currentTable=table;
@@ -46,8 +53,10 @@ export default class TableStore {
 decorate(TableStore, {
     currentTableModal: observable,
     currentTable: observable,
+    listTable: observable,
 
     pushTable: action,
     updateTable: action,
     setcurrenttable: action,
+    getTable: action,
 })

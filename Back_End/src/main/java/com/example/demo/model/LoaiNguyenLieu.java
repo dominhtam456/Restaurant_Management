@@ -27,6 +27,25 @@ public class LoaiNguyenLieu implements Serializable {
 	
 	 @Column(name = "unit")
 	 private String unit;
+	 
+	 @Column(name = "is_active")
+	 private Integer isActive;
+
+	public Integer getIsActive() {
+		return isActive;
+	}
+
+	public LoaiNguyenLieu(long id, String name, String unit, Integer isActive) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.unit = unit;
+		this.isActive = isActive;
+	}
+
+	public void setIsActive(Integer isActive) {
+		this.isActive = isActive;
+	}
 
 	public LoaiNguyenLieu(String name, String unit) {
 		super();

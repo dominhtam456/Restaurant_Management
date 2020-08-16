@@ -33,7 +33,8 @@ public class UserController {
         return new ApiResponse<>(HttpStatus.OK.value(), "User list fetched successfully.",nhanvienService.findAll());
     }
     
-    @GetMapping("/GetUserByName/{key}")
+    @RequestMapping(path = "/GetUserByName/{key}", method = RequestMethod.GET)
+//    @GetMapping("/GetUserByName/{key}")
     @PreAuthorize("@appAuthorizer.authorize(authentication, 'VIEW', this)")
     public ApiResponse<List<NhanVien>> findByName(@PathVariable String key){
     	return new ApiResponse<>(HttpStatus.OK.value(), "User list fetched succesfully.", nhanvienService.findByName(key));

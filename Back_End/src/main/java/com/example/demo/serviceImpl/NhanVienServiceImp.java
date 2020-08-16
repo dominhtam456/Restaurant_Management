@@ -108,10 +108,10 @@ public class NhanVienServiceImp  implements UserDetailsService, NhanVienService 
 		nhanvienDao
 		.TimNhanVienTheoTen(fullname).iterator().forEachRemaining(list::add);
 		
-//		for (NhanVien nhanVien : list) {
-//			ChucVu cv = chucvuService.getOne(Long.valueOf(nhanVien.getLoai()));
-//			nhanVien.setChucvu(cv.getName());
-//		}
+		for (NhanVien nhanVien : list) {
+			ChucVu cv = chucvuService.getOne(Long.valueOf(nhanVien.getLoai()));
+			nhanVien.setChucvu(cv.getName());
+		}
 		return list;
 	}
 	 

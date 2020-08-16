@@ -2,7 +2,7 @@ package com.example.demo.controller;
 
 import javax.validation.Valid;
 
-import java.io.ObjectInputFilter.Status;
+//import java.io.ObjectInputFilter.Status;
 import java.util.List;
 
 import org.hibernate.annotations.common.util.impl.LoggerFactory;
@@ -141,19 +141,19 @@ public class FoodController {
 	}
 
 	// TIM KIEM
-	@CrossOrigin
-	@RequestMapping(value = "/SearchFoods/{key}", method = RequestMethod.GET)
+	@RequestMapping(path = "/SearchFoods/{key}", method = RequestMethod.GET)
 	@PreAuthorize("@appAuthorizer.authorize(authentication, 'VIEW', this)")
 	public List<MonAn> SearchFoods(@PathVariable(value = "key") String key) {
 		try {
-			for (MonAn monan : repositoryMonAn.TimMonAnTheoTen(key)) {
+			List<MonAn> list = repositoryMonAn.TimMonAnTheoTen(key);
+			for (MonAn monan : list) {
 				// Set ten loai nguyen lieu
 
 				monan.setTenloaimonan(GetTenLoaiMonAn(monan.getLoaimonan_id()));
 			}
-			return repositoryMonAn.TimMonAnTheoTen(key);
+			return list;
 		} catch (Exception e) {
-			return null;
+			throw e;
 		}
 	}
 }

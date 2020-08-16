@@ -45,6 +45,17 @@ public class MaterialTypeController {
 		// return ResponseEntity<List<Contact>>(listContact, HttpStatus.OK);
 		return new ResponseEntity<List<LoaiNguyenLieu>>(listLoaiNguyenLieu, HttpStatus.OK);
 	}
+	
+	@RequestMapping(value = "/GetAllMByStatus/{status}", method = RequestMethod.GET)
+	@PreAuthorize("@appAuthorizer.authorize(authentication, 'VIEW', this)")
+	public ResponseEntity<List<LoaiNguyenLieu>> listAllByStatus(@PathVariable("status") int status) {
+		List<LoaiNguyenLieu> listLoaiNguyenLieu = repositoryLoaiNguyenLieu.listAllByStatus(status);
+		if (listLoaiNguyenLieu.isEmpty()) {
+			return new ResponseEntity<List<LoaiNguyenLieu>>(HttpStatus.NO_CONTENT);
+		}
+		// return ResponseEntity<List<Contact>>(listContact, HttpStatus.OK);
+		return new ResponseEntity<List<LoaiNguyenLieu>>(listLoaiNguyenLieu, HttpStatus.OK);
+	}
 
 	// LAY 1 LOAI NGUYEN LIEU
 	@RequestMapping(value = "/LoaiNguyenLieu/{id}", method = RequestMethod.GET)
@@ -79,6 +90,7 @@ public class MaterialTypeController {
 
 		lnl.setName(loainguyenlieuForm.getName());
 		lnl.setUnit(loainguyenlieuForm.getUnit());
+		lnl.setIsActive(loainguyenlieuForm.getIsActive());
 
 		LoaiNguyenLieu updatedLoaiNguyenLieu = repositoryLoaiNguyenLieu.save(lnl);// update trong database
 		return ResponseEntity.ok(updatedLoaiNguyenLieu);

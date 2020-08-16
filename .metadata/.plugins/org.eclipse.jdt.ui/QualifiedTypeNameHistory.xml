@@ -18,4 +18,5 @@
 <fullyQualifiedTypeName name="com.example.demo.model.ApiResponse"/>
 <fullyQualifiedTypeName name="org.springframework.http.HttpStatus"/>
 <fullyQualifiedTypeName name="com.example.demo.model.NhanVien"/>
+<fullyQualifiedTypeName name="com.example.demo.model.LoaiNguyenLieu"/>
 </qualifiedTypeNameHistroy>

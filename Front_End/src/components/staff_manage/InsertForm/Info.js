@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { inject, observer } from "mobx-react";
 import { toJS } from "mobx";
+import FileBase64 from 'react-file-base64';
 
 class Info extends Component {
   constructor(props) {
@@ -11,12 +12,21 @@ class Info extends Component {
     this.email = React.createRef();
     this.pass = React.createRef();
     this.typeId = React.createRef();
-    //this.image = React.createRef();
+    this.image = React.createRef();
 
     this.state = {
       num: "",
+      img: ""
     };
   }
+
+  getFiles(files){
+    this.image = files.base64;
+    this.setState({
+      img: files.base64
+    })
+  }
+
   componentDidMount() {
     this.props.staffStore.getRole();
   }
@@ -28,7 +38,7 @@ class Info extends Component {
       this.email.current.value,
       this.pass.current.value,
       this.state.num,
-      //this.image.current.value
+      this.state.img
     );
     await this.props.staffStore.getStaffs();
   }
@@ -190,20 +200,17 @@ class Info extends Component {
             <div class="container">
               <div class="row">
                 <div class="card-body border">
-                  <div class="col-6">
-                    <img width={250} height={250} id="imgTest" />
+                <div  className="card-img-top p-4">
+                    <img width={250} height={250} id="imgTest" src={this.state.img}/>
                   </div>
                 </div>
-                <div class="col-6"></div>
               </div>
               <div class="row mt-1">
                 <div class="file-field">
                   <div class="btn form-control-file btn-sm btn-success ml-2">
-                    <input
-                      id="inputFileToLoad"
-                      type="file"
-                      onChange={() => this.encodeImageFileAsURL}
-                    />
+                  <FileBase64
+                      multiple={ false }
+                      onDone={ this.getFiles.bind(this) } />
                   </div>
                 </div>
               </div>

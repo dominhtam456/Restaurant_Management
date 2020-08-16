@@ -15,7 +15,7 @@ class UpdateForm extends Component {
 
   async onUpdate(){
     await this.props.tableManageStore.updateTable(this.name.current.value, this.isActive.value);
-    await this.props.tableStore.getTable();
+    await this.props.tableManageStore.getTable();
   }
 
   onChangeSelect(e){

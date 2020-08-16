@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { inject , observer} from 'mobx-react';
+import FileBase64 from "react-file-base64";
 
 class UpdateForm extends Component {
   constructor(props) {
@@ -9,12 +10,20 @@ class UpdateForm extends Component {
     this.phone = React.createRef();
     this.email = React.createRef();
     this.typeId = React.createRef();
-    //this.image = React.createRef();
+    this.image = React.createRef();
     this.isactive = React.createRef();
     this.state=({
       num:"",
-      act:""
+      act:"",
+      img:""
     });
+    }
+
+    getFiles(files) {
+      this.image = files.base64;
+      this.setState({
+        img: files.base64,
+      });
     }
 
     async onupdate(){
@@ -29,7 +38,7 @@ class UpdateForm extends Component {
         this.phone.current.value, 
         this.email.current.value,
         this.state.num,
-        '',
+        this.state.img,
         this.state.act
         );
       await this.props.staffStore.getStaffs();
@@ -202,16 +211,22 @@ class UpdateForm extends Component {
                       <div class="container">
                         <div class="row">
                           <div class="card-body border">
-                            <div class="col-6">
-                              <img width={150} height={150} alt="" />
+                          <div className="card-img-top p-4">
+                              <img
+                                width={250}
+                                height={250}
+                                src={this.state.img === "" ? this.props.staffStore.currentStaff.image : this.state.img}
+                              />
                             </div>
                           </div>
-                          <div class="col-6"></div>
                         </div>
                         <div class="row mt-1">
                           <div class="file-field">
                             <div class="btn form-control-file btn-sm btn-success ml-2">
-                              <input type="file" />
+                            <FileBase64
+                                multiple={false}
+                                onDone={this.getFiles.bind(this)}
+                              />
                             </div>
                           </div>
                         </div>

@@ -71,8 +71,20 @@ export default class Sidebar extends Component {
                       </li>
                       <li className="nav-item">
                         {role == 4 ?
+                        <Link to='/food_type' className="nav-link text-white" >
+                          <i className="fas fa-vector-square text-danger " /> Loại Món ăn
+                        </Link> : ''}
+                      </li>
+                      <li className="nav-item">
+                        {role == 4 ?
                         <Link to='/resources' className="nav-link text-white" >
                           <i className="fas fa-vector-square text-danger " /> Nguyên liệu
+                        </Link> : ''}
+                      </li>
+                      <li className="nav-item">
+                        {role == 4 ?
+                        <Link to='/resource_type' className="nav-link text-white" >
+                          <i className="fas fa-vector-square text-danger " /> Loại Nguyên liệu
                         </Link> : ''}
                       </li>
                       <li className="nav-item">

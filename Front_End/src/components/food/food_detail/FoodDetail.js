@@ -19,7 +19,7 @@ class FoodDetail extends Component {
   render() {
     return (
       <tr className="detail">
-        <td colSpan={8} className="hiddenRow">
+        <td colSpan={5} className="hiddenRow">
           <div
             id={`id${this.props.food.id}`}
             className="collapse"

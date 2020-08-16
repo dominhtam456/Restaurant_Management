@@ -10,7 +10,7 @@ class Resource extends Component {
   }
   async onclick(){
     // console.log(this.name.current.value)
-    await this.props.resourceStore.getResourceByName(this.name.current.value);
+    await this.props.resourceStore.checkSearch(this.name.current.value);
   }
   render() {
     return (

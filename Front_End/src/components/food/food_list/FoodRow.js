@@ -2,9 +2,6 @@ import React, { Component } from "react";
 import { inject , observer } from 'mobx-react';
 
 class FoodRow extends Component {
-  componentDidMount() {
-    this.props.foodStore.getFood();
-  }
   render() {
     return (
       <tr

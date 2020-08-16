@@ -41,6 +41,17 @@ public class FoodTypeController {
 		// return ResponseEntity<List<Contact>>(listContact, HttpStatus.OK);
 		return new ResponseEntity<List<LoaiMonAn>>(listLoaiMonAn, HttpStatus.OK);
 	}
+	
+	@RequestMapping(value = "/GetAllByStatus/{status}", method = RequestMethod.GET)
+	@PreAuthorize("@appAuthorizer.authorize(authentication, 'VIEW', this)")
+	public ResponseEntity<List<LoaiMonAn>> listTypeFoodByStatus(@PathVariable("status") int status) {
+		List<LoaiMonAn> listLoaiMonAn = repositoryLoaiMonAn.listTypeFoodByStatus(status);
+		if (listLoaiMonAn.isEmpty()) {
+			return new ResponseEntity<List<LoaiMonAn>>(HttpStatus.NO_CONTENT);
+		}
+		// return ResponseEntity<List<Contact>>(listContact, HttpStatus.OK);
+		return new ResponseEntity<List<LoaiMonAn>>(listLoaiMonAn, HttpStatus.OK);
+	}
 
 	// LAY 1 LOAI MON AN
 	@RequestMapping(value = "/LoaiMonAn/{id}", method = RequestMethod.GET)
@@ -75,6 +86,7 @@ public class FoodTypeController {
 
 		lma.setName(loaimonanForm.getName());
 		lma.setDescription(loaimonanForm.getDescription());
+		lma.setIsActive(loaimonanForm.getIsActive());
 
 		LoaiMonAn updatedLoaiMonAn = repositoryLoaiMonAn.save(lma);// update trong database
 		return ResponseEntity.ok(updatedLoaiMonAn);

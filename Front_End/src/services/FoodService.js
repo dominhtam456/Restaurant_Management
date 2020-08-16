@@ -12,8 +12,8 @@ export const getFoods = async () => {
     return await response.json();
 }
 
-export const getTypeFoods = async () => {
-  const url = `${URL_API}/GetAllLoaiMonAn`;
+export const getTypeFoods = async (isActive) => {
+  const url = `${URL_API}/GetAllByStatus/${isActive}`;
   const response = await fetch(url, {
       method: 'GET', // *GET, POST, PUT, DELETE, etc.
       headers: {

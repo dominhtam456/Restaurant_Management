@@ -38,10 +38,13 @@ class Navbar extends Component {
                                     <h6 className="text-overflow m-0">Welcome!</h6>
                                 </div>
                                 <span className="avatar avatar-sm rounded-circle">
-                                    <img alt="Image placeholder" src={process.env.PUBLIC_URL + "/img/icons/avatar.png"} />
+                                    <img alt="Image placeholder" 
+                                    src={process.env.PUBLIC_URL + "/img/icons/avatar.png"} 
+                                    //src = {this.props.staffStore.currentStaff.image}
+                                    />
                                 </span>
                                 <div className="media-body ml-2 d-none d-lg-block">
-                                    <span className="mb-0 text-sm  font-weight-bold text-dark"> Admin </span>
+                                    <span className="mb-0 text-sm  font-weight-bold text-dark"> {JSON.parse(atob(localStorage.getItem('token').split('.')[1])).sub} </span>
                                 </div>
                             </div>
                             </a>

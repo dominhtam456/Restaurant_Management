@@ -48,7 +48,7 @@ class Info extends Component {
           </div>
         </div>
         <div class="float-right mt-3">
-          <button type="submit" class="btn btn-danger" onClick={() => this.onCreate()} data-dismiss="modal">Lưu & thêm mới</button>
+          <button type="button" class="btn btn-danger" onClick={() => this.onCreate()} data-dismiss="modal">Lưu & thêm mới</button>
           <button type="button" class="btn btn-secondary"
             data-dismiss="modal">Đóng</button>
         </div>

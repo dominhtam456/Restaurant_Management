@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { inject, observer } from "mobx-react";
 import { toJS } from "mobx";
+import FileBase64 from 'react-file-base64';
 
 class Info extends Component {
   constructor(props) {
@@ -9,10 +10,12 @@ class Info extends Component {
     this.name = React.createRef();
     this.price = React.createRef();
     this.unit = React.createRef();
+    this.image = React.createRef();
     this.typeId = React.createRef();
     this.desc = React.createRef();
     this.state = {
       num: 1,
+      img: "",
       isAlertNo: false,
       isAlertName: false,
       isAlertPrice: false,
@@ -20,18 +23,39 @@ class Info extends Component {
     };
   }
 
+  getFiles(files){
+    this.image = files.base64;
+    this.setState({
+      img: files.base64
+    })
+  }
+
   async onCreate() {
     if(this.state.num === "") await this.setState({num:this.props.foodStore.currentFood.loaimonan_id});
-
+    //console.log(this.props.foodStore.check())
+    if(!this.props.foodStore.check(this.no.current.value)){
+      if(this.no.current.value === ""){alert('Mã món ăn không được để trống!')}
+      else alert('Mã món ăn bị trùng')
+    }
+    else if(!this.props.foodStore.check(this.name.current.value) ){
+      if(this.name.current.value === ""){alert('Tên món ăn không được để trống!')}
+      else alert('Tên món ăn bị trùng')
+    }
+    else if(this.price.current.value === ""){
+      alert('Giá tiền không được để trống!')
+    }
+    else {
     await this.props.foodStore.pushFood(
       this.no.current.value,
       this.name.current.value,
       this.price.current.value,
       this.unit.current.value,
+      this.state.img,
       this.state.num,
       this.desc.current.value
     );
     await this.props.foodStore.getFood();
+    }
   }
 
   onChangeSelect(e) {
@@ -234,20 +258,17 @@ class Info extends Component {
             <div class="container">
               <div class="row">
                 <div class="card-body border">
-                  <div class="col-6">
-                    <img width={150} height={150} id="imgTest" />
+                  <div className="card-img-top p-4">
+                    <img width={250} height={250} id="imgTest" src={this.state.img}/>
                   </div>
                 </div>
-                <div class="col-6"></div>
               </div>
               <div class="row mt-1">
                 <div class="file-field">
                   <div class="btn form-control-file btn-sm btn-success ml-2">
-                    <input
-                      id="inputFileToLoad"
-                      type="file"
-                      onChange={() => this.encodeImageFileAsURL}
-                    />
+                  <FileBase64
+                      multiple={ false }
+                      onDone={ this.getFiles.bind(this) } />
                   </div>
                 </div>
               </div>
@@ -265,7 +286,6 @@ class Info extends Component {
           </button>
           <button
             type="button"
-            ng-click="test()"
             class="btn btn-secondary"
             data-dismiss="modal"
           >

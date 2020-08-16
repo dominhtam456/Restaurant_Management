@@ -3,7 +3,7 @@ import FoodRow from "./FoodRow";
 import FoodDetail from "../food_detail/FoodDetail";
 import { inject, observer } from "mobx-react";
 import { toJS } from "mobx";
-
+import ReactPaginate from 'react-paginate'
 
 class FoodList extends Component {
   componentDidMount() {
@@ -11,18 +11,32 @@ class FoodList extends Component {
     this.props.foodStore.getFood();
   }
 
-  componentDidUpdate(prevProps) {
-    if (prevProps.update != this.props.update) this.props.foodStore.getFood();
+  merge(element, element1) {
+    let element3 = [];
+      for(let i=0; i<element.length; i++){
+        element3.push(element[i]);
+        element3.push(element1[i]);
+      }
+      
+      return element3;
   }
 
   render() {
+    //console.log('render', toJS(this.props.foodStore.listFoods))
     const element = this.props.foodStore.listFoods.map((food, index) => {
       return <FoodRow food={food} key={food.no} index={index} />;
+      
     });
 
     const element1 = this.props.foodStore.listFoods.map((food, index) => {
       return <FoodDetail food={food} key={food.no} index={index} />;
     });
+
+    const element2 = this.merge(element,element1);
+    // console.log(element2);
+
+  
+
     return (
       <div className="table-responsive">
         <table
@@ -39,8 +53,7 @@ class FoodList extends Component {
             </tr>
           </thead>
           <tbody>
-            {element}
-            {element1}
+            {element2}
           </tbody>
         </table>
       </div>

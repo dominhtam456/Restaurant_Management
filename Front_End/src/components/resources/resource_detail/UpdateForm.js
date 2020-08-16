@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import { inject , observer } from 'mobx-react'
-import { toJS } from 'mobx';
+import { inject, observer } from "mobx-react";
+import { toJS } from "mobx";
+import FileBase64 from "react-file-base64";
 
 class UpdateForm extends Component {
   constructor(props) {
@@ -8,82 +9,114 @@ class UpdateForm extends Component {
     this.no = React.createRef();
     this.name = React.createRef();
     this.price = React.createRef();
-    this.typeid = React.createRef();  
+    this.typeid = React.createRef();
     this.date = React.createRef();
-    //this.image = React.createRef();
-    this.state=({
-      num:"", 
-      dat:"",
-      act:""
-    });
+    this.image = React.createRef();
+    this.state = {
+      num: "",
+      dat: "",
+      act: "",
+      img: ""
+    };
     this.isactive = React.createRef();
-    }
+  }
 
-    async componentDidMount(){
-      await this.props.resourceStore.getTypeResource();
-    }
-
-    // encodeImageFileAsURL = (element) => {
-    //   var file = element.files[0];
-    //   var reader = new FileReader();
-    //   reader.onloadend = function() {
-    //     console.log('RESULT', reader.result)
-    //   }
-    //   reader.readAsDataURL(file);
-    // }
-
-  async onupdate(){
-    //console.log(this.state.num)
-  
-    if(this.state.num === "") await this.setState({num:this.props.resourceStore.currentResource.loainguyenlieu_id});
-    if(this.state.act === "") await this.setState({act:this.props.resourceStore.currentResource.isActive});
-    if(this.state.dat === "") await this.setState({dat:this.props.resourceStore.currentResource.date.substr(0,10)});
-
-    await this.props.resourceStore.updateResource(this.no.current.value,
-                                          this.name.current.value, 
-                                          this.price.current.value, 
-                                          this.state.dat, 
-                                          this.state.num,
-                                          this.state.act);
-    await this.props.resourceStore.getResource();
-}
-  onChangeSelect(e) {
-    this.typeid=e.target.value;
+  getFiles(files) {
+    this.image = files.base64;
     this.setState({
-      num:e.target.value
-    })
+      img: files.base64,
+    });
+
+    //console.log(this.image);
+  }
+
+  async componentDidMount() {
+    await this.props.resourceStore.getTypeResource();
+  }
+
+  // encodeImageFileAsURL = (element) => {
+  //   var file = element.files[0];
+  //   var reader = new FileReader();
+  //   reader.onloadend = function() {
+  //     console.log('RESULT', reader.result)
+  //   }
+  //   reader.readAsDataURL(file);
+  // }
+
+  async onupdate() {
+    //console.log(this.state.num)
+
+    if (this.state.num === "")
+      await this.setState({
+        num: this.props.resourceStore.currentResource.loainguyenlieu_id,
+      });
+    if (this.state.act === "")
+      await this.setState({
+        act: this.props.resourceStore.currentResource.isActive,
+      });
+    if (this.state.dat === "")
+      await this.setState({
+        dat: this.props.resourceStore.currentResource.date.substr(0, 10),
+      });
+
+    await this.props.resourceStore.updateResource(
+      this.no.current.value,
+      this.name.current.value,
+      this.price.current.value,
+      this.state.dat,
+      this.state.img,
+      this.state.num,
+      this.state.act
+    );
+    await this.props.resourceStore.getResource();
+  }
+  onChangeSelect(e) {
+    this.typeid = e.target.value;
+    this.setState({
+      num: e.target.value,
+    });
     //console.log(e.target.value)
   }
   onChangeDate(e) {
-    this.date=e.target.value;
+    this.date = e.target.value;
     this.setState({
-      dat:e.target.value
-    })
+      dat: e.target.value,
+    });
     //console.log(e.target.value)
   }
 
-  onChangeActive(e){
-    this.isactive=e.target.value;
+  onChangeActive(e) {
+    this.isactive = e.target.value;
     this.setState({
-      act:e.target.value
-    })
+      act: e.target.value,
+    });
     //console.log(e.target.value)
   }
 
   // initState(){
-    
+
   // }
 
   render() {
-    if(!this.props.resourceStore.currentResource.id) return null;
+    if (!this.props.resourceStore.currentResource.id) return null;
     //console.log("date",toJS(this.props.resourceStore.currentResource.date));
     let act = this.props.resourceStore.currentResource.isActive;
     //console.log(act);
     let type = this.props.resourceStore.currentResource.loainguyenlieu_id;
 
-    const listType= this.props.resourceStore.listTypeResources.map((resource, index)=>{
-      return <option key={index} value={resource.id} selected={type === resource.id ? true: false} >{resource.name}</option>
-    })
+    const listType = this.props.resourceStore.listTypeResources.map(
+      (resource, index) => {
+        return (
+          <option
+            key={index}
+            value={resource.id}
+            selected={type === resource.id ? true : false}
+          >
+            {resource.name}
+          </option>
+        );
+      }
+    );
 
     return (
       <div className="modal-dialog modal-lg" role="document">
@@ -106,7 +139,7 @@ class UpdateForm extends Component {
             </button>
           </div>
           <div className="modal-body">
-            <form >
+            <form>
               <div className="container">
                 <div className="row">
                   <div className="col-6">
@@ -123,7 +156,9 @@ class UpdateForm extends Component {
                           className="form-control form-control-sm"
                           id="input1"
                           ref={this.no}
-                          defaultValue={this.props.resourceStore.currentResource.no}
+                          defaultValue={
+                            this.props.resourceStore.currentResource.no
+                          }
                         />
                       </div>
                     </div>
@@ -140,7 +175,9 @@ class UpdateForm extends Component {
                           className="form-control form-control-sm"
                           id="inputName"
                           ref={this.name}
-                          defaultValue={this.props.resourceStore.currentResource.name}
+                          defaultValue={
+                            this.props.resourceStore.currentResource.name
+                          }
                         />
                       </div>
                     </div>
@@ -152,7 +189,11 @@ class UpdateForm extends Component {
                         Loại nguyên liệu:
                       </label>
                       <div className="col-sm-7">
-                        <select className="form-control-sm" id="inputType" onChange={(e) => this.onChangeSelect(e)}>
+                        <select
+                          className="form-control-sm"
+                          id="inputType"
+                          onChange={(e) => this.onChangeSelect(e)}
+                        >
                           {listType}
                         </select>
                       </div>
@@ -172,7 +213,9 @@ class UpdateForm extends Component {
                           id="inputNum"
                           placeholder={0}
                           ref={this.price}
-                          defaultValue={this.props.resourceStore.currentResource.price}
+                          defaultValue={
+                            this.props.resourceStore.currentResource.price
+                          }
                         />
                       </div>
                     </div>
@@ -190,8 +233,11 @@ class UpdateForm extends Component {
                           class="form-control form-control-sm "
                           id="inputNum"
                           placeholder="dd/MM/yyyy"
-                          defaultValue={this.props.resourceStore.currentResource.date.substr(0,10)}
-                          onChange={(e)=> this.onChangeDate(e)}
+                          defaultValue={this.props.resourceStore.currentResource.date.substr(
+                            0,
+                            10
+                          )}
+                          onChange={(e) => this.onChangeDate(e)}
                         />
                       </div>
                     </div>
@@ -203,9 +249,17 @@ class UpdateForm extends Component {
                         Hiện trạng:
                       </label>
                       <div className="col-sm-7">
-                        <select ref={this.state.act} className="form-control-sm" onChange={(e) => this.onChangeActive(e)}>
-                          <option value="1" selected={act === 1 ? true: false}>Active</option>
-                          <option value="0" selected={act === 0 ? true: false}>Deactive</option>
+                        <select
+                          ref={this.state.act}
+                          className="form-control-sm"
+                          onChange={(e) => this.onChangeActive(e)}
+                        >
+                          <option value="1" selected={act === 1 ? true : false}>
+                            Active
+                          </option>
+                          <option value="0" selected={act === 0 ? true : false}>
+                            Deactive
+                          </option>
                         </select>
                       </div>
                     </div>
@@ -226,17 +280,25 @@ class UpdateForm extends Component {
                       </label>
                       <div class="container">
                         <div class="row">
-                          <div class="card-body border">
-                            <div class="col-6">
-                              <img width={150} height={150}  />
+                         
+                            <div className="card-img-top p-4">
+                              <img
+                                width={250}
+                                height={250}
+                                src={this.state.img === "" ? this.props.resourceStore.currentResource.image : this.state.img}
+                              />
                             </div>
-                          </div>
-                          <div class="col-6"></div>
+                         
+                          {/* <div class="col-6"></div> */}
                         </div>
                         <div class="row mt-1">
                           <div class="file-field">
                             <div class="btn form-control-file btn-sm btn-success ml-2">
-                              <input type="file" onChange={()=> this.encodeImageFileAsURL} />
+                              {/* <input type="file" onChange={()=> this.encodeImageFileAsURL} /> */}
+                              <FileBase64
+                                multiple={false}
+                                onDone={this.getFiles.bind(this)}
+                              />
                             </div>
                           </div>
                         </div>
@@ -245,8 +307,13 @@ class UpdateForm extends Component {
                   </div>
                 </div>
               </div>
-              <div className="text-right mt-3" >
-                <button type="button" className="btn btn-danger" data-dismiss="modal" onClick={() => this.onupdate()}>
+              <div className="text-right mt-3">
+                <button
+                  type="button"
+                  className="btn btn-danger"
+                  onClick={() => this.onupdate()}
+                  data-dismiss="modal"
+                >
                   Lưu
                 </button>
                 <button
@@ -254,7 +321,6 @@ class UpdateForm extends Component {
                   //type="cancel"
                   data-dismiss="modal"
                   className="btn btn-secondary"
-                  //data-dismiss="modal"
                 >
                   Đóng
                 </button>
@@ -266,4 +332,4 @@ class UpdateForm extends Component {
     );
   }
 }
-export default inject("resourceStore")(observer(UpdateForm))
+export default inject("resourceStore")(observer(UpdateForm));

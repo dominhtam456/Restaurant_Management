@@ -44,7 +44,7 @@ class ResourceDetail extends Component {
                       <h2 className="mt-1">{this.props.resource.name}</h2>
                       <div className="row p-2 mt-3 ">
                         <div className="col-4">
-                          <div className="card">
+                          <div className="card-img-top p-4">
                             <img
                               width={250}
                               height={250}

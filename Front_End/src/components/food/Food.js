@@ -47,6 +47,7 @@ class Food extends Component {
           </div>
         </div>
       </div>
+      
     );
   }
 }

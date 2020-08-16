@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import UpdateForm from "./UpdateForm";
 import { inject , observer} from "mobx-react";
+import {toJS} from "mobx";
 
 class StaffDetail extends Component {
   constructor(props) {
@@ -21,6 +22,7 @@ class StaffDetail extends Component {
   }
 
   render() {
+    // console.log("aaaaa",toJS(this.props.user));
     return (
       <tr className="detail">
         <td colSpan={8} className="hiddenRow">
@@ -47,8 +49,8 @@ class StaffDetail extends Component {
                       <h2 className="mt-1">{this.props.user.fullname}</h2>
                       <div className="row p-2 mt-3 ">
                         <div className="col-4">
-                          <div className="card">
-                            <img width={250} height={250} alt="" />
+                          <div className="card-img-top p-4">
+                            <img width={250} height={250} alt="" src={this.props.user.img}/>
                           </div>
                         </div>
                         <div className="col-4">
