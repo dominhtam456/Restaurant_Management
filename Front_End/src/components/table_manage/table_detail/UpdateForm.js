@@ -9,12 +9,25 @@ class UpdateForm extends Component {
     this.isActive = React.createRef();
     this.state={
       tn: "",
-      ht: ""
+      ht: "",
+      isAlertName: false,
     }
   }
 
+  onBlurRSName() {
+    if (this.name.current.value === "") this.setState({ isAlertName: true });
+    else this.setState({ isAlertName: false });
+  }
+
   async onUpdate(){
-    await this.props.tableManageStore.updateTable(this.name.current.value, this.isActive.value);
+    if(this.name.current.value === ""){
+      alert ("Tên bàn không được để trống!")
+    }
+    else if(this.props.tableManageStore.currentTable.status === "Có"){
+      alert ("Bàn đang có người. Không được cập nhật!")
+    }
+    else{
+    await this.props.tableManageStore.updateTable(this.name.current.value, this.isActive.value);}
     await this.props.tableManageStore.getTable();
   }
 
@@ -29,6 +42,11 @@ class UpdateForm extends Component {
   
   render() {
     let act = this.props.tableManageStore.currentTable.isActive;
+    const alertTableName = (
+      <span style={{ fontSize: "10px", color: "red" }}>
+        Không được để trống tên bàn
+      </span>
+    );
     console.log(toJS(this.props.tableManageStore.currentTable))
     return (
       <div className="modal-dialog modal-lg" role="document">
@@ -69,7 +87,9 @@ class UpdateForm extends Component {
                           id="inputName"
                           ref={this.name}
                           defaultValue={this.props.tableManageStore.currentTable.name}
+                          onBlur={() => this.onBlurRSName()}
                         />
+                        {this.state.isAlertName ? alertTableName: ""}
                       </div>
                     </div>
                     <div className="form-group row">

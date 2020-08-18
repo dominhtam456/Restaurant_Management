@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { inject, observer } from "mobx-react";
 import { toJS } from "mobx";
-import FileBase64 from 'react-file-base64';
+import FileBase64 from "react-file-base64";
 
 class Info extends Component {
   constructor(props) {
@@ -23,38 +23,42 @@ class Info extends Component {
     };
   }
 
-  getFiles(files){
+  getFiles(files) {
     this.image = files.base64;
     this.setState({
-      img: files.base64
-    })
+      img: files.base64,
+    });
   }
 
   async onCreate() {
-    if(this.state.num === "") await this.setState({num:this.props.foodStore.currentFood.loaimonan_id});
-    //console.log(this.props.foodStore.check())
-    if(!this.props.foodStore.check(this.no.current.value)){
-      if(this.no.current.value === ""){alert('Mã món ăn không được để trống!')}
-      else alert('Mã món ăn bị trùng')
-    }
-    else if(!this.props.foodStore.check(this.name.current.value) ){
-      if(this.name.current.value === ""){alert('Tên món ăn không được để trống!')}
-      else alert('Tên món ăn bị trùng')
-    }
-    else if(this.price.current.value === ""){
-      alert('Giá tiền không được để trống!')
-    }
-    else {
-    await this.props.foodStore.pushFood(
-      this.no.current.value,
-      this.name.current.value,
-      this.price.current.value,
-      this.unit.current.value,
-      this.state.img,
-      this.state.num,
-      this.desc.current.value
-    );
-    await this.props.foodStore.getFood();
+    if (this.state.num === "")
+      await this.setState({
+        num: this.props.foodStore.currentFood.loaimonan_id,
+      });
+
+    if ((this.no.current.value).trim() === "") {
+      alert("Mã món ăn không được để trống!");
+    } else if (!this.props.foodStore.check(this.no.current.value)) {
+      alert("Mã món ăn bị trùng");
+    } else if ((this.name.current.value).trim() === "") {
+      alert("Tên món ăn không được để trống!");
+    } else if (!this.props.foodStore.check(this.name.current.value)) {
+      alert("Tên món ăn bị trùng");
+    } else if (this.price.current.value.trim() === "") {
+      alert("Giá tiền không được để trống!");
+    } else if (this.unit.current.value === "") {
+      alert("Đơn vị không được để trống!");
+    } else {
+      await this.props.foodStore.pushFood(
+        this.no.current.value,
+        this.name.current.value,
+        this.price.current.value,
+        this.unit.current.value,
+        this.state.img,
+        this.state.num,
+        this.desc.current.value
+      );
+      await this.props.foodStore.getFood();
     }
   }
 
@@ -69,16 +73,16 @@ class Info extends Component {
     if (this.no.current.value === "") this.setState({ isAlertNo: true });
     else this.setState({ isAlertNo: false });
   }
-  onBlurRName(){
-    if (this.name.current.value === "") this.setState({ isAlertName: true});
-    else this.setState({ isAlertName: false});
+  onBlurRName() {
+    if (this.name.current.value === "") this.setState({ isAlertName: true });
+    else this.setState({ isAlertName: false });
   }
-  onBlurRPri(){
-    if (this.price.current.value === "") this.setState({isAlertPrice: true});
+  onBlurRPri() {
+    if (this.price.current.value === "") this.setState({ isAlertPrice: true });
     else this.setState({ isAlertPrice: false });
   }
-  onBlurRUni(){
-    if (this.unit.current.value === "") this.setState({ isAlertUnit: true});
+  onBlurRUni() {
+    if (this.unit.current.value === "") this.setState({ isAlertUnit: true });
     else this.setState({ isAlertUnit: false });
   }
 
@@ -101,15 +105,19 @@ class Info extends Component {
       <span style={{ fontSize: "10px", color: "red" }}>
         Giá tiền không được để trống
       </span>
-    )
+    );
     const alertFoodUnit = (
       <span style={{ fontSize: "10px", color: "red" }}>
         Đơn vị không được để trống
       </span>
-    )
+    );
     const typeFood = this.props.foodStore.listTypeFoods.map((food, index) => {
       return (
-        <option key={index} value={food.id} selected={index === 0? true : false}>
+        <option
+          key={index}
+          value={food.id}
+          selected={index === 0 ? true : false}
+        >
           {food.name}
         </option>
       );
@@ -259,16 +267,22 @@ class Info extends Component {
               <div class="row">
                 <div class="card-body border">
                   <div className="card-img-top p-4">
-                    <img width={250} height={250} id="imgTest" src={this.state.img}/>
+                    <img
+                      width={250}
+                      height={250}
+                      id="imgTest"
+                      src={this.state.img}
+                    />
                   </div>
                 </div>
               </div>
               <div class="row mt-1">
                 <div class="file-field">
                   <div class="btn form-control-file btn-sm btn-success ml-2">
-                  <FileBase64
-                      multiple={ false }
-                      onDone={ this.getFiles.bind(this) } />
+                    <FileBase64
+                      multiple={false}
+                      onDone={this.getFiles.bind(this)}
+                    />
                   </div>
                 </div>
               </div>
@@ -280,15 +294,11 @@ class Info extends Component {
             type="button"
             class="btn btn-danger"
             onClick={() => this.onCreate()}
-            data-dismiss="modal"
+            // data-dismiss="modal"
           >
             Lưu & thêm mới
           </button>
-          <button
-            type="button"
-            class="btn btn-secondary"
-            data-dismiss="modal"
-          >
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">
             Đóng
           </button>
         </div>

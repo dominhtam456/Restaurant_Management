@@ -20,16 +20,11 @@ export default class ResourceStore {
     else {
       this.listResources = [];
       this.listResources = await ResourceService.searchResource(name.trim());
+      if(this.listResources.length === 0){
+        this.listResources = [];
+        alert('Ten Nguyen Lieu Khong ton tai !')}
     }
   };
-
-  checkSearch(name){
-    for(let i=0;i<this.listResources.length;i++){
-        if(this.listResources[i] === "")
-        return this.listResources = "Ten Nguyen Lieu Khong ton tai !"
-    }
-    return this.getResourceByName(name);
-  }
 
   // getCurrentListResource = async (resource) => {
   //     for(let i = 0; i < this.listResource.length; i++){

@@ -18,9 +18,11 @@ export default class FoodStore {
   getFoodByName = async (name) => {
     if (name.trim() === "") {
       this.getFood();
-    } else {
+    }
+    else {
       this.listFoods = [];
       this.listFoods = await FoodService.searchFood(name.trim());
+      if(this.listFoods.length === 0){this.listFoods = []; alert('Tên món ăn không tồn tại !')}
       //console.log(toJS(this.listFoods))
     }
   };
@@ -30,21 +32,29 @@ export default class FoodStore {
     this.listTypeFoods = data;
   };
 
-  check(name) {
+  check(val) {
     for (let i = 0; i < this.listFoods.length; i++) {
       //console.log(this.listFoods[i].name);
-      if (name === this.listFoods[i].no) return false;
-      if (name === this.listFoods[i].name) return false;
+      if (val === this.listFoods[i].no) return false;
+      if (val === this.listFoods[i].name) return false;
+    }
+    return true;
+  }
+
+  checkType(name) {
+    for (let i = 0; i < this.listTypeFoods.length; i++) {
+      //console.log(this.listFoods[i].name);
+      if (name === this.listTypeFoods[i].name) return false;
     }
     return true;
   }
 
   pushFood = async (no, name, price, unit, img, typeid, desc) => {
     let food = {
-      no: no,
-      name: name,
-      price: price.replace(/\./g,""),
-      unit: unit,
+      no: no.trim(),
+      name: name.trim(),
+      price: price.replace(/\./g,"").trim(),
+      unit: unit.trim(),
       image: img,
       loaimonan_id: typeid,
       nguyenlieus: [null],
@@ -59,20 +69,21 @@ export default class FoodStore {
 
   pushTypeFood = async (name, desc) => {
     let type = {
-      name: name,
-      description: desc,
+      "name": name.trim(),
+      "description": desc,
+      "isActive": 1
     };
-    await FoodService.addTypeFoods(type);
-    // console.log(type)
+    // await FoodService.addTypeFoods(type);
+    console.log(type)
   };
 
   updateFood = async (no, name, price, unit, img, typeid, isactive, desc) => {
     let food = {
       id: this.currentFood.id,
-      no: no,
-      name: name,
-      price: price.replace(/\./g,""),
-      unit: unit,
+      no: no.trim(),
+      name: name.trim(),
+      price: price.replace(/\./g,"").trim(),
+      unit: unit.trim(),
       image: img,
       loaimonan_id: typeid,
       nguyenlieus: [null],

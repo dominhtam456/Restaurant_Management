@@ -12,19 +12,29 @@ class Info extends Component {
   }
 
   async onCreate(){
-    await this.props.tableManageStore.pushTable(this.name.current.value);
-    await this.props.tableStore.getTable();
+    if((this.name.current.value).trim() === ""){
+      alert ("Tên bàn không được để trống!")
+    }
+    else if(!this.props.tableManageStore.check(this.name.current.value)){ 
+      alert ("Tên bàn bị trùng")
+    }
+    else{
+    await this.props.tableManageStore.pushTable(this.name.current.value);}
+    await this.props.tableManageStore.getTable();
   }
 
   showAlert() {
-    return (<span style={{ fontSize: 10, color: "red" }}>
-    Không được để trống tên món ăn
-  </span>)
+    if (this.name.current.value === "") this.setState({ check: false});
+    else this.setState({ check: true });
   }
 
 
 
   render() {
+    const alertName = (
+    <span style={{ fontSize: 10, color: "red" }}>
+    Tên bàn không được để trống 
+  </span>);
     return (
       <div class="col-12">
         <div className="form-group row">
@@ -42,9 +52,9 @@ class Info extends Component {
               id="tablename"
               required
               ref={this.name}
-              onfocusout=""
+              onBlur={() => this.showAlert()}
             />
-            {this.state.check ? '' : this.showAlert()}
+            {this.state.check ? "" : alertName}
           </div>
         </div>
         <div class="float-right mt-3">

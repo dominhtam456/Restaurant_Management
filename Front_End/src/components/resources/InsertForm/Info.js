@@ -18,8 +18,7 @@ class Info extends Component {
       img: "",
       isAlertNo: false,
       isAlertName: false,
-      isAlertPrice: false,
-      isAlertDate: false,
+      isAlertPrice: false
     })
   }
 
@@ -87,11 +86,6 @@ class Info extends Component {
     const alertResoucrePrice = (
       <span style={{ fontSize: "10px", color: "red" }}>
         Giá tiền không được để trống
-      </span>
-    )
-    const alertResoucreDate = (
-      <span style={{ fontSize: "10px", color: "red" }}>
-        Hạn sử dụng không được để trống
       </span>
     )
     const element = this.props.resourceStore.listTypeResources.map(
@@ -206,9 +200,7 @@ class Info extends Component {
                   id="inputNum"
                   placeholder="dd/MM/yyyy"
                   ref={this.date}
-                  // onBlur={() => this.onBlurRDate()}
                 />
-                {this.state.isAlertDate ? alertResoucreDate : ""}
               </div>
             </div>
           </div>

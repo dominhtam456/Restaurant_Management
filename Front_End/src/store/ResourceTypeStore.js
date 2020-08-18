@@ -9,6 +9,14 @@ export default class ResourceTypeStore {
         this.currentTypeResource=type;
     }
 
+    check(val) {
+        for (let i = 0; i < this.listTypeResource.length; i++) {
+          //console.log(this.listFoods[i].name);
+          if (val === this.listTypeResource[i].name) return false;
+        }
+        return true;
+      }
+
     getTypeResource = async () => {
         const data = await ResourceTypeService.getTypeResource();
         this.listTypeResource = data;

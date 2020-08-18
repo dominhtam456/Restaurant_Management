@@ -10,6 +10,10 @@ class Navbar extends Component {
         document.getElementById("mySidebar").style.display = "block";
         document.getElementById("openNav").style.display = 'none';
     }
+
+    onclick(){
+        localStorage.removeItem('token')
+    }
     
     render() {
         const openNavStyle = {
@@ -40,7 +44,7 @@ class Navbar extends Component {
                                 <span className="avatar avatar-sm rounded-circle">
                                     <img alt="Image placeholder" 
                                     src={process.env.PUBLIC_URL + "/img/icons/avatar.png"} 
-                                    //src = {this.props.staffStore.currentStaff.image}
+                                    // src = {this.props.staffStore.currentStaff.image}
                                     />
                                 </span>
                                 <div className="media-body ml-2 d-none d-lg-block">
@@ -53,7 +57,7 @@ class Navbar extends Component {
                             <div className="dropdown-divider" />
                             <a href="login" className="dropdown-item">
                                 <i className="ni ni-user-run" />
-                                <span>Logout</span>
+                                <span onClick={() => this.onclick()}>Logout</span>
                             </a>
                             </div>
                         </li>

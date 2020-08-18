@@ -58,6 +58,7 @@ class UpdateForm extends Component {
       await this.setState({
         dat: this.props.resourceStore.currentResource.date.substr(0, 10),
       });
+    if (this.state.img === "") await this.setState({img:this.props.resourceStore.currentResource.image});
 
     await this.props.resourceStore.updateResource(
       this.no.current.value,

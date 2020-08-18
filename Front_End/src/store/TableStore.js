@@ -11,6 +11,14 @@ export default class TableStore {
         // console.log(data)
     }
 
+    check(val) {
+        for (let i = 0; i < this.listTable.length; i++) {
+          //console.log(this.listFoods[i].name);
+          if (val.normalize('NFC') === (this.listTable[i].name).normalize('NFC')) return false; 
+        }
+        return true;
+      }
+
     setcurrenttable = async (table) => {
         this.currentTable=table;
     }
@@ -20,7 +28,7 @@ export default class TableStore {
                 "name": name,
                 "status": "Trong",
                 "isActive": 1,
-                "color": null
+                "color": "white"
             }
         await TableService.addTables(table);
         //console.log(name);
@@ -30,9 +38,9 @@ export default class TableStore {
         let table = {
                 "id": this.currentTable.id,
                 "name": name,
-                "status": "Trong",
+                "status": this.currentTable.status,
                 "isActive": isActive,
-                "color": null,
+                "color": this.currentTable.color,
             }
         await TableService.updateTables(table);
         //console.log(toJS(this.currentTable), name, isActive);

@@ -14,10 +14,17 @@ export default class FoodTypeStore {
         this.listTypeFood = data;
     }
 
+    check(name) {
+        for (let i = 0; i < this.listTypeFood.length; i++) {
+          if (name === this.listTypeFood[i].name) return false;
+        }
+        return true;
+      }
+
     pushTypeFood = async (name, desc) => {
         let type = {
-            "name": name,
-            "description": desc,
+            "name": name.trim(),
+            "description": desc.trim(),
             "isActive": 1
         }
         await FoodTypeService.addTypeFood(type);
@@ -27,8 +34,8 @@ export default class FoodTypeStore {
     updateTypeFoods = async (name, desc, isactive) => {
         let type = {
             "id": this.currentTypeFood.id,
-            "name": name,
-            "description": desc,
+            "name": name.trim(),
+            "description": desc.trim(),
             "isActive": isactive
         }
         await FoodTypeService.updateTypeFood(type);

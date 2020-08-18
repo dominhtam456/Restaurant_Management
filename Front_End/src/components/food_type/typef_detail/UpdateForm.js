@@ -8,7 +8,8 @@ class UpdateForm extends Component {
     this.desc = React.createRef();
     this.isActive = React.createRef();
     this.state={
-      ht: ""
+      ht: "",
+      isAlertname: false,
     } 
   }
 
@@ -19,12 +20,28 @@ class UpdateForm extends Component {
     })}
 
     async onUpdate(){
+      if ((this.name.current.value).trim() === "") {
+        alert("Tên loại món ăn không được để trống!");
+      }
+      else{
       await this.props.foodTypeStore.updateTypeFoods(
-        this.name.current.value, this.desc.current.value, this.isActive.value);
+        this.name.current.value, this.desc.current.value, this.isActive.value)}
       await this.props.foodTypeStore.getTypeFood();
     }
+
+    onBlurRSName() {
+      if (this.name.current.value === "") this.setState({ isAlertname: true });
+      else this.setState({ isAlertname: false });
+    }
+
     render() {
       let act = this.props.foodTypeStore.currentTypeFood.isActive;
+
+      const alertFoodName = (
+        <span style={{ fontSize: "10px", color: "red" }}>
+          Không được để trống tên loại món ăn
+        </span>
+      );
         return (
             <div className="modal-dialog modal-lg" role="document">
         <div className="modal-content">
@@ -64,7 +81,13 @@ class UpdateForm extends Component {
                           id="inputName"
                           ref={this.name}
                           defaultValue={this.props.foodTypeStore.currentTypeFood.name}
-                        />
+                          onBlur={() => this.onBlurRSName()}
+                          />
+                          <p className="text-danger">
+                            {this.state.isAlertname
+                              ? alertFoodName
+                              : ""}
+                          </p>
                       </div>
                     </div>
                     <div className="form-group row">

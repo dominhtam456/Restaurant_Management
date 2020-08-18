@@ -7,17 +7,37 @@ class InsertFoodButton extends Component {
     super(props);
     this.name = React.createRef();
     this.desc = React.createRef();
+    this.state = {
+      isAlertname: false,
+    };
   }
 
   onclick() {
-    this.props.foodStore.pushTypeFood(
-      this.name.current.value,
-      this.desc.current.value
-    );
-    this.props.foodStore.getTypeFood();
+      if ((this.name.current.value).trim() === "") {
+        alert("Tên loại món ăn không được để trống!");
+      } 
+      else if (!this.props.foodStore.checkType(this.name.current.value)) { alert("Tên loại món ăn bị trùng");
+    } 
+    else {
+      this.props.foodStore.pushTypeFood(
+        this.name.current.value,
+        this.desc.current.value
+      );
+      this.props.foodStore.getTypeFood();
+    }
+  }
+
+  onBlurRSName() {
+    if (this.name.current.value === "") this.setState({ isAlertname: true });
+    else this.setState({ isAlertname: false });
   }
 
   render() {
+    const alertFoodName = (
+      <span style={{ fontSize: "10px", color: "red" }}>
+        Không được để trống tên loại món ăn
+      </span>
+    );
     return (
       <div className="float-md-right mb-3 mr-3">
         <button
@@ -130,11 +150,12 @@ class InsertFoodButton extends Component {
                                             id="inputName"
                                             placeholder="eg. Món chiên"
                                             ref={this.name}
+                                            onBlur={() => this.onBlurRSName()}
                                           />
                                           <p className="text-danger">
-                                            {"{"}
-                                            {"{"}alertLNL{"}"}
-                                            {"}"}
+                                            {this.state.isAlertname
+                                              ? alertFoodName
+                                              : ""}
                                           </p>
                                         </div>
                                         <div className="col-sm-1">
@@ -155,11 +176,6 @@ class InsertFoodButton extends Component {
                                             id="inputName"
                                             ref={this.desc}
                                           />
-                                          <p className="text-danger">
-                                            {"{"}
-                                            {"{"}alertLNL{"}"}
-                                            {"}"}
-                                          </p>
                                         </div>
                                         <div className="col-sm-1">
                                           <i className="fas fa-exclamation-circle" />
@@ -223,4 +239,4 @@ class InsertFoodButton extends Component {
     );
   }
 }
-export default inject("foodStore")(observer(InsertFoodButton));
+export default inject("foodStore","foodTypeStore")(observer(InsertFoodButton));

@@ -8,15 +8,33 @@ class Info extends Component {
     this.desc = React.createRef();
 
     this.state = {
-      check: true
-    }
+      isAlertname: false,
+    };
   }
 
   async onCreate(){
+    if ((this.name.current.value).trim() === "") {
+      alert("Tên loại món ăn không được để trống!");
+    }
+    else if (!this.props.foodTypeStore.check(this.name.current.value)) {
+      alert("Tên loại món ăn bị trùng");
+    } 
+    else {
     await this.props.foodTypeStore.pushTypeFood(this.name.current.value, this.desc.current.value);
-    await this.props.foodTypeStore.getTypeFood();
+    await this.props.foodTypeStore.getTypeFood();}
   }
+
+  onBlurRSName() {
+    if (this.name.current.value === "") this.setState({ isAlertname: true });
+    else this.setState({ isAlertname: false });
+  }
+
     render() {
+      const alertFoodName = (
+        <span style={{ fontSize: "10px", color: "red" }}>
+          Không được để trống tên loại món ăn
+        </span>
+      );
         return (
             <div class="col-12">
         <div className="form-group row">
@@ -34,9 +52,13 @@ class Info extends Component {
               id="tablename"
               required
               ref={this.name}
-              onfocusout=""
-            />
-            {/* {this.state.check ? '' : this.showAlert()} */}
+              onBlur={() => this.onBlurRSName()}
+              />
+              <p className="text-danger">
+                {this.state.isAlertname
+                  ? alertFoodName
+                  : ""}
+              </p>
           </div>
           <label
             htmlFor="inputName"
@@ -53,9 +75,7 @@ class Info extends Component {
               id="tablename"
               required
               ref={this.desc}
-              onfocusout=""
             />
-            {/* {this.state.check ? '' : this.showAlert()} */}
           </div>
         </div>
         <div class="float-right mt-3">

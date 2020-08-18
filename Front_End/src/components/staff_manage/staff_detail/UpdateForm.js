@@ -27,10 +27,9 @@ class UpdateForm extends Component {
     }
 
     async onupdate(){
-      //console.log(this.state.num)
-    
       if(this.state.num === "") await this.setState({num:this.props.staffStore.currentStaff.loai});
       if(this.state.act === "") await this.setState({act:this.props.staffStore.currentStaff.isactive});
+      if(this.state.img === "") await this.setState({img:this.props.staffStore.currentStaff.img});
   
       await this.props.staffStore.updateStaff(
         this.no.current.value,
@@ -215,7 +214,7 @@ class UpdateForm extends Component {
                               <img
                                 width={250}
                                 height={250}
-                                src={this.state.img === "" ? this.props.staffStore.currentStaff.image : this.state.img}
+                                src={this.state.img === "" ? this.props.staffStore.currentStaff.img : this.state.img}
                               />
                             </div>
                           </div>

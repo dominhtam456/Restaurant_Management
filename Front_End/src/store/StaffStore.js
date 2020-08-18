@@ -19,6 +19,7 @@ export default class StaffStore {
       this.listStaff = [];
       const data = await UserService.searchStaff(name.trim());
       this.listStaff = data.result;
+      if(this.listStaff.length === 0){this.listStaff = []; alert('Không tồn tại nhân viên !')}
       //console.log(data);
     }
   };
@@ -64,7 +65,7 @@ export default class StaffStore {
       isActive: isactive,
     };
     await UserService.updateStaff(staff);
-    console.log(staff);
+    // console.log(staff);
   };
 }
 
