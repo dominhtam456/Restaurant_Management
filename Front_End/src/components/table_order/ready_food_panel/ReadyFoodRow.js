@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { inject , observer } from 'mobx-react'
+import { toJS } from 'mobx'
 
 class ReadyFoodRow extends Component {
     async onClickComplete() {
@@ -10,6 +11,7 @@ class ReadyFoodRow extends Component {
     }
 
     render() {
+        console.log(toJS(this.props.food))
         return (
             <tr>
                 <td className="col-9">{this.props.food.tenMonAn}</td>

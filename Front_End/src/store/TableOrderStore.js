@@ -155,14 +155,23 @@ export default class Table {
                 }
             });
         }
-        console.log(toJS(this.currentListOrder))
+        //console.log(toJS(this.currentListOrder))
     }
 
     solvedNotice = async(notice) => {
-        console.log('notice', toJS(notice))
-        await InvoiceService.updateInvoiceDetailStatus("queue", notice.id);
+        //console.log('notice', toJS(notice))
+        let id = -1;
+        for(let i=0; i<this.currentListOrder[0].length; i++){
+            if(this.currentListOrder[0][i].hoadonchitiet_id.hoadon_id === notice.hoadon_id && this.currentListOrder[0][i].hoadonchitiet_id.monan_id === notice.monan_id && this.currentListOrder[0][i].status === "cancel"){
+                id = this.currentListOrder[0][i].hoadonchitiet_id.id
+            }
+        }
+        //console.log(id)
+        if(id === -1) return;
+        await InvoiceService.updateInvoiceDetailStatus("queue", id);
         let noticeData = {
             "noticeId": {
+                "id": notice.id,
                 "hoadon_id": notice.hoadon_id,
                 "monan_id": notice.monan_id
             },
@@ -234,6 +243,7 @@ export default class Table {
     }
 
     refactorListOrder = async() => {
+        if(this.currentListOrder[0].length === 0) return;
         for(let i = 0; i< this.currentListOrder[0].length - 1; i++){
             for(let j = i+1; j< this.currentListOrder[0].length; j++){
                 if(this.currentListOrder[0][i].hoadonchitiet_id.monan_id === this.currentListOrder[0][j].hoadonchitiet_id.monan_id){

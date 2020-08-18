@@ -118,6 +118,7 @@ public class InvoiceDetailController {
 			List<HoadonBan> ban = hoadonBanService.Get(item.getHoadonchitiet_id().getHoadon_id());
 			
 			InvoiceDetailDTO iv = new InvoiceDetailDTO(
+				item.getHoadonchitiet_id().getId(),
 				item.getHoadonchitiet_id().getMonan_id(),
 				item.getHoadonchitiet_id().getHoadon_id(), 
 				item.getSoluong(), 
