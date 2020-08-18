@@ -39,7 +39,7 @@ public class AppAuthorizerImpl implements AppAuthorizer{
             //Truy vấn vào CSDL theo userId + menuCode + action
             //Nếu có quyền thì
             GrantedAuthority role = userDetails.getAuthorities().iterator().next();
-            logger.info(callerObj.getClass().getSimpleName());
+            //logger.info(callerObj.getClass().getSimpleName());
             if(role.getAuthority().equals("4")) return true;
 
             List<String> role_waiter = new ArrayList<String>() { 

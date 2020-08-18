@@ -1,6 +1,8 @@
 package com.example.demo.controller;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -144,6 +146,7 @@ public class InvoiceDetailController {
 			List<HoadonBan> ban = hoadonBanService.Get(item.getHoadonchitiet_id().getHoadon_id());
 
 			InvoiceDetailDTO iv = new InvoiceDetailDTO(
+				item.getHoadonchitiet_id().getId(),
 				item.getHoadonchitiet_id().getMonan_id(),
 				item.getHoadonchitiet_id().getHoadon_id(), 
 				item.getSoluong(),
@@ -153,6 +156,9 @@ public class InvoiceDetailController {
 				ban);
 			response.add(iv);
 		}
+
+		Collections.sort(response, Comparator.comparing(InvoiceDetailDTO::getHoadon_id));
+
 		return response;
 	}
 
@@ -160,10 +166,9 @@ public class InvoiceDetailController {
 	@PreAuthorize("@appAuthorizer.authorize(authentication, 'VIEW', this)")
 	public Boolean UpdateHDCTStatus(
 		@RequestParam(value = "status") String status,
-		@RequestParam(value = "hoaDonId") Long hoaDonId,
-		@RequestParam(value = "monAnId") Long monAnId) {
+		@RequestParam(value = "id") Long id) {
 		try{
-			repositoryHDCT.UpdateHDCTStatus(status, hoaDonId,monAnId);
+			repositoryHDCT.UpdateHDCTStatus(status, id);
 			return true;
 		}catch(Exception e){
 			throw e;

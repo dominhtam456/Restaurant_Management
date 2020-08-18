@@ -39,13 +39,15 @@ public class MergeTableService {
 
             for(int j=0; j< listHDCT_temp.size(); j++){
                 boolean flag = true;
-                for(int k =0; k< listHDCT.size(); k++){
-                    if(listHDCT_temp.get(j).getHoadonchitiet_id().getMonan_id() == listHDCT.get(k).getHoadonchitiet_id().getMonan_id()){
-                        int currentAmount = listHDCT.get(k).getSoluong();
-                        int amount = currentAmount + listHDCT_temp.get(j).getSoluong();
-                        listHDCT.get(k).setSoluong(amount);
-                        flag = false;
-                        break;
+                if(listHDCT_temp.get(j).getStatus().equals("queue") || listHDCT_temp.get(j).getStatus().equals("completed")){
+                    for(int k =0; k< listHDCT.size(); k++){
+                        if(listHDCT_temp.get(j).getHoadonchitiet_id().getMonan_id() == listHDCT.get(k).getHoadonchitiet_id().getMonan_id() && (listHDCT.get(k).getStatus().equals("queue") || listHDCT.get(k).getStatus().equals("completed"))){
+                            int currentAmount = listHDCT.get(k).getSoluong();
+                            int amount = currentAmount + listHDCT_temp.get(j).getSoluong();
+                            listHDCT.get(k).setSoluong(amount);
+                            flag = false;
+                            break;
+                        }
                     }
                 }
                 if(flag) {

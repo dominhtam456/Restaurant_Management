@@ -11,3 +11,28 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.group-dot{
+  position: absolute;
+  top: 0px;
+  right: 0px;
+}
+.dot {
+  height: 25px;
+  width: 25px;
+  background-color: #FFFFFF;
+  border-radius: 50%;
+  display: inline-block;
+  margin-left: 5px;
+  border-style: solid;
+}
+
+.table-list{
+  position: relative;
+}
+
+.check-table{
+  position: absolute;
+  top: 0.75rem;
+  left: 3rem;
+}

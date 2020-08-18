@@ -6,7 +6,7 @@ import java.util.List;
 
 public class InvoiceDetailDTO implements Serializable{
     private static final long serialVersionUID = 1L;
-    
+    private Integer id;
     private Integer monan_id;
     private Integer hoadon_id;
     private Integer soluong;
@@ -88,6 +88,26 @@ public class InvoiceDetailDTO implements Serializable{
 
     public InvoiceDetailDTO(Integer monan_id, Integer hoadon_id, Integer soluong, String status, String tenMonAn,
             String comment, List<HoadonBan> ban) {
+        this.monan_id = monan_id;
+        this.hoadon_id = hoadon_id;
+        this.soluong = soluong;
+        this.status = status;
+        this.tenMonAn = tenMonAn;
+        this.comment = comment;
+        this.ban = ban;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public InvoiceDetailDTO(Integer id, Integer monan_id, Integer hoadon_id, Integer soluong, String status,
+            String tenMonAn, String comment, List<HoadonBan> ban) {
+        this.id = id;
         this.monan_id = monan_id;
         this.hoadon_id = hoadon_id;
         this.soluong = soluong;

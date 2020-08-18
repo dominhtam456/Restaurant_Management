@@ -116,9 +116,9 @@ export const getInvoiceDetailByStatus = async (status) => {
   return await response.json();
 }
 
-export const updateInvoiceDetailStatus = async (status, hoaDonId, monAnId) => {
+export const updateInvoiceDetailStatus = async (status, id) => {
   var url = new URL(`${URL_API}/UpdateHDCTStatus`),
-  params = {status, hoaDonId, monAnId}
+  params = {status, id}
   Object.keys(params).forEach(key => url.searchParams.append(key, params[key]))
   
   const response = await fetch(url, {

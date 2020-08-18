@@ -45,17 +45,11 @@ public interface HoaDonChiTietService extends JpaRepository<HoaDonChiTiet, HoaDo
 	// Update Hoa Don Chi Tiet
 	public default boolean UpdateHoaDonChiTiet(HoaDonChiTiet o) {
 		 HoaDonChiTiet temp = this.getOne(o.getHoadonchitiet_id());
-		 if (temp!=null)
-		 { 
 			 temp.setPrice(o.getPrice());
 			 temp.setSoluong(o.getSoluong());
+			 temp.setComment(o.getComment());
 			 this.save(temp); 
-			 return true; 
-	     }
-		 else { 
-			 return false; 
-		 }
-		 
+			 return true; 	 
 	}
 
 
@@ -107,12 +101,11 @@ public interface HoaDonChiTietService extends JpaRepository<HoaDonChiTiet, HoaDo
 		}
 
 		@Modifying
-	    @Query(value = "update hoadonchitiet set status = :status where hoadon_id = :hoaDonId and monan_id = :monAnId", nativeQuery = true)
+	    @Query(value = "update hoadonchitiet set status = :status where id = :id", nativeQuery = true)
 	    @Transactional
 		void UpdateHDCTStatus(
 			@Param("status") String status, 
-			@Param("hoaDonId") Long hoaDonId, 
-			@Param("monAnId") Long monAnId);
+			@Param("id") Long id);
 
 		
 		@Modifying

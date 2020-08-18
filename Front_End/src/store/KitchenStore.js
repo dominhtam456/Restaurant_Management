@@ -25,10 +25,10 @@ export default class Kitchen {
         this.listUncompledFood = data;
     }
 
-    updateStatusFood = async (status, invoiceId, foodId) => {
+    updateStatusFood = async (status, id) => {
         let index =  STATUS_FOOD.indexOf(status);
         if(status !== "completed") index++;
-        await InvoiceService.updateInvoiceDetailStatus(STATUS_FOOD[index], invoiceId, foodId);
+        await InvoiceService.updateInvoiceDetailStatus(STATUS_FOOD[index], id);
         this.getListUncompledFood()
     }
 
@@ -47,7 +47,7 @@ export default class Kitchen {
             "status": "Unsolved"
         }
         await NoticeService.addNotice(notice);
-        await InvoiceService.updateInvoiceDetailStatus("cancel", this.currentFoodModal.hoadon_id, this.currentFoodModal.monan_id);
+        await InvoiceService.updateInvoiceDetailStatus("cancel", this.currentFoodModal.id);
         await this.getListUncompledFood();
     }
 

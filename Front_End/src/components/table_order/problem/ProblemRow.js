@@ -2,8 +2,9 @@ import React, { Component } from 'react'
 import { inject , observer } from 'mobx-react'
 
 class ProblemRow extends Component {
-    onClickSolved() {
-        this.props.tableStore.solvedNotice(this.props.notice)
+    async onClickSolved() {
+        await this.props.tableStore.solvedNotice(this.props.notice)
+        this.props.tableStore.setUpdateCount();
     }
 
     render() {
