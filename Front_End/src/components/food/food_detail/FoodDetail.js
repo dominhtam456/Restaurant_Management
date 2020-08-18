@@ -77,10 +77,6 @@ class FoodDetail extends Component {
                           <table>
                             <tbody>
                               <tr className="p-2">
-                                <td>Trạng thái:</td>
-                                <td>{this.props.food.status}</td>
-                              </tr>
-                              <tr className="p-2">
                                 <td style={{ verticalAlign: "top" }}>
                                   Thành Phần:
                                 </td>

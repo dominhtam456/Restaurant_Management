@@ -4,6 +4,10 @@ import { toJS } from 'mobx'
 
 class Navbar extends Component {
 
+    async componentDidMount() {
+        await this.props.staffStore.getLogedStaff();
+    }
+
     w3_open() {
         document.getElementById("main").style.marginLeft = "15%";
         document.getElementById("mySidebar").style.width = "15%";
@@ -43,12 +47,12 @@ class Navbar extends Component {
                                 </div>
                                 <span className="avatar avatar-sm rounded-circle">
                                     <img alt="Image placeholder" 
-                                    src={process.env.PUBLIC_URL + "/img/icons/avatar.png"} 
-                                    // src = {this.props.staffStore.currentStaff.image}
+                                    // src={process.env.PUBLIC_URL + "/img/icons/avatar.png"} 
+                                    src = {this.props.staffStore.logedStaff.img}
                                     />
                                 </span>
                                 <div className="media-body ml-2 d-none d-lg-block">
-                                    <span className="mb-0 text-sm  font-weight-bold text-dark"> {JSON.parse(atob(localStorage.getItem('token').split('.')[1])).sub} </span>
+                                    <span className="mb-0 text-sm  font-weight-bold text-dark"> {this.props.staffStore.logedStaff.fullname} </span>
                                 </div>
                             </div>
                             </a>
@@ -72,4 +76,4 @@ class Navbar extends Component {
         )
     }
 }
-export default inject("staffStore")(observer(Navbar))
+export default inject("staffStore","kitchenStore")(observer(Navbar))

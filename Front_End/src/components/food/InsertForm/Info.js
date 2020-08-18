@@ -44,9 +44,11 @@ class Info extends Component {
       alert("Tên món ăn không được để trống!");
     } else if (!this.props.foodStore.check(this.name.current.value)) {
       alert("Tên món ăn bị trùng");
-    } else if (this.price.current.value.trim() === "") {
+    } else if ((this.price.current.value).trim() === "") {
       alert("Giá tiền không được để trống!");
-    } else if (this.unit.current.value === "") {
+    } else if ((this.price.current.value).trim() < 0) {
+      alert("Giá tiền không được âm!")
+    } else if ((this.unit.current.value).trim() === "") {
       alert("Đơn vị không được để trống!");
     } else {
       await this.props.foodStore.pushFood(
@@ -58,8 +60,21 @@ class Info extends Component {
         this.state.num,
         this.desc.current.value
       );
-      await this.props.foodStore.getFood();
+      const modals = document.getElementsByClassName('modal');
+
+    // on every modal change state like in hidden modal
+    for(let i=0; i<modals.length; i++) {
+      modals[i].classList.remove('show');
+      modals[i].setAttribute('aria-hidden', 'true');
+      modals[i].setAttribute('style', 'display: none');
     }
+    const modalBackdrops = document.getElementsByClassName('modal-backdrop');
+
+     // remove opened modal backdrop
+      document.body.removeChild(modalBackdrops[0]);
+      
+    }
+    await this.props.foodStore.getFood();
   }
 
   onChangeSelect(e) {
@@ -203,12 +218,11 @@ class Info extends Component {
               </label>
               <div class="col-sm-7">
                 <input
-                  ng-model="inputPrice"
-                  type="num"
+                  type="number"
                   class="form-control form-control-sm "
                   id="inputNum"
-                  placeholder={0}
                   ref={this.price}
+                  placeholder="0"
                   required
                   onBlur={() => this.onBlurRPri()}
                 />
@@ -293,8 +307,8 @@ class Info extends Component {
           <button
             type="button"
             class="btn btn-danger"
+            id="modal-button-save"
             onClick={() => this.onCreate()}
-            // data-dismiss="modal"
           >
             Lưu & thêm mới
           </button>

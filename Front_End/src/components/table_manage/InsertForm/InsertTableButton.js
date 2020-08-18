@@ -61,7 +61,7 @@ class InsertTableButton extends Component {
                   <div class="tab-content" id="myTabContent">
                     <div
                       class="tab-pane fade show active"
-                      id="info"
+                      id="infoTable"
                       role="tabpanel"
                       aria-labelledby="home-tab"
                     >

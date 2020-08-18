@@ -11,8 +11,8 @@ export default class FoodStore {
   };
 
   getFood = async () => {
-    const data = await FoodService.getFoods();
-    this.listFoods = data;
+    this.listFoods = [];
+    this.listFoods = await FoodService.getFoods();
   };
 
   getFoodByName = async (name) => {
@@ -51,17 +51,17 @@ export default class FoodStore {
 
   pushFood = async (no, name, price, unit, img, typeid, desc) => {
     let food = {
-      no: no.trim(),
-      name: name.trim(),
-      price: price.replace(/\./g,"").trim(),
-      unit: unit.trim(),
-      image: img,
-      loaimonan_id: typeid,
-      nguyenlieus: [null],
-      tenloaimonan: null,
-      isActive: 1,
-      description: desc,
-      status: "Còn",
+      "no": no.trim(),
+      "name": name.trim(),
+      "price": price.replace(/\./g,"").trim(),
+      "unit": unit.trim(),
+      "image": img,
+      "loaimonan_id": typeid,
+      "nguyenlieus": [null],
+      "tenloaimonan": null,
+      "isActive": 1,
+      "description": desc,
+      "status": "Còn",
     };
     await FoodService.addFoods(food);
     //  console.log(toJS(food))
@@ -79,18 +79,18 @@ export default class FoodStore {
 
   updateFood = async (no, name, price, unit, img, typeid, isactive, desc) => {
     let food = {
-      id: this.currentFood.id,
-      no: no.trim(),
-      name: name.trim(),
-      price: price.replace(/\./g,"").trim(),
-      unit: unit.trim(),
-      image: img,
-      loaimonan_id: typeid,
-      nguyenlieus: [null],
-      tenloaimonan: null,
-      isActive: isactive,
-      description: desc,
-      status: "",
+      "id": this.currentFood.id,
+      "no": no.trim(),
+      "name": name.trim(),
+      "price": price.replace(/\./g,"").trim(),
+      "unit": unit.trim(),
+      "image": img,
+      "loaimonan_id": typeid,
+      "nguyenlieus": [null],
+      "tenloaimonan": null,
+      "isActive": isactive,
+      "description": desc,
+      "status": "",
     };
     await FoodService.updateFoods(food);
     //  console.log(toJS(food))

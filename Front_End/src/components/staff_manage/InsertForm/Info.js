@@ -16,7 +16,11 @@ class Info extends Component {
 
     this.state = {
       num: "",
-      img: ""
+      img: "",
+      isAlertNo: false,
+      isAlertName: false,
+      isAlertMail: false,
+      isAlertPass: false,
     };
   }
 
@@ -31,6 +35,20 @@ class Info extends Component {
     this.props.staffStore.getRole();
   }
   async onCreate() {
+    if ((this.no.current.value).trim() === "") {
+      alert("Mã nhân viên không được để trống!");
+    } else if (!this.props.staffStore.check(this.no.current.value)) {
+      alert("Mã nhân viên bị trùng");
+    } else if ((this.name.current.value).trim() === "") {
+      alert("Tên nhân viên không được để trống!");
+    } 
+    else if ((this.email.current.value).trim() === "") {
+      alert("Email không được để trống!");
+    } else if (!this.props.staffStore.check(this.email.current.value)) {
+      alert("Email bị trùng!");
+    } else if ((this.pass.current.value).trim() === "") {
+      alert("Mật khẩu không được để trống!");
+    } else {
     await this.props.staffStore.pushStaff(
       this.no.current.value,
       this.name.current.value,
@@ -40,6 +58,19 @@ class Info extends Component {
       this.state.num,
       this.state.img
     );
+    const modals = document.getElementsByClassName('modal');
+
+    // on every modal change state like in hidden modal
+    for(let i=0; i<modals.length; i++) {
+      modals[i].classList.remove('show');
+      modals[i].setAttribute('aria-hidden', 'true');
+      modals[i].setAttribute('style', 'display: none');
+    }
+    const modalBackdrops = document.getElementsByClassName('modal-backdrop');
+
+     // remove opened modal backdrop
+      document.body.removeChild(modalBackdrops[0]);
+    }
     await this.props.staffStore.getStaffs();
   }
   onChangeSelect(e) {
@@ -48,7 +79,45 @@ class Info extends Component {
       num: e.target.value,
     });
   }
+
+  onBlurRSid() {
+    if (this.no.current.value === "") this.setState({ isAlertNo: true });
+    else this.setState({ isAlertNo: false });
+  }
+  onBlurRName() {
+    if (this.name.current.value === "") this.setState({ isAlertName: true });
+    else this.setState({ isAlertName: false });
+  }
+  onBlurRPri() {
+    if (this.email.current.value === "") this.setState({ isAlertMail: true });
+    else this.setState({ isAlertMail: false });
+  }
+  onBlurRUni() {
+    if (this.pass.current.value === "") this.setState({ isAlertPass: true });
+    else this.setState({ isAlertPass: false });
+  }
+
   render() {
+    const alertStaffId = (
+      <span style={{ fontSize: "10px", color: "red" }}>
+        Không được để trống mã nhân viên
+      </span>
+    );
+    const alertStaffName = (
+      <span style={{ fontSize: "10px", color: "red" }}>
+        Không được để trống tên nhân viên
+      </span>
+    );
+    const alertStaffMail = (
+      <span style={{ fontSize: "10px", color: "red" }}>
+        Email không được để trống
+      </span>
+    );
+    const alertStaffPass = (
+      <span style={{ fontSize: "10px", color: "red" }}>
+        Mật khẩu không được để trống
+      </span>
+    );
     const element = this.props.staffStore.listRole.map(
       (user, index) => {
         return (<option key={index} value={user.id}>{user.name}</option>);
@@ -72,11 +141,10 @@ class Info extends Component {
                   class="form-control form-control-sm"
                   id="input1"
                   ref={this.no}
+                  onBlur={() => this.onBlurRSid()}
                   required
                 />
-                <span style={{ fontSize: "10px", color: "red" }}>
-                  Không được để trống mã nguyên liệu
-                </span>
+                {this.state.isAlertNo ? alertStaffId : ""}
               </div>
             </div>
 
@@ -94,11 +162,10 @@ class Info extends Component {
                   className="form-control form-control-sm"
                   id="inputName"
                   ref={this.name}
+                  onBlur={() => this.onBlurRName()}
                   required
                 />
-                <span style={{ fontSize: 10, color: "red" }}>
-                  Không được để trống tên món ăn
-                </span>
+                {this.state.isAlertName ? alertStaffName : ""}
               </div>
             </div>
 
@@ -135,7 +202,10 @@ class Info extends Component {
                   id="inputNum"
                   placeholder="abc@gmail.com"
                   ref={this.email}
+                  onBlur={() => this.onBlurRPri()}
+                  required
                 />
+                {this.state.isAlertMail ? alertStaffMail : ""}
               </div>
             </div>
 
@@ -152,7 +222,10 @@ class Info extends Component {
                   class="form-control form-control-sm "
                   id="inputNum"
                   ref={this.pass}
+                  onBlur={() => this.onBlurRUni()}
+                  required
                 />
+                {this.state.isAlertPass ? alertStaffPass : ""}
               </div>
             </div>
 
@@ -173,12 +246,6 @@ class Info extends Component {
                 >
                   {element}
                 </select>
-                <div>
-                  <span style={{ fontSize: 10, color: "red" }}>
-                    Không được để trống loại món ăn
-                  </span>
-                  
-                </div>
               </div>
             </div>
             
@@ -221,8 +288,8 @@ class Info extends Component {
           <button
             type="button"
             class="btn btn-danger"
+            id="modal-button-save"
             onClick={() => this.onCreate()}
-            data-dismiss="modal"
           >
             Lưu & thêm mới
           </button>

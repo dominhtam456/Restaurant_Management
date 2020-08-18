@@ -67,4 +67,5 @@ decorate(TableStore, {
     updateTable: action,
     setcurrenttable: action,
     getTable: action,
+    check: action,
 })

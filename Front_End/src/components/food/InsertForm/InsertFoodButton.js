@@ -16,15 +16,16 @@ class InsertFoodButton extends Component {
       if ((this.name.current.value).trim() === "") {
         alert("Tên loại món ăn không được để trống!");
       } 
-      else if (!this.props.foodStore.checkType(this.name.current.value)) { alert("Tên loại món ăn bị trùng");
+      else if (!this.props.foodTypeStore.check(this.name.current.value)) { alert("Tên loại món ăn bị trùng");
     } 
     else {
-      this.props.foodStore.pushTypeFood(
+      this.props.foodTypeStore.pushTypeFood(
         this.name.current.value,
         this.desc.current.value
       );
-      this.props.foodStore.getTypeFood();
     }
+    this.props.foodStore.getTypeFood();
+    this.props.foodTypeStore.getTypeFood();
   }
 
   onBlurRSName() {
@@ -122,14 +123,6 @@ class InsertFoodButton extends Component {
                               >
                                 Thêm Loại Món Ăn
                               </h5>
-                              <button
-                                type="button"
-                                className="close"
-                                data-dismiss="modal"
-                                aria-label="Close"
-                              >
-                                <span aria-hidden="true">×</span>
-                              </button>
                             </div>
                             <div className="modal-body">
                               <form className="mt-2">
@@ -192,13 +185,6 @@ class InsertFoodButton extends Component {
                                     onClick={() => this.onclick()}
                                   >
                                     Lưu
-                                  </button>
-                                  <button
-                                    type="button"
-                                    className="btn btn-secondary"
-                                    data-dismiss="modal"
-                                  >
-                                    Đóng
                                   </button>
                                 </div>
                               </form>

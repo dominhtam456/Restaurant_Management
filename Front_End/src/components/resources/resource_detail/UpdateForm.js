@@ -45,6 +45,8 @@ class UpdateForm extends Component {
 
   async onupdate() {
     //console.log(this.state.num)
+    // let today = Date.parse((new Date()).toISOString().slice(0,10));
+    // let hsd = Date.parse(this.state.dat ===""? this.props.resourceStore.currentResource.date:this.state.dat);
 
     if (this.state.num === "")
       await this.setState({
@@ -60,6 +62,28 @@ class UpdateForm extends Component {
       });
     if (this.state.img === "") await this.setState({img:this.props.resourceStore.currentResource.image});
 
+    if((this.no.current.value).trim() === ""){
+      alert("Mã nguyên liệu không được để trống!")
+    }
+    else if(!this.props.resourceStore.check(this.no.current.value) && this.props.resourceStore.currentResource.no !== this.no.current.value){ 
+      alert("Mã nguyên liệu bị trùng!")
+    }
+    else if((this.name.current.value).trim() === ""){
+      alert("Tên nguyên liệu không được để trống!")
+    }
+    else if(!this.props.resourceStore.check(this.name.current.value) && this.props.resourceStore.currentResource.name !== this.name.current.value){ 
+      alert("Tên nguyên liệu bị trùng!")
+    }
+    else if ((this.price.current.value).trim() === ""){
+      alert("Giá không được để trống!")
+    }
+    else if(this.price.current.value < 0){
+      alert("Giá tiền không được âm!")
+    }
+    // else if (hsd !==  today || hsd < today){
+    //   alert("Ngày không hợp lệ!")
+    // }
+    else{
     await this.props.resourceStore.updateResource(
       this.no.current.value,
       this.name.current.value,
@@ -69,7 +93,21 @@ class UpdateForm extends Component {
       this.state.num,
       this.state.act
     );
-    await this.props.resourceStore.getResource();
+    const modals = document.getElementsByClassName('modal');
+
+    // on every modal change state like in hidden modal
+    for(let i=0; i<modals.length; i++) {
+      modals[i].classList.remove('show');
+      modals[i].setAttribute('aria-hidden', 'true');
+      modals[i].setAttribute('style', 'display: none');
+    }
+    const modalBackdrops = document.getElementsByClassName('modal-backdrop');
+
+     // remove opened modal backdrop
+      document.body.removeChild(modalBackdrops[0]);
+      await this.props.resourceStore.getResource();
+    }
+    
   }
   onChangeSelect(e) {
     this.typeid = e.target.value;
@@ -208,8 +246,7 @@ class UpdateForm extends Component {
                       </label>
                       <div className="col-sm-7">
                         <input
-                          ng-model="inputPrice"
-                          type="text"
+                          type="number"
                           class="form-control form-control-sm "
                           id="inputNum"
                           placeholder={0}
@@ -312,8 +349,8 @@ class UpdateForm extends Component {
                 <button
                   type="button"
                   className="btn btn-danger"
+                  id="modal-button-save"
                   onClick={() => this.onupdate()}
-                  data-dismiss="modal"
                 >
                   Lưu
                 </button>

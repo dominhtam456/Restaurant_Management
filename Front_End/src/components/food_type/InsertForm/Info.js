@@ -21,7 +21,19 @@ class Info extends Component {
     } 
     else {
     await this.props.foodTypeStore.pushTypeFood(this.name.current.value, this.desc.current.value);
-    await this.props.foodTypeStore.getTypeFood();}
+    const modals = document.getElementsByClassName('modal');
+
+    // on every modal change state like in hidden modal
+    for(let i=0; i<modals.length; i++) {
+      modals[i].classList.remove('show');
+      modals[i].setAttribute('aria-hidden', 'true');
+      modals[i].setAttribute('style', 'display: none');
+    }
+    const modalBackdrops = document.getElementsByClassName('modal-backdrop');
+
+     // remove opened modal backdrop
+      document.body.removeChild(modalBackdrops[0]);}
+    await this.props.foodTypeStore.getTypeFood();
   }
 
   onBlurRSName() {
@@ -79,7 +91,7 @@ class Info extends Component {
           </div>
         </div>
         <div class="float-right mt-3">
-          <button type="button" class="btn btn-danger" onClick={() => this.onCreate()} data-dismiss="modal">Lưu & thêm mới</button>
+          <button type="button" class="btn btn-danger" id="modal-button-save" onClick={() => this.onCreate()}>Lưu & thêm mới</button>
           <button type="button" class="btn btn-secondary"
             data-dismiss="modal">Đóng</button>
         </div>

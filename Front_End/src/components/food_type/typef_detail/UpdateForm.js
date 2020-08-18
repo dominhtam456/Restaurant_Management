@@ -23,6 +23,9 @@ class UpdateForm extends Component {
       if ((this.name.current.value).trim() === "") {
         alert("Tên loại món ăn không được để trống!");
       }
+      else if(!this.props.foodTypeStore.check(this.name.current.value) && this.props.foodTypeStore.currentTypeFood.name !== this.name.current.value){
+        alert("Tên loại món ăn bị trùng!");
+      }
       else{
       await this.props.foodTypeStore.updateTypeFoods(
         this.name.current.value, this.desc.current.value, this.isActive.value)}
@@ -63,7 +66,7 @@ class UpdateForm extends Component {
             </button>
           </div>
           <div className="modal-body">
-            <form ng-submit="updateFood()">
+            <form >
               <div className="container">
                 <div className="row">
                   <div className="col-6">

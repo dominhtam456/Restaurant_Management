@@ -32,15 +32,54 @@ class Info extends Component {
   }
 
   async onCreate() {
+    let today = Date.parse((new Date()).toISOString().slice(0,10));
+    let hsd = Date.parse((this.date.current.value));
+
+    if((this.no.current.value).trim() === ""){
+      alert("Mã nguyên liệu không được để trống!")
+    }
+    else if(!this.props.resourceStore.check(this.no.current.value)){ 
+      alert("Mã nguyên liệu bị trùng!")
+    }
+    else if((this.name.current.value).trim() === ""){
+      alert("Tên nguyên liệu không được để trống!")
+    }
+    else if(!this.props.resourceStore.check(this.name.current.value)){ 
+      alert("Tên nguyên liệu bị trùng!")
+    }
+    else if ((this.price.current.value).trim() === ""){
+      alert("Giá không được để trống!")
+    }
+    else if(this.price.current.value < 0){
+      alert("Giá tiền không được âm!")
+    }
+    else if (hsd <= today){
+      alert("Ngày không hợp lệ!")
+      return hsd;
+    }
+    else{
     await this.props.resourceStore.pushResource(
       this.no.current.value,
       this.name.current.value,
       this.price.current.value,
-      this.date.current.value,
+      Date.parse(hsd),
       this.state.img,
       this.state.num,
       '',
     );
+    const modals = document.getElementsByClassName('modal');
+
+    // on every modal change state like in hidden modal
+    for(let i=0; i<modals.length; i++) {
+      modals[i].classList.remove('show');
+      modals[i].setAttribute('aria-hidden', 'true');
+      modals[i].setAttribute('style', 'display: none');
+    }
+    const modalBackdrops = document.getElementsByClassName('modal-backdrop');
+
+     // remove opened modal backdrop
+      document.body.removeChild(modalBackdrops[0]);
+    }
     await this.props.resourceStore.getResource();
   }
 
@@ -175,10 +214,10 @@ class Info extends Component {
               <div class="col-sm-7">
                 <input
                   ng-model="inputPrice"
-                  type="text"
+                  type="number"
                   class="form-control form-control-sm "
                   id="inputNum"
-                  placeholder={0}
+                  placeholder="0"
                   ref={this.price}
                   onBlur={() => this.onBlurRPri()}
                 />
@@ -246,8 +285,8 @@ class Info extends Component {
           <button
             type="button"
             class="btn btn-danger"
+            id="modal-button-save"
             onClick={() => this.onCreate()}
-            data-dismiss="modal"
           >
             Lưu & thêm mới
           </button>

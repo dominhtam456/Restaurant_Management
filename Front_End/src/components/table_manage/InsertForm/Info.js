@@ -14,13 +14,30 @@ class Info extends Component {
   async onCreate(){
     if((this.name.current.value).trim() === ""){
       alert ("Tên bàn không được để trống!")
+      
     }
     else if(!this.props.tableManageStore.check(this.name.current.value)){ 
       alert ("Tên bàn bị trùng")
     }
     else{
-    await this.props.tableManageStore.pushTable(this.name.current.value);}
+    await this.props.tableManageStore.pushTable(this.name.current.value);
+    // document.getElementById("modalAddMaterials").classList.remove("show");
+    // document.getElementById("modalAddMaterials").style.display='none';
+    const modals = document.getElementsByClassName('modal');
+
+    // on every modal change state like in hidden modal
+    for(let i=0; i<modals.length; i++) {
+      modals[i].classList.remove('show');
+      modals[i].setAttribute('aria-hidden', 'true');
+      modals[i].setAttribute('style', 'display: none');
+    }
+    const modalBackdrops = document.getElementsByClassName('modal-backdrop');
+
+     // remove opened modal backdrop
+      document.body.removeChild(modalBackdrops[0]);
+  }
     await this.props.tableManageStore.getTable();
+    
   }
 
   showAlert() {
@@ -58,7 +75,7 @@ class Info extends Component {
           </div>
         </div>
         <div class="float-right mt-3">
-          <button type="button" class="btn btn-danger" onClick={() => this.onCreate()} data-dismiss="modal">Lưu & thêm mới</button>
+          <button type="button" class="btn btn-danger" id="modal-button-save" onClick={() => this.onCreate()}>Lưu & thêm mới</button>
           <button type="button" class="btn btn-secondary"
             data-dismiss="modal">Đóng</button>
         </div>

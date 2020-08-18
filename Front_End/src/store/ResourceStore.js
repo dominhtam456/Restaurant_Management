@@ -9,6 +9,7 @@ export default class ResourceStore {
   currentResource = {};
 
   getResource = async () => {
+    this.listResources = [];
     const data = await ResourceService.getResources();
     this.listResources = data;
   };
@@ -26,25 +27,19 @@ export default class ResourceStore {
     }
   };
 
-  // getCurrentListResource = async (resource) => {
-  //     for(let i = 0; i < this.listResource.length; i++){
-  //         for(let j = 0; j < this.listResource[i].ban.length; j++){
-  //             if(resource != undefined){
-  //                 if(this.listResource[i].resource.no == resource.no){
-  //                     const data = await ResourceService.getEachResourcesDetail(this.listResource[i].no);
-  //                     this.currentListResource = data;
-  //                     //console.log(toJS(this.currentListResource));
-  //                     return;
-  //                 }
-  //              }
-  //         }
-  //     }
-  // }
-
   getTypeResource = async () => {
     const data = await ResourceService.getTypeResources(1);
     this.listTypeResources = data;
   };
+
+  check(val) {
+    for (let i = 0; i < this.listResources.length; i++) {
+      //console.log(this.listFoods[i].name);
+      if (val === this.listResources[i].no) return false;
+      if (val === this.listResources[i].name) return false;
+    }
+    return true;
+  }
 
   setcurrentresource = async (resource) => {
     this.currentResource = resource;
@@ -55,14 +50,14 @@ export default class ResourceStore {
     let currentTimestamp = Math.floor(Date.now() / 1000);
     date = CommonUtil.epochToDateTime(currentTimestamp, "yyyy-MM-dd");
     let resource = {
-      no: no,
-      name: name,
-      price: price,
-      date: date,
-      image: img,
-      loainguyenlieu_id: typeid,
-      isActive: 1,
-      tenloainguyenlieu: null,
+      "no": no.trim(),
+      "name": name.trim(),
+      "price": price,
+      "date": date,
+      "image2DRect": img,
+      "loainguyenlieu_id": typeid,
+      "isActive": 1,
+      "tenloainguyenlieu": null,
     };
     await ResourceService.addResources(resource);
     // console.log(resource);
@@ -70,8 +65,8 @@ export default class ResourceStore {
 
   pushTypeResource = async (name, unit) => {
     let type = {
-      name: name,
-      unit: unit,
+      "name": name,
+      "unit": unit,
     };
     await ResourceService.addTypeResources(type);
     //console.log(type)
@@ -82,15 +77,15 @@ export default class ResourceStore {
     //console.log('a',typeid)
     //date = CommonUtil.epochToDateTime(currentTimestamp, 'yyyy-MM-dd');
     let resource = {
-      id: this.currentResource.id,
-      no: no,
-      name: name,
-      price: price,
-      date: date,
-      image: img,
-      loainguyenlieu_id: typeid,
-      isActive: isactive,
-      tenloainguyenlieu: null,
+      "id": this.currentResource.id,
+      "no": no.trim(),
+      "name": name.trim(),
+      "price": price,
+      "date": date,
+      "image": img,
+      "loainguyenlieu_id": typeid,
+      "isActive": isactive,
+      "tenloainguyenlieu": null,
     };
     await ResourceService.updateResources(resource);
     // console.log(resource);
@@ -119,5 +114,6 @@ decorate(ResourceStore, {
   getResource: action,
   getTypeResource: action,
   getCurrentListResource: action,
-  checkSearch: action,
+  getResourceByName: action,
+  check: action,
 });

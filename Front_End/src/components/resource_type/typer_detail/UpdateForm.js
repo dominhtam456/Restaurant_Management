@@ -34,12 +34,27 @@ class UpdateForm extends Component {
       if(this.name.current.value === ""){
         alert ("Tên loại nguyên liệu không được để trống!")
       }
+      else if(!this.props.resourceTypeStore.check(this.name.current.value) && this.props.resourceTypeStore.currentTypeResource.name !== this.name.current.value){
+        alert("Tên loại nguyên liệu bị trùng!")
+      }
       else if(this.unit.current.value === ""){
         alert ("Đơn vị không được để trống!")
       }
       else {
         await this.props.resourceTypeStore.updateTypeResources(
-          this.name.current.value, this.unit.current.value, this.isActive.value);}
+          this.name.current.value, this.unit.current.value, this.isActive.value);
+          const modals = document.getElementsByClassName('modal');
+
+          // on every modal change state like in hidden modal
+          for(let i=0; i<modals.length; i++) {
+            modals[i].classList.remove('show');
+            modals[i].setAttribute('aria-hidden', 'true');
+            modals[i].setAttribute('style', 'display: none');
+          }
+          const modalBackdrops = document.getElementsByClassName('modal-backdrop');
+      
+           // remove opened modal backdrop
+            document.body.removeChild(modalBackdrops[0]);}
         await this.props.resourceTypeStore.getTypeResource();
       }
     render() {
@@ -140,7 +155,7 @@ class UpdateForm extends Component {
                 </div>
               </div>
               <div className="text-right mt-3">
-                <button type="button" className="btn btn-danger" onClick={() => this.onUpdate()} data-dismiss="modal">
+                <button type="button" className="btn btn-danger" id="modal-button-save" onClick={() => this.onUpdate()}>
                   Lưu
                 </button>
                 <button

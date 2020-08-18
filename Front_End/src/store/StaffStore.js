@@ -5,6 +5,12 @@ export default class StaffStore {
   listStaff = [];
   currentStaff = [];
   listRole = [];
+  logedStaff = {};
+
+  getLogedStaff = async () => {
+    let email = JSON.parse(atob(localStorage.getItem('token').split('.')[1])).sub;
+    this.logedStaff = await UserService.getUserByEmail(email);
+  }
 
   getStaffs = async () => {
     const data = await UserService.getAllStaff();
@@ -35,15 +41,15 @@ export default class StaffStore {
 
   pushStaff = async (no, name, phone, mail, pass, typeid, img) => {
     let staff = {
-      no: no,
-      fullname: name,
-      phone: phone,
-      username: mail,
-      password: pass,
-      loai: typeid,
-      img: img,
-      chucvu: null,
-      isActive: 1,
+      "no": no.trim(),
+      "fullname": name.trim(),
+      "phone": phone.trim(),
+      "username": mail.trim(),
+      "password": pass.trim(),
+      "loai": typeid,
+      "img": img,
+      "chucvu": null,
+      "isActive": 1,
     };
     await UserService.addStaff(staff);
     // console.log(staff);
@@ -55,28 +61,39 @@ export default class StaffStore {
     //date = CommonUtil.epochToDateTime(currentTimestamp, 'yyyy-MM-dd');
     // console.log("active", isactive);
     let staff = {
-      id: this.currentStaff.id,
-      no: no,
-      fullname: name,
-      phone: phone,
-      username: mail,
-      loai: typeid,
-      img: img,
-      isActive: isactive,
+      "id": this.currentStaff.id,
+      "no": no.trim(),
+      "fullname": name.trim(),
+      "phone": phone.trim(),
+      "username": mail.trim(),
+      "loai": typeid,
+      "img": img,
+      "isActive": isactive,
     };
     await UserService.updateStaff(staff);
     // console.log(staff);
   };
+
+  check(val) {
+    for (let i = 0; i < this.listStaff.length; i++) {
+      //console.log(this.listFoods[i].name);
+      if (val === this.listStaff[i].no) return false;
+      if (val === this.listStaff[i].username) return false;
+    }
+    return true;
+  }
 }
 
 decorate(StaffStore, {
   listStaff: observable,
   currentStaff: observable,
   listRole: observable,
+  logedStaff: observable,
 
   getStaffs: action,
   pushStaff: action,
   getRole: action,
   updateStaff: action,
   getStaffByName: action,
+  getLogedStaff:action
 });

@@ -38,20 +38,22 @@ class UpdateForm extends Component {
   }
 
   async onupdate() {
-    if (this.state.num === "")
-      await this.setState({
-        num: this.props.foodStore.currentFood.loaimonan_id,
-      });
-    if (this.state.act === "")
-      await this.setState({ act: this.props.foodStore.currentFood.isActive });
+    if (this.state.num === "") await this.setState({num: this.props.foodStore.currentFood.loaimonan_id});
+    if (this.state.act === "") await this.setState({act: this.props.foodStore.currentFood.isActive});
     if (this.state.img === "") await this.setState({img:this.props.foodStore.currentFood.image});
 
     if ((this.no.current.value).trim() === "") {
       alert("Mã món ăn không được để trống!");
     }
+    else if(!this.props.foodStore.check(this.no.current.value) && this.props.foodStore.currentFood.no !== this.no.current.value){
+      alert("Mã món ăn bị trùng!")
+    }
     else if ((this.name.current.value).trim() === "") {
       alert("Tên món ăn không được để trống!");
     } 
+    else if(!this.props.foodStore.check(this.name.current.value) && this.props.foodStore.currentFood.name !== this.name.current.value){
+      alert("Tên món ăn bị trùng!")
+    }
     else if (this.price.current.value.trim() === "") {
       alert("Giá tiền không được để trống!");
     } 
@@ -69,7 +71,20 @@ class UpdateForm extends Component {
       this.state.act,
       this.desc.current.value
     );
-    await this.props.foodStore.getFood();}
+    const modals = document.getElementsByClassName('modal');
+
+    // on every modal change state like in hidden modal
+    for(let i=0; i<modals.length; i++) {
+      modals[i].classList.remove('show');
+      modals[i].setAttribute('aria-hidden', 'true');
+      modals[i].setAttribute('style', 'display: none');
+    }
+    const modalBackdrops = document.getElementsByClassName('modal-backdrop');
+
+     // remove opened modal backdrop
+      document.body.removeChild(modalBackdrops[0]);
+  }
+    await this.props.foodStore.getFood();
   }
 
   onChangeSelect(e) {
@@ -343,7 +358,7 @@ class UpdateForm extends Component {
                 <button
                   type="button"
                   className="btn btn-danger"
-                  data-dismiss="modal"
+                  id="modal-button-save"
                   onClick={() => this.onupdate()}
                 >
                   Lưu
