@@ -9,6 +9,9 @@ import javax.persistence.Embeddable;
 public class NoticeId implements Serializable{
 
     private static final long serialVersionUID = 1L;
+    @Column(name = "id")
+    private Integer id;
+    
 	@Column(name = "hoadon_id")
 	private Integer hoadon_id;
 	
@@ -35,6 +38,20 @@ public class NoticeId implements Serializable{
     }
 
     public NoticeId(Integer hoadon_id, Integer monan_id) {
+        this.hoadon_id = hoadon_id;
+        this.monan_id = monan_id;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public NoticeId(Integer id, Integer hoadon_id, Integer monan_id) {
+        this.id = id;
         this.hoadon_id = hoadon_id;
         this.monan_id = monan_id;
     }

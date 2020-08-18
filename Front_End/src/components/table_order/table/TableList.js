@@ -16,6 +16,7 @@ class TableList extends Component {
     async onMergeTable() {
         const flag = await this.props.tableStore.mergeTable();
         if(!flag) alert("Chọn ít nhất 2 bàn không cùng nhóm")
+        else this.props.tableStore.setUpdateCount();
     }
 
     async onChangeTable() {
@@ -24,11 +25,12 @@ class TableList extends Component {
         if((crTable[0].status === 'Có' && crTable[1].status === 'Có') || (crTable[0].status === 'Trong' && crTable[1].status === 'Trong')) {alert("Phải có 1 bàn trống và 1 bàn có người"); return;}
         await this.props.tableStore.changeTable();
         await this.props.tableStore.getTable();
+        this.props.tableStore.setUpdateCount();
     }
 
     render() {
         const element= this.props.tableStore.listTable.map((table, index)=>{
-            return <TableElement table={table} key={table.id}/>
+            return <TableElement table={table} key={table.id} update={this.props.update}/>
         })
         //console.log(toJS(this.props.tableStore.listTable))
         return (

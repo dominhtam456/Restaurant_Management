@@ -1,6 +1,7 @@
 package com.example.demo.model;
 
 public class NoticeDTO {
+    private Integer id;
     private Integer hoadon_id;
     private Integer monan_id;
     private String description;
@@ -42,6 +43,22 @@ public class NoticeDTO {
     }
 
     public NoticeDTO(Integer hoadon_id, Integer monan_id, String description, String status) {
+        this.hoadon_id = hoadon_id;
+        this.monan_id = monan_id;
+        this.description = description;
+        this.status = status;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public NoticeDTO(Integer id, Integer hoadon_id, Integer monan_id, String description, String status) {
+        this.id = id;
         this.hoadon_id = hoadon_id;
         this.monan_id = monan_id;
         this.description = description;

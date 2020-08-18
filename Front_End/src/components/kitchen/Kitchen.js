@@ -6,6 +6,26 @@ import { toJS } from 'mobx'
 import { withRouter } from 'react-router-dom'
 
 class Kitchen extends Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      count: 0
+    }
+  }
+
+  async componentDidUpdate(prevProps, prevState) {
+    if(this.state.count !== prevState.count){
+      await this.props.loginStore.checkValid();
+      if(!this.props.loginStore.isValid) this.props.history.push('/login')
+      else {
+        if(this.checkRole()){
+          this.props.kitchenStore.getListUncompledFood();
+        }
+      }
+    }
+
+}
+
   checkRole() {
     const role = JSON.parse(atob(localStorage.getItem('token').split('.')[1])).role;
     if(role == 1 || role == 2) {
@@ -20,8 +40,12 @@ class Kitchen extends Component {
     await this.props.loginStore.checkValid();
     if(!this.props.loginStore.isValid) this.props.history.push('/login')
     else {
-      if(this.checkRole())
+      if(this.checkRole()){
         this.props.kitchenStore.getListUncompledFood();
+        setInterval(() => {
+          this.setState({count: this.state.count++})
+        }, 10000);
+      }
     }
   }
   render() {

@@ -75,7 +75,7 @@ class TableOrder extends Component {
                                 </ul>
                                 <div className="tab-content" id="myTabContent">
                                     <TableList update={this.props.tableStore.updateCount}/>
-                                    <MenuList />
+                                    <MenuList update={this.props.tableStore.updateCount}/>
                                     
                                 </div> 
                             </div>
@@ -86,7 +86,7 @@ class TableOrder extends Component {
                                     </div>
                                     <div className="card-body" style={{height:"40em", overflowY: "scroll"}}>
                                     <div className="table-responsive">
-                                    <TableDetail update={this.props.tableStore.updateCount} />
+                                    <TableDetail />
                                     </div>
                                     <h3 className="text-danger float-md-right ">Tổng tiền: {CommonUtil.formatVND(this.props.tableStore.totalMoney)}</h3>
                                     

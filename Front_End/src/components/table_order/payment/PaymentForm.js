@@ -19,7 +19,7 @@ class PaymentForm extends Component {
         await this.props.tableStore.refactorListOrder();
         printJS('form-bill', 'html'); 
         await this.props.tableStore.payment();
-        
+        this.props.tableStore.setUpdateCount();
           
     }
 

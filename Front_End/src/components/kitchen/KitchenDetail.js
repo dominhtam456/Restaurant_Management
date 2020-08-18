@@ -4,8 +4,8 @@ import { toJS } from 'mobx';
 
 class KitchenDetail extends Component {
   
-  changeStatus(status, invoiceId, foodId) {
-    this.props.kitchenStore.updateStatusFood(status, invoiceId, foodId);
+  changeStatus(status, id) {
+    this.props.kitchenStore.updateStatusFood(status, id);
   }
 
   onClickCancel(food) {
@@ -23,14 +23,14 @@ class KitchenDetail extends Component {
     if(this.props.food.status === "queue")
       return (
         <button type="button" className="btn btn-primary text-center" 
-          onClick={() => this.changeStatus(this.props.food.status,this.props.food.hoadon_id,this.props.food.monan_id)}>
+          onClick={() => this.changeStatus(this.props.food.status,this.props.food.id)}>
           Pending
       </button>)
 
     if(this.props.food.status === "processing")
     return (
       <button type="button" className="btn btn-warning text-center" 
-        onClick={() => this.changeStatus(this.props.food.status,this.props.food.hoadon_id,this.props.food.monan_id)}>
+        onClick={() => this.changeStatus(this.props.food.status,this.props.food.id)}>
         Processing
     </button>)
 

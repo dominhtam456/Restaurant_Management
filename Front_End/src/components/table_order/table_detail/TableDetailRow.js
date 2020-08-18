@@ -27,9 +27,10 @@ class TableDetailRow extends Component {
     onLoseFocusComment() {
         if(this.props.order.status !== "queue" && this.props.order.status !== "cancel"){
             alert("Món ăn đang hoặc đã được thực hiện");
+            this.props.tableStore.updateComment("", this.props.order.hoadonchitiet_id.id);
             return;
         }
-        this.props.tableStore.updateComment(this.commentRef.current.value, this.props.order.hoadonchitiet_id.monan_id);
+        this.props.tableStore.updateComment(this.commentRef.current.value, this.props.order.hoadonchitiet_id.id);
     }
 
     render() {

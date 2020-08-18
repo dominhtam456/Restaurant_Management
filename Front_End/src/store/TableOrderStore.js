@@ -20,6 +20,63 @@ export default class Table {
     flag = false;
     currentInvoice = {};
 
+    getAlertTable = async(id, color) => {
+        try{
+            let rs = {
+                isReady: false,
+                isWarning: false
+            }
+
+            if(color === "white") {
+                document.getElementById("n"+id).style.backgroundColor = "white";
+                document.getElementById("m"+id).style.backgroundColor = "white";
+                return;
+            }
+
+            const data = await InvoiceService.getInvoiceDetailByStatus("ready");
+            const data1 = await InvoiceService.getInvoiceDetailByStatus("cancel");
+            const list = await InvoiceService.getInvoiceByStatus(0);
+            let hd = -1;
+            let flag = false;
+            for(let i=0; i<list.length; i++){
+                for(let j=0; j< list[i].ban.length; j++){
+                    
+                    if(id === list[i].ban[j].id.banId){
+                        hd = list[i].id;
+                        flag = true;
+                        break;
+                    }
+                }
+                if(flag) break;
+            }
+            if(hd === -1) {
+                document.getElementById("n"+id).style.backgroundColor = "white";
+                document.getElementById("m"+id).style.backgroundColor = "white";
+                return rs;
+            }
+            for(let i=0; i<data.length; i++){
+                if(data[i].hoadon_id === hd) {
+                    rs.isReady = true;
+                    document.getElementById("n"+id).style.backgroundColor = "green";
+                    break;    
+                }
+            }
+            if(!rs.isReady) document.getElementById("n"+id).style.backgroundColor = "white";
+            for(let i=0; i<data1.length; i++){
+                if(data1[i].hoadon_id === hd) {
+                    rs.isWarning = true;
+                    document.getElementById("m"+id).style.backgroundColor = "red";
+                    break;    
+                }
+            }
+            if(!rs.isWarning) document.getElementById("m"+id).style.backgroundColor = "white";
+            return rs;
+        }catch(err) {
+            return null;
+        }
+
+    }
+
     mergeTable = async() => {
         let list = [];
         if(this.currentTable.length < 2) return false;
@@ -52,7 +109,7 @@ export default class Table {
 
     updateComment = async(text, id) => {
         this.currentListOrder[0].forEach(order => {
-            if(order.hoadonchitiet_id.monan_id === id){
+            if(order.hoadonchitiet_id.id === id){
                 order.comment = text;
             }
         });
@@ -82,6 +139,7 @@ export default class Table {
     }
 
     checkTable = async (check, table) => {
+        console.log('list',toJS(this.listOrder));
         if(this.flag) {
             this.currentTable = [];
             this.flag = false;
@@ -97,13 +155,23 @@ export default class Table {
                 }
             });
         }
-        console.log(toJS(this.currentListOrder))
+        //console.log(toJS(this.currentListOrder))
     }
 
     solvedNotice = async(notice) => {
-        await InvoiceService.updateInvoiceDetailStatus("queue", notice.hoadon_id, notice.monan_id);
+        //console.log('notice', toJS(notice))
+        let id = -1;
+        for(let i=0; i<this.currentListOrder[0].length; i++){
+            if(this.currentListOrder[0][i].hoadonchitiet_id.hoadon_id === notice.hoadon_id && this.currentListOrder[0][i].hoadonchitiet_id.monan_id === notice.monan_id && this.currentListOrder[0][i].status === "cancel"){
+                id = this.currentListOrder[0][i].hoadonchitiet_id.id
+            }
+        }
+        //console.log(id)
+        if(id === -1) return;
+        await InvoiceService.updateInvoiceDetailStatus("queue", id);
         let noticeData = {
             "noticeId": {
+                "id": notice.id,
                 "hoadon_id": notice.hoadon_id,
                 "monan_id": notice.monan_id
             },
@@ -175,6 +243,7 @@ export default class Table {
     }
 
     refactorListOrder = async() => {
+        if(this.currentListOrder[0].length === 0) return;
         for(let i = 0; i< this.currentListOrder[0].length - 1; i++){
             for(let j = i+1; j< this.currentListOrder[0].length; j++){
                 if(this.currentListOrder[0][i].hoadonchitiet_id.monan_id === this.currentListOrder[0][j].hoadonchitiet_id.monan_id){
@@ -226,7 +295,7 @@ export default class Table {
                             const data = await InvoiceService.getInvoiceDetailByInvoiceId(this.listOrder[i].id);
                             lst.push(data); 
                             
-                            console.log(toJS(this.currentListOrder));
+                            //console.log(toJS(this.currentListOrder));
                             flag=true;
                         }
                     }
@@ -289,7 +358,7 @@ export default class Table {
     setAmount = (order, amount) => {
         if(amount < 1) amount = 1;
         for(let i=0; i<this.currentListOrder[0].length; i++){
-            if(order.hoadonchitiet_id.monan_id == this.currentListOrder[0][i].hoadonchitiet_id.monan_id){
+            if(order.hoadonchitiet_id.id == this.currentListOrder[0][i].hoadonchitiet_id.id){
                 this.currentListOrder[0][i].soluong = amount;
                 this.totalMoney = this.calTotalMoney();
                 return;
@@ -320,6 +389,7 @@ export default class Table {
     update = async () => {
         console.log(toJS(this.currentListOrder[0]))
         await InvoiceService.updateHDCT(this.currentListOrder[0]);
+        
     }
 
     confirm = async () => {

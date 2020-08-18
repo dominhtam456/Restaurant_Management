@@ -16,9 +16,9 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface NoticeService extends JpaRepository<Notice, NoticeId>{
     @Modifying
-    @Query(value = "update thongbao set status = :status where hoadon_id = :hoadonId and monan_id = :monanId", nativeQuery = true)
+    @Query(value = "update thongbao set status = :status where id = :id", nativeQuery = true)
     @Transactional
-    void UpdateStatusNotice(@Param("status") String status,@Param("hoadonId") Integer hoadonId, @Param("monanId") Integer monanId);
+    void UpdateStatusNotice(@Param("status") String status,@Param("id") Integer id);
 
     @Modifying
     @Query(value = "select * from thongbao where status = :status", nativeQuery = true)

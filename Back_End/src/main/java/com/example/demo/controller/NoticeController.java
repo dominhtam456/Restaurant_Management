@@ -29,12 +29,11 @@ public class NoticeController {
     @RequestMapping(path = "/updateStatusNotice", method = RequestMethod.POST)
     @PreAuthorize("@appAuthorizer.authorize(authentication, 'VIEW', this)")
     public Boolean UpdateStatusNotice(
-            @RequestParam(value = "hoadonId") Integer hoadonId,
-            @RequestParam(value = "monanId") Integer monanId,
+            @RequestParam(value = "id") Integer id,
             @RequestParam(value = "status") String status) {
         // This returns a JSON or XML with the users
         try{
-            noticeService.UpdateStatusNotice(status, hoadonId, monanId);
+            noticeService.UpdateStatusNotice(status, id);
             return true;
         }catch(Exception ex){
             return false;
@@ -48,6 +47,7 @@ public class NoticeController {
         List<NoticeDTO> response = new ArrayList<>();
         for (Notice notice : list) {
             NoticeDTO o = new NoticeDTO(
+                notice.getNoticeId().getId(),
                 notice.getNoticeId().getHoadon_id(),
                 notice.getNoticeId().getMonan_id(),
                 notice.getDescription(),
