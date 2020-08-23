@@ -36,7 +36,7 @@ class StaffDetailFooter extends Component {
             <div
               class="modal fade"
               id={`c${this.props.id}`}
-              tabindex="-1"
+              tabIndex="-1"
               role="dialog"
               aria-labelledby="modalDeleteMaterials"
               aria-hidden="true"

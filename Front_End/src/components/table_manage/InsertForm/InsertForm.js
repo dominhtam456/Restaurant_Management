@@ -4,9 +4,9 @@ import Info from "./Info";
 class InsertForm extends Component {
   render() {
     return (
-      <form name="formAddMaterial">
-        <div class="container">
-          <div class="row">
+      <form className="formAddMaterial">
+        <div className="container">
+          <div className="row">
             <Info />
           </div>
         </div>

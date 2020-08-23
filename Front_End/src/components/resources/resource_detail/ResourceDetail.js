@@ -80,7 +80,7 @@ class ResourceDetail extends Component {
                         </div>
                       </div>
                     </div>
-                    <div class="float-md-right mt-3">
+                    <div className="float-md-right mt-3">
                       <button
                         type="button"
                         className="btn btn-success "
@@ -112,7 +112,7 @@ class ResourceDetail extends Component {
                       <div
                         class="modal fade"
                         id={`c${this.props.id}`}
-                        tabindex="-1"
+                        tabIndex="-1"
                         role="dialog"
                         aria-labelledby="modalDeleteMaterials"
                         aria-hidden="true"

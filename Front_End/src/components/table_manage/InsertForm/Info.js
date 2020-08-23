@@ -53,7 +53,7 @@ class Info extends Component {
     Tên bàn không được để trống 
   </span>);
     return (
-      <div class="col-12">
+      <div className="col-12">
         <div className="form-group row">
           <label
             htmlFor="inputName"
@@ -74,9 +74,9 @@ class Info extends Component {
             {this.state.check ? "" : alertName}
           </div>
         </div>
-        <div class="float-right mt-3">
-          <button type="button" class="btn btn-danger" id="modal-button-save" onClick={() => this.onCreate()}>Lưu & thêm mới</button>
-          <button type="button" class="btn btn-secondary"
+        <div className="float-right mt-3">
+          <button type="button" className="btn btn-danger" id="modal-button-save" onClick={() => this.onCreate()}>Lưu & thêm mới</button>
+          <button type="button" className="btn btn-secondary"
             data-dismiss="modal">Đóng</button>
         </div>
       </div>

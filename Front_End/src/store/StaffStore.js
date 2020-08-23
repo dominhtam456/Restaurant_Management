@@ -82,6 +82,27 @@ export default class StaffStore {
     }
     return true;
   }
+
+  updatePassStaff = async (pass) => {
+    //let currentTimestamp = Math.floor(Date.now() / 1000);
+    //console.log('a',typeid)
+    //date = CommonUtil.epochToDateTime(currentTimestamp, 'yyyy-MM-dd');
+    // console.log("active", isactive);
+    let staff = {
+      "id": this.currentStaff.id,
+      "no": this.currentStaff.no,
+      "fullname": this.currentStaff.fullname,
+      "phone": this.currentStaff.phone,
+      "username": this.currentStaff.username,
+      "password":pass.trim(),
+      "loai": this.currentStaff.loai,
+      "img": this.currentStaff.img,
+      "chucvu": this.currentStaff.chucvu,
+      "isActive": this.currentStaff.isactive,
+    };
+    await UserService.updateStaff(staff);
+    // console.log(staff);
+  };
 }
 
 decorate(StaffStore, {
@@ -95,5 +116,6 @@ decorate(StaffStore, {
   getRole: action,
   updateStaff: action,
   getStaffByName: action,
-  getLogedStaff:action
+  getLogedStaff:action,
+  updatePassStaff: action,
 });

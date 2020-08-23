@@ -26,9 +26,9 @@ class ResourceList extends Component {
     })
     const element2 = this.merge(element,element1);
         return (
-            <div class="table-responsive">
-        <table class="table  align-items-center table-flush accordion table-hover" id="accordionRow">
-          <thead class="thead-light">
+            <div className="table-responsive">
+        <table className="table  align-items-center table-flush accordion table-hover" id="accordionRow">
+          <thead className="thead-light">
             <tr>
               <th scope="col">Stt</th>
               <th scope="col">Mã Nguyên Liệu</th>

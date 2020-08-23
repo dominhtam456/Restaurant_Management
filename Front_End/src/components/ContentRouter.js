@@ -25,8 +25,8 @@ export default class ContentRouter extends Component {
                     <Route exact path="/food_type" render={() => <FoodType/>}/>
                     <Route exact path="/resources" render={() => <Resource/>}/>
                     <Route exact path="/resource_type" render={() => <ResourceType/>}/>
-                    <Route exact path="/table_manage" render={() => <TableManage/>}/>
                     <Route exact path="/staff_manage" render={() => <StaffManage/>}/>
+                    <Route exact path="/table_manage" render={() => <TableManage/>}/>
                     <Route exact path="/statistical" render={() => <Statistical/>}/>
                     <Route exact path="/kitchen" render={() => <Kitchen/>}/>
                 </Switch>

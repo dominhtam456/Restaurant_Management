@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import UpdateForm from "./UpdateForm";
+import UpdatePass from "./UpdatePass";
 import { inject , observer} from "mobx-react";
 import {toJS} from "mobx";
 
@@ -92,7 +93,7 @@ class StaffDetail extends Component {
                       </div>
                     </div>
                     <div>
-                    <div class="float-md-right mt-3">
+                    <div className="float-md-right mt-3">
             <button
               type="button"
               className="btn btn-success "
@@ -111,6 +112,25 @@ class StaffDetail extends Component {
               aria-hidden="true"
             >
               <UpdateForm />
+            </div>
+            <button
+              type="button"
+              className="btn btn-success "
+              data-toggle="modal"
+              data-target={`#c${this.props.user.id}`}
+              onClick ={() => this.onclick()}
+            >
+              <i className="fas fa-plus-circle" /> Thay đổi mật khẩu
+            </button>
+            <div
+              className="modal fade"
+              id={`c${this.props.user.id}`}
+              tabIndex={-1}
+              role="dialog"
+              aria-labelledby="modifyFoodsTitle"
+              aria-hidden="true"
+            >
+              <UpdatePass />
             </div>
             </div>
                     </div>

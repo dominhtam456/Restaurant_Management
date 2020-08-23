@@ -14,12 +14,11 @@ class TypefList extends Component {
         return <TypefRow type={type} key={type.id} index={index}/>
       })
         return (
-            <div class="table-responsive">
-        <table
-          class="table  align-items-center table-flush accordion table-hover"
+            <div className="table-responsive">
+        <table className="table  align-items-center table-flush accordion table-hover"
           id="accordionRow"
         >
-          <thead class="thead-light">
+          <thead className="thead-light">
             <tr>
               <th scope="col">Stt</th>
               <th scope="col">Tên loại món ăn</th>

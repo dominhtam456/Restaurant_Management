@@ -24,12 +24,12 @@ class FoodList extends Component {
   render() {
     //console.log('render', toJS(this.props.foodStore.listFoods))
     const element = this.props.foodStore.listFoods.map((food, index) => {
-      return <FoodRow food={food} key={food.no} index={index} />;
+      return <FoodRow food={food} key={index} index={index} />;
       
     });
 
     const element1 = this.props.foodStore.listFoods.map((food, index) => {
-      return <FoodDetail food={food} key={food.no} index={index} />;
+      return <FoodDetail food={food} key={index} index={index} />;
     });
 
     const element2 = this.merge(element,element1);

@@ -17,12 +17,12 @@ class TableList extends Component {
       return <TableRow table={table} key={table.id} index={index}/>
     })
     return (
-      <div class="table-responsive">
+      <div className="table-responsive">
         <table
-          class="table  align-items-center table-flush accordion table-hover"
+          className="table  align-items-center table-flush accordion table-hover"
           id="accordionRow"
         >
-          <thead class="thead-light">
+          <thead className="thead-light">
             <tr>
               <th scope="col">Stt</th>
               <th scope="col">Mã Bàn</th>

@@ -24,8 +24,8 @@ export default class ResourceTypeStore {
 
     pushTypeResource = async (name, unit) => {
         let resource = {
-            "name": name,
-            "unit": unit,
+            "name": name.trim(),
+            "unit": unit.trim(),
             "isActive": 1
         }
         await ResourceTypeService.addTypeResource(resource);
@@ -35,8 +35,8 @@ export default class ResourceTypeStore {
     updateTypeResources = async (name, unit, isactive) => {
         let resource = {
             "id": this.currentTypeResource.id,
-            "name": name,
-            "unit": unit,
+            "name": name.trim(),
+            "unit": unit.trim(),
             "isActive": isactive
         }
         await ResourceTypeService.updateTypeResource(resource);

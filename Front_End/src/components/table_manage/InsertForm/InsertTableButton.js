@@ -5,28 +5,28 @@ class InsertTableButton extends Component {
   
   render() {
     return (
-      <div class="float-md-right mb-3 mr-3">
+      <div className="float-md-right mb-3 mr-3">
         <button
           type="button"
-          class="btn btn-danger "
+          className="btn btn-danger "
           data-toggle="modal"
           data-target="#modalAddMaterials"
         >
-          <i class="fas fa-plus-circle"></i> Thêm Mới
+          <i className="fas fa-plus-circle"></i> Thêm Mới
         </button>
         <div
-          class="modal fade"
+          className="modal fade"
           id="modalAddMaterials"
-          tabindex={-1}
+          tabIndex={-1}
           role="dialog"
           aria-labelledby="modalAddMaterials"
           aria-hidden="true"
         >
-          <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content ">
-              <div class="modal-header bg-primary">
+          <div className="modal-dialog modal-lg" role="document">
+            <div className="modal-content ">
+              <div className="modal-header bg-primary">
                 <h2
-                  class="modal-title"
+                  className="modal-title"
                   id="modalAddMaterials"
                   style={{ color: "white" }}
                 >
@@ -34,18 +34,18 @@ class InsertTableButton extends Component {
                 </h2>
                 <button
                   type="button"
-                  class="close"
+                  className="close"
                   data-dismiss="modal"
                   aria-label="Close"
                 >
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
-              <div class="modal-body">
-                <ul class="nav nav-tabs" id="myTab" role="tablist">
-                  <li class="nav-item">
+              <div className="modal-body">
+                <ul className="nav nav-tabs" id="myTab" role="tablist">
+                  <li className="nav-item">
                     <a
-                      class="nav-link active"
+                      className="nav-link active"
                       id="home-tab"
                       data-toggle="tab"
                       href="#home"
@@ -57,10 +57,10 @@ class InsertTableButton extends Component {
                     </a>
                   </li>
                 </ul>
-                <div class="card-body border">
-                  <div class="tab-content" id="myTabContent">
+                <div className="card-body border">
+                  <div className="tab-content" id="myTabContent">
                     <div
-                      class="tab-pane fade show active"
+                      className="tab-pane fade show active"
                       id="infoTable"
                       role="tabpanel"
                       aria-labelledby="home-tab"
@@ -68,26 +68,24 @@ class InsertTableButton extends Component {
                       <InsertForm />
                     </div>
                     <div
-                      class="tab-pane fade"
+                      className="tab-pane fade"
                       id="detail"
                       role="tabpanel"
                       aria-labelledby="profile-tab"
                     ></div>
                     <div
-                      class="tab-pane fade"
+                      className="tab-pane fade"
                       id="detailDescription"
                       role="tabpanel"
                       aria-labelledby="contact-tab"
                     >
-                      ...
                     </div>
                     <div
-                      class="tab-pane fade"
+                      className="tab-pane fade"
                       id="moreDishs"
                       role="tabpanel"
                       aria-labelledby="contact-tab"
                     >
-                      ...
                     </div>
                   </div>
                 </div>

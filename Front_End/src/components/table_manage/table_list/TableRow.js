@@ -59,7 +59,7 @@ class TableRow extends Component {
           </span>
         </td>
         <td>
-        <div class="float-md-right mt-3" >
+        <div className="float-md-right mt-3" >
         <button
           type="button"
           className="btn btn-success "
@@ -93,7 +93,7 @@ class TableRow extends Component {
         <div
           class="modal fade"
           id={`btnDelete`}
-          tabindex="-1"
+          tabIndex="-1"
           role="dialog"
           aria-labelledby="modalDeleteMaterials"
           aria-hidden="true"

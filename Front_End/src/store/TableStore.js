@@ -25,7 +25,7 @@ export default class TableStore {
 
     pushTable = async (name) => {
         let table = {
-                "name": name,
+                "name": name.trim(),
                 "status": "Trong",
                 "isActive": 1,
                 "color": "white"
@@ -37,7 +37,7 @@ export default class TableStore {
     updateTable = async (name, isActive) => {
         let table = {
                 "id": this.currentTable.id,
-                "name": name,
+                "name": name.trim(),
                 "status": this.currentTable.status,
                 "isActive": isActive,
                 "color": this.currentTable.color,

@@ -52,7 +52,7 @@ class Navbar extends Component {
                                     />
                                 </span>
                                 <div className="media-body ml-2 d-none d-lg-block">
-                                    <span className="mb-0 text-sm  font-weight-bold text-dark"> {this.props.staffStore.logedStaff.fullname} </span>
+                                    <span className="mb-0 text-sm  font-weight-bold text-dark"> {JSON.parse(atob(localStorage.getItem('token').split('.')[1])).sub} </span>
                                 </div>
                             </div>
                             </a>

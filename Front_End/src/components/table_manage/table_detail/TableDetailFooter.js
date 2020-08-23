@@ -6,7 +6,7 @@ class TableDetailFooter extends Component {
 
   render() {
     return (
-      <div class="float-md-right mt-3" >
+      <div className="float-md-right mt-3" >
         <button
           type="button"
           className="btn btn-success "
@@ -28,21 +28,21 @@ class TableDetailFooter extends Component {
 
         <button
           type="button"
-          class="btn btn-danger "
+          className="btn btn-danger "
           data-toggle="modal"
           data-target={`#btnDelete`}
         >
-          <i class="far fa-trash-alt"></i> Xóa
+          <i className="far fa-trash-alt"></i> Xóa
         </button>
         <div
-          class="modal fade"
+          className="modal fade"
           id={`btnDelete`}
           tabindex="-1"
           role="dialog"
           aria-labelledby="modalDeleteMaterials"
           aria-hidden="true"
         >
-          <div class="modal-dialog modal-dialog-scrollable" role="document">
+          <div className="modal-dialog modal-dialog-scrollable" role="document">
             <DeletePanel />
           </div>
         </div>

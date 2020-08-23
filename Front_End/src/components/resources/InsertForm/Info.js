@@ -23,12 +23,23 @@ class Info extends Component {
   }
 
   getFiles(files){
-    this.image = files.base64;
-    this.setState({
-      img: files.base64
-    })
-
-    //console.log(this.image);
+    switch (files[0].type) {
+      case "image/png":
+      case "image/gif":
+      case "image/jpeg":
+      case "image/pjpeg":
+        if (files[0].size.split(" ",1) > 1024) {
+          alert("Vui lòng upload các file có dung lượng < 1MB");
+        } else {
+          this.image = files.base64;
+          this.setState({
+            img: files[0].base64,
+          });
+        }
+        break;
+      default:
+        alert("File không hỗ trợ!");
+    }
   }
 
   async onCreate() {
@@ -53,16 +64,15 @@ class Info extends Component {
     else if(this.price.current.value < 0){
       alert("Giá tiền không được âm!")
     }
-    else if (hsd <= today){
+    else if (hsd < today){
       alert("Ngày không hợp lệ!")
-      return hsd;
     }
     else{
     await this.props.resourceStore.pushResource(
       this.no.current.value,
       this.name.current.value,
       this.price.current.value,
-      Date.parse(hsd),
+      this.date.current.value,
       this.state.img,
       this.state.num,
       '',
@@ -135,19 +145,19 @@ class Info extends Component {
     return (
       <div className="container">
         <div className="row">
-          <div class="col-6">
-            <div class="form-group row">
+          <div className="col-6">
+            <div className="form-group row">
               <label
-                for="input1"
-                class="col-sm-4 col-form-label form-control-sm"
+                htmlFor="input1"
+                className="col-sm-4 col-form-label form-control-sm"
               >
                 Mã nguyên liệu:
               </label>
-              <div class="col-sm-7">
+              <div className="col-sm-7">
                 <input
                   name="resourcesNo"
                   type="text"
-                  class="form-control form-control-sm"
+                  className="form-control form-control-sm"
                   id="input1"
                   ref={this.no}
                   onBlur={() => this.onBlurRSid()}
@@ -178,10 +188,10 @@ class Info extends Component {
               </div>
             </div>
 
-            <div class="form-group row">
+            <div className="form-group row">
               <label
-                for="inputType"
-                class="col-sm-4 col-form-label form-control-sm"
+                htmlFor="inputType"
+                className="col-sm-4 col-form-label form-control-sm"
               >
                 Loại nguyên liệu:
               </label>
@@ -204,18 +214,18 @@ class Info extends Component {
                 </div>
               </div>
             </div>
-            <div class="form-group row">
+            <div className="form-group row">
               <label
-                for="inputNum"
-                class="col-sm-4 col-form-label form-control-sm"
+                htmlFor="inputNum"
+                className="col-sm-4 col-form-label form-control-sm"
               >
                 Giá nhập:
               </label>
-              <div class="col-sm-7">
+              <div className="col-sm-7">
                 <input
                   ng-model="inputPrice"
                   type="number"
-                  class="form-control form-control-sm "
+                  className="form-control form-control-sm "
                   id="inputNum"
                   placeholder="0"
                   ref={this.price}
@@ -224,18 +234,17 @@ class Info extends Component {
                 {this.state.isAlertPrice ? alertResoucrePrice : ""}
               </div>
             </div>
-            <div class="form-group row">
+            <div className="form-group row">
               <label
                 htmlFor="inputNum"
-                class="col-sm-4 col-form-label form-control-sm"
+                className="col-sm-4 col-form-label form-control-sm"
               >
                 Hạn Sử Dụng:
               </label>
-              <div class="col-sm-7">
+              <div className="col-sm-7">
                 <input
-                  ng-model="inputDate"
                   type="date"
-                  class="form-control form-control-sm "
+                  className="form-control form-control-sm "
                   id="inputNum"
                   placeholder="dd/MM/yyyy"
                   ref={this.date}
@@ -249,31 +258,31 @@ class Info extends Component {
               className="col-sm-4 col-form-label form-control-sm"
             />
           </div>
-          <div class="col-6">
+          <div className="col-6">
             <label
               htmlFor="inputNum"
-              class="col-sm-4 col-form-label form-control-sm"
+              className="col-sm-4 col-form-label form-control-sm"
             >
               Hình Ảnh:
             </label>
-            <div class="container">
-              <div class="row">
-                <div class="card-body border">
+            <div className="container">
+              <div className="row">
+                <div className="card-body border">
                   <div  className="card-img-top p-4">
                     <img width={250} height={250} id="imgTest" src={this.state.img}/>
                   </div>
                 </div>
               </div>
-              <div class="row mt-1">
-                <div class="file-field">
-                  <div class="btn form-control-file btn-sm btn-success ml-2">
+              <div className="row mt-1">
+                <div className="file-field">
+                  <div className="btn form-control-file btn-sm btn-success ml-2">
                     {/* <input
                       id="inputFileToLoad"
                       type="file"
                       onChange={() => this.encodeImageFileAsURL}
                     /> */}
                     <FileBase64
-                      multiple={ false }
+                      multiple={ true }
                       onDone={ this.getFiles.bind(this) } />
                   </div>
                 </div>
@@ -281,10 +290,10 @@ class Info extends Component {
             </div>
           </div>
         </div>
-        <div class="text-right mt-3">
+        <div className="text-right mt-3">
           <button
             type="button"
-            class="btn btn-danger"
+            className="btn btn-danger"
             id="modal-button-save"
             onClick={() => this.onCreate()}
           >
@@ -292,8 +301,7 @@ class Info extends Component {
           </button>
           <button
             type="button"
-            ng-click="test()"
-            class="btn btn-secondary"
+            className="btn btn-secondary"
             data-dismiss="modal"
           >
             Đóng

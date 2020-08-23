@@ -52,7 +52,7 @@ export default class ResourceStore {
     let resource = {
       "no": no.trim(),
       "name": name.trim(),
-      "price": price,
+      "price": price.replace(/\./g,"").trim(),
       "date": date,
       "image2DRect": img,
       "loainguyenlieu_id": typeid,
@@ -65,8 +65,8 @@ export default class ResourceStore {
 
   pushTypeResource = async (name, unit) => {
     let type = {
-      "name": name,
-      "unit": unit,
+      "name": name.trim(),
+      "unit": unit.trim(),
     };
     await ResourceService.addTypeResources(type);
     //console.log(type)
@@ -80,7 +80,7 @@ export default class ResourceStore {
       "id": this.currentResource.id,
       "no": no.trim(),
       "name": name.trim(),
-      "price": price,
+      "price": price.replace(/\./g,"").trim(),
       "date": date,
       "image": img,
       "loainguyenlieu_id": typeid,
