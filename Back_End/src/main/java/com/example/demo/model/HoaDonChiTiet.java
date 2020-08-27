@@ -1,6 +1,8 @@
 package com.example.demo.model;
 
 import java.io.Serializable;
+import java.sql.Date;
+
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -40,11 +42,17 @@ public class HoaDonChiTiet implements Serializable {
 	@Transient
 	private String thanhTien;
 	
+	public void setThanhTien(String thanhTien) {
+		this.thanhTien = thanhTien;
+	}
+
 	@Transient
 	private String tenMonAn;
 	
-	//HAM TAO
+	@Transient
+	private Date ngayLapHD;
 	
+	//HAM TAO
 	public HoaDonChiTiet(HoaDonChiTietID hoadonchitiet_id, String price, Integer soluong, String status) {
 		super();
 		this.hoadonchitiet_id = hoadonchitiet_id;
@@ -118,6 +126,12 @@ public class HoaDonChiTiet implements Serializable {
 		this.comment = comment;
 	}
 
+	public Date getNgayLapHD() {
+		return ngayLapHD;
+	}
 
+	public void setNgayLapHD(Date ngayLapHD) {
+		this.ngayLapHD = ngayLapHD;
+	}
 	
 }

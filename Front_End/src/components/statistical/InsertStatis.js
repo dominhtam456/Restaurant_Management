@@ -9,27 +9,34 @@ class InsertStatis extends Component {
 
   onChangeFromDate(e){
     let toDate = Date.parse(this.props.statisticStore.toDate);
+    let toDate1 = Date.parse(this.props.getChartStore.toDate);
     let fromDate = Date.parse(e.target.value);
 
-    if(fromDate > toDate) {
+    if(fromDate > toDate || fromDate > toDate1) {
       alert('Ngày không hợp lệ');
       e.target.value = this.props.statisticStore.fromDate;
+      e.target.value = this.props.getChartStore.fromDate;
     }
-    else this.props.statisticStore.setFromDate(e.target.value);
+    else {this.props.statisticStore.setFromDate(e.target.value)
+      this.props.getChartStore.setFromDate(e.target.value)}
   }
 
   onChangeToDate(e){
     let toDate = Date.parse(e.target.value);
     let fromDate = Date.parse(this.props.statisticStore.fromDate);
+    let fromDate1 = Date.parse(this.props.getChartStore.fromDate);
 
-    if(fromDate > toDate) {
+    if(fromDate > toDate || fromDate1 > toDate) {
       alert('Ngày không hợp lệ');
       e.target.value = this.props.statisticStore.toDate;
+      e.target.value = this.props.getChartStore.toDate;
     }
-    else this.props.statisticStore.setToDate(e.target.value);
+    else {this.props.statisticStore.setToDate(e.target.value);
+      this.props.getChartStore.setToDate(e.target.value)}
   }
 
   onSearch(){
+    this.props.getChartStore.getDataCharts();
     this.props.statisticStore.getListTrendingFood();
     this.props.statisticStore.getListInvoiceByDate();
     this.props.statisticStore.getSum();
@@ -109,4 +116,4 @@ class InsertStatis extends Component {
   }
 }
 
-export default inject("statisticStore")(observer(InsertStatis));
+export default inject("statisticStore","getChartStore")(observer(InsertStatis));

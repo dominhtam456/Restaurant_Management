@@ -2,15 +2,16 @@ import React, { Component } from "react";
 import BillDetail from "../detailstatis/BillDetail";
 import { inject , observer } from 'mobx-react'
 import CommonUtil from './../../../util'
+import TrendFoodChart from '../Chart/TrendFoodChart'
 
 class ListBill extends Component {
   render() {
-
     const element = this.props.statisticStore.listInvoiceByDate.map((invoice, index) => {
       return <BillDetail key={index} index={index} invoice={invoice}/>
     })
     return (
       <div>
+        <TrendFoodChart/>
         <p style={{textAlign: 'center', color: 'red', fontWeight: 'bold'}}>Tổng tiền: {CommonUtil.formatVND(this.props.statisticStore.sum)}</p>
         <table
           className="table align-items-center table-flush accordion"

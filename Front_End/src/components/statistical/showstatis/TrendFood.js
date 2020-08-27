@@ -1,12 +1,14 @@
 import React, { Component } from "react"
 import TrendFoodDetail from "../detailstatis/TrendFoodDetail"
 import { inject , observer } from 'mobx-react'
+import { toJS } from 'mobx'
 
 class TrendFood extends Component {
   render() {
     const element = this.props.statisticStore.listTrendingFood.map((food,index) => {
         return <TrendFoodDetail food={food} key={index} index={index}/>
     })
+    console.log(toJS(this.props.statisticStore.listTrendingFood));
     return (
       <div>
         <table

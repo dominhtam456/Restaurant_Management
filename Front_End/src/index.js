@@ -14,6 +14,7 @@ import ResourceStore from './store/ResourceStore';
 import StaffStore from './store/StaffStore';
 import FoodTypeStore from './store/FoodTypeStore';
 import ResourceTypeStore from './store/ResourceTypeStore';
+import GetChartStore from './store/GetChartStore';
 
 
 ReactDOM.render(
@@ -28,7 +29,8 @@ ReactDOM.render(
       resourceStore={new ResourceStore()}
       staffStore={new StaffStore()}
       foodTypeStore={new FoodTypeStore()}
-      resourceTypeStore={new ResourceTypeStore()}>
+      resourceTypeStore={new ResourceTypeStore()}
+      getChartStore={new GetChartStore()}>
       <App />
     </Provider>
   </React.StrictMode>,

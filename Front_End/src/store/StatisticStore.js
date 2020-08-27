@@ -21,7 +21,7 @@ export default class Statistical {
     getListInvoiceByDate = async () => {
         const data = await StatisticalService.getInvoiceByDate(this.fromDate, this.toDate);
         this.listInvoiceByDate = data;
-        console.log(toJS(this.fromDate), toJS(this.toDate))
+        // console.log(toJS(this.fromDate), toJS(this.toDate))
     }
 
     getListTrendingFood = async () => {

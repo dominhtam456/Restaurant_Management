@@ -19,4 +19,16 @@
 <fullyQualifiedTypeName name="org.springframework.http.HttpStatus"/>
 <fullyQualifiedTypeName name="com.example.demo.model.NhanVien"/>
 <fullyQualifiedTypeName name="com.example.demo.model.LoaiNguyenLieu"/>
+<fullyQualifiedTypeName name="javax.persistence.Transient"/>
+<fullyQualifiedTypeName name="com.example.demo.service.HoaDonService"/>
+<fullyQualifiedTypeName name="java.lang.Long"/>
+<fullyQualifiedTypeName name="java.lang.String"/>
+<fullyQualifiedTypeName name="com.example.demo.model.HoaDonChiTiet"/>
+<fullyQualifiedTypeName name="com.example.demo.service.ThongKeService"/>
+<fullyQualifiedTypeName name="com.example.demo.model.HoaDonChiTietID"/>
+<fullyQualifiedTypeName name="org.springframework.data.repository.query.Param"/>
+<fullyQualifiedTypeName name="com.example.demo.model.HoaDon"/>
+<fullyQualifiedTypeName name="java.sql.Date"/>
+<fullyQualifiedTypeName name="java.util.Date"/>
+<fullyQualifiedTypeName name="com.example.demo.model.ThongKeDTO"/>
 </qualifiedTypeNameHistroy>

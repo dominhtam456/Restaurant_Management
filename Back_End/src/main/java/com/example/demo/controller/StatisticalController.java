@@ -18,10 +18,14 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.service.HoaDonChiTietService;
 import com.example.demo.service.HoaDonService;
 import com.example.demo.service.MonAnService;
+import com.example.demo.service.ThongKeService;
+
 import org.springframework.security.access.prepost.PreAuthorize;
 
 import com.example.demo.model.HoaDon;
 import com.example.demo.model.HoaDonChiTiet;
+import com.example.demo.model.HoaDonChiTietID;
+import com.example.demo.model.ThongKeDTO;
 
 @RestController
 @RequestMapping("/api")
@@ -35,6 +39,9 @@ public class StatisticalController {
 
     @Autowired
 	HoaDonService repositoryHoaDon;
+    
+    @Autowired
+    ThongKeService repositoryTK;
 
 	public class CustomComparator implements java.util.Comparator<HoaDonChiTiet> {
 		@Override
@@ -182,4 +189,17 @@ public class StatisticalController {
 		}
 		return list;
 	}
+	// REQUEST THONG ke Tong Tien Trong Ngay
+		@RequestMapping(path = "/ThongKeTongTienTrongNgay", method = RequestMethod.GET)
+		@PreAuthorize("@appAuthorizer.authorize(authentication, 'VIEW', this)")
+		@ResponseBody
+		public List<ThongKeDTO> TKtheoNgay(
+				@RequestParam(value = "fromDate") Date fromDate,
+				@RequestParam(value = "toDate") Date toDate
+				
+			// This returns a JSON or XML with the users
+				) {
+			return repositoryTK.TKtheoNgay(fromDate, toDate);
+
+		}
 }

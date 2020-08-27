@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import * as api from './../../services/LoginService'
 import { withRouter   } from 'react-router-dom'
-import { Redirect } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 class Login extends Component {
     constructor(props){
@@ -95,16 +95,17 @@ class Login extends Component {
                         </div>
                         {this.state.alert ? errorMessage() : ''}
                     </form>
+                    {/* <div className="text-right mt-3">
+                        <a href="ConfirmEmail" className="text-light"><small>Forgot password?</small></a>
+                    </div> */}
                     </div>
+                    
                 </div>
-                {/* <div className="row mt-3">
-                    <div className="col-6">
-                    <a href="#" className="text-light"><small>Forgot password?</small></a>
-                    </div>
-                    <div className="col-6 text-right">
+                 
+                    {/* <div className="col-6 text-right">
                     <a href="#" className="text-light"><small>Create new account</small></a>
                     </div>
-                </div> */}
+                </div> */} 
                 </div>
             </div>
             </div>

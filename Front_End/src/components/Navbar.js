@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { inject , observer} from 'mobx-react'
 import { toJS } from 'mobx'
+import { Link } from 'react-router-dom'
 
 class Navbar extends Component {
 
@@ -59,10 +60,10 @@ class Navbar extends Component {
                             
                             <div className="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
                             <div className="dropdown-divider" />
-                            <a href="login" className="dropdown-item">
+                            <Link to="/login" className="dropdown-item">
                                 <i className="ni ni-user-run" />
                                 <span onClick={() => this.onclick()}>Logout</span>
-                            </a>
+                            </Link>
                             </div>
                         </li>
                         </ul>
