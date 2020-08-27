@@ -9,7 +9,7 @@ import { toJS } from 'mobx'
 class TableDetailFooter extends Component {
     print(){
         printJS('form-bill', 'html')
-        console.log(printJS.params);
+        //console.log(printJS.params);
     }
 
     async onConfirm() {

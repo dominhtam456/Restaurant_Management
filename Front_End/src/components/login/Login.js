@@ -25,6 +25,12 @@ class Login extends Component {
                     alert: true
                 })
             }
+            else if(data.status === 300)
+            {
+                this.setState({
+                    alert: true
+                })
+            }
             else {
                 this.setState({
                     alert: false,

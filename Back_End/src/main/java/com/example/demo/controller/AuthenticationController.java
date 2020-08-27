@@ -28,6 +28,9 @@ public class AuthenticationController {
 
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginUser.getUsername(), loginUser.getPassword()));
         final NhanVien nhanvien = nhanvienService.findOne(loginUser.getUsername());
+        if(nhanvien.getIsactive() == 0) {
+            return new ApiResponse<>(300, "User deactive",null);
+        }
         final String token = jwtTokenUtil.generateToken(nhanvien);
         return new ApiResponse<>(200, "success",new AuthToken(token));
     }

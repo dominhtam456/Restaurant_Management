@@ -139,7 +139,7 @@ export default class Table {
     }
 
     checkTable = async (check, table) => {
-        console.log('list',toJS(this.listOrder));
+        //console.log('list',toJS(this.listOrder));
         if(this.flag) {
             this.currentTable = [];
             this.flag = false;
@@ -159,6 +159,7 @@ export default class Table {
     }
 
     solvedNotice = async(notice) => {
+        await this.getListOrder();
         //console.log('notice', toJS(notice))
         let id = -1;
         for(let i=0; i<this.currentListOrder[0].length; i++){
@@ -214,6 +215,11 @@ export default class Table {
             }
         }
         this.listReadyFood = list;
+    }
+
+    getCurrentInvoice = async () => {
+        if(this.currentListOrder[0])
+            this.currentInvoice = await InvoiceService.getInvoiceById(this.currentListOrder[0][0].hoadonchitiet_id.hoadon_id);
     }
 
     payment = async () => {
@@ -387,7 +393,7 @@ export default class Table {
     }
 
     update = async () => {
-        console.log(toJS(this.currentListOrder[0]))
+        //console.log(toJS(this.currentListOrder[0]))
         await InvoiceService.updateHDCT(this.currentListOrder[0]);
         
     }
@@ -477,5 +483,6 @@ decorate(Table, {
     update: action,
     solvedNotice: action,
     mergeTable: action,
-    refactorListOrder: action
+    refactorListOrder: action,
+    getCurrentInvoice: action
 })

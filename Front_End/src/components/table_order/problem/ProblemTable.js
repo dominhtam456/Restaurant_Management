@@ -5,7 +5,7 @@ import ProblemRow from './ProblemRow'
 
 class ProblemTable extends Component {
     render() {
-        console.log(toJS(this.props.tableStore.currentListNotice))
+        //console.log(toJS(this.props.tableStore.currentListNotice))
         const element = this.props.tableStore.currentListNotice.map((notice, index) => {
             if(notice.status === "Unsolved")
                 return <ProblemRow notice={notice} key={index}/>

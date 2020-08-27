@@ -4,6 +4,7 @@ import { observable, computed, action, decorate, toJS } from "mobx"
 import CommonUtil from './../../../util'
 
  class FormBill extends Component {
+    
     getListStaff() {
         
         if(!this.props.tableStore.currentInvoice.nhanvien) return;
@@ -16,11 +17,13 @@ import CommonUtil from './../../../util'
 
     render() {
         if(!this.props.tableStore.currentListOrder[0]) return null;
+        if(!this.props.tableStore.currentListOrder[0].length === 0) return null;
         const invoice = this.props.tableStore.currentInvoice;
+        //console.log('invoice', toJS(invoice));
         const totalMoney = this.props.tableStore.totalMoney;
 
         const element = this.props.tableStore.currentListOrder[0].map((od, index) => {
-            console.log(toJS(od));
+            //console.log(toJS(od));
             return(
                 <tr style={{lineHeight: '1em'}} key={index}>
                     <td>{index + 1}</td>
