@@ -22,7 +22,7 @@ class TableOrder extends Component {
 
     listTableName() {
         let str = '';
-        console.log(toJS(this.props.tableStore.currentTable))
+        //console.log(toJS(this.props.tableStore.currentTable))
         this.props.tableStore.currentTable.forEach(table => {
             str += table.name + ' '
         });

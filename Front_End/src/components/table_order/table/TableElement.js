@@ -13,6 +13,7 @@ class TableElement extends Component {
         this.props.tableStore.getListOrder(this.props.table);
         this.props.tableStore.getListReadyFood();
         this.props.tableStore.getCurrentListNotice();
+        //this.props.tableStore.getCurrentInvoice();
     }
 
     onHandelClickTable() {
@@ -20,6 +21,7 @@ class TableElement extends Component {
         this.props.tableStore.getListOrder(this.props.table);
         this.props.tableStore.getListReadyFood();
         this.props.tableStore.getCurrentListNotice();
+        //this.props.tableStore.getCurrentInvoice();
     }
 
     async componentDidMount(){

@@ -11,7 +11,7 @@ class ReadyFoodRow extends Component {
     }
 
     render() {
-        console.log(toJS(this.props.food))
+        //console.log(toJS(this.props.food))
         return (
             <tr>
                 <td className="col-9">{this.props.food.tenMonAn}</td>

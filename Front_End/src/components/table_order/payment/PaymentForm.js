@@ -17,6 +17,7 @@ class PaymentForm extends Component {
       }
     async print(){
         await this.props.tableStore.refactorListOrder();
+        await this.props.tableStore.getCurrentInvoice();
         printJS('form-bill', 'html'); 
         await this.props.tableStore.payment();
         this.props.tableStore.setUpdateCount();
