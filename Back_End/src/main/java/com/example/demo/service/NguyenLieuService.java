@@ -15,6 +15,9 @@ public interface NguyenLieuService extends JpaRepository<NguyenLieu, Long>{
 	@Query("FROM NguyenLieu WHERE name LIKE %:keyword%")
 	public List<NguyenLieu> TimNguyenLieuTheoTen(@Param("keyword") String keyword);
 	
+	@Query(value = "select * FROM NguyenLieu WHERE is_active in (:isActive) order by is_active desc", nativeQuery=true)
+	public List<NguyenLieu> filterNL(@Param("isActive") List<String> isActive);
+	
 	//GET DANH SACH NGUYEN LIEU
 		public default List<NguyenLieu> GetAllNguyenLieu(){
 			return this.findAll();

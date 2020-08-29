@@ -90,3 +90,18 @@ export const getFoodByActive = async (isActive) => {
   });
   return await response.json();
 }
+
+export const filterFood = async (isActive) => {
+  const url = new URL(`${URL_API}/filterFood?is_active=${isActive}`),
+  params = {isActive}
+  Object.keys(params).forEach(key => url.searchParams.append(key, params[key]))
+
+  const response = await fetch(url, {
+      method: 'GET', // *GET, POST, PUT, DELETE, etc.
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      }      
+  });
+  return await response.json();
+}

@@ -34,7 +34,6 @@ public class UserController {
     }
     
     @RequestMapping(path = "/GetUserByName/{key}", method = RequestMethod.GET)
-//    @GetMapping("/GetUserByName/{key}")
     @PreAuthorize("@appAuthorizer.authorize(authentication, 'VIEW', this)")
     public ApiResponse<List<NhanVien>> findByName(@PathVariable String key){
     	return new ApiResponse<>(HttpStatus.OK.value(), "User list fetched succesfully.", nhanvienService.findByName(key));
@@ -78,6 +77,10 @@ public class UserController {
         return true;
     }
     
+    @RequestMapping(path = "/filterStaff", method = RequestMethod.GET)
+    @PreAuthorize("@appAuthorizer.authorize(authentication, 'VIEW', this)")
+    public ApiResponse<List<NhanVien>> filter(@RequestParam(value="is_active", required = false) List<String> isActive, @RequestParam(value = "loai", required = false) List<String> loai){
+    	return new ApiResponse<>(HttpStatus.OK.value(), "User list fetched succesfully.", nhanvienService.filterStaff(isActive, loai));
+    }
     
-
 }

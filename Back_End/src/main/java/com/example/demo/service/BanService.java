@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import com.example.demo.model.Ban;
+import com.example.demo.model.LoaiMonAn;
 
 public interface BanService extends JpaRepository<Ban, Long>{
 
@@ -19,6 +20,9 @@ public interface BanService extends JpaRepository<Ban, Long>{
 
 	@Query(value = "select * FROM ban WHERE is_active = :isActive", nativeQuery = true)
 	public List<Ban> GetTabeByStatus(@Param("isActive") int isActive);
+	
+	@Query(value = "select * FROM ban WHERE is_active in (:isActive) order by is_active desc", nativeQuery = true)
+	public List<Ban> TableFliter(@Param("isActive") List<String> isActive);
 	//CAP NHAT TRANG THAI BAN
 	/*
 	 * @Modifying

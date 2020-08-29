@@ -13,4 +13,7 @@ import com.example.demo.model.LoaiMonAn;
 public interface LoaiMonAnService extends JpaRepository<LoaiMonAn, Long> {
 	@Query(value = "select * FROM loaimonan WHERE is_active = :isActive", nativeQuery = true)
 	public List<LoaiMonAn> listTypeFoodByStatus(@Param("isActive") int isActive);
+	
+	@Query(value = "select * FROM loaimonan WHERE is_active in (:isActive) order by is_active desc", nativeQuery = true)
+	public List<LoaiMonAn> listTypeFoodFliter(@Param("isActive") List<String> isActive);
 }

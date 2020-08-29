@@ -115,5 +115,15 @@ public class NhanVienServiceImp  implements UserDetailsService, NhanVienService 
 		return list;
 	}
 	 
+	@Override
+	public List<NhanVien> filterStaff (List<String> isActive, List<String> loai){
+		List<NhanVien> list = new ArrayList<>();
+		nhanvienDao.filterNV(isActive, loai).iterator().forEachRemaining(list::add);
+		for (NhanVien nhanVien : list) {
+			ChucVu cv = chucvuService.getOne(Long.valueOf(nhanVien.getLoai()));
+			nhanVien.setChucvu(cv.getName());
+		}
+		return list;
+	}
 	 
 }

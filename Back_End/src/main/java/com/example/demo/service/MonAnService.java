@@ -20,6 +20,8 @@ public interface MonAnService extends JpaRepository<MonAn, Long>{
 	@Query(value = "select * FROM monan WHERE is_active = :isActive", nativeQuery = true)
 	public List<MonAn> GetFoodByStatus(@Param("isActive") int isActive);
 	
+	@Query(value = "SELECT * FROM monan WHERE is_active in (:isActive) order by is_active desc", nativeQuery = true)
+	public List<MonAn> filterMonAn (@Param("isActive") List<String> isActive);
 
 	//GET DANH SACH MON AN
 		public default List<MonAn> GetAllMonAn(){

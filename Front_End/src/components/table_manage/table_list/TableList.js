@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import TableRow from "./TableRow";
 import { inject, observer } from "mobx-react";
 import { toJS } from "mobx";
+import TableFilter from "../TableFilter"
 
 class TableList extends Component {
   componentDidMount() {
@@ -17,6 +18,14 @@ class TableList extends Component {
       return <TableRow table={table} key={table.id} index={index}/>
     })
     return (
+      <div>
+      <div className="float-left">
+                      <i className="fas fa-filter" aria-hidden="true" data-toggle="collapse"
+                      data-target="#ffilter"></i>
+                    <div id="ffilter" className="collapse">
+                      <TableFilter/>
+                    </div>
+                    </div>
       <div className="table-responsive">
         <table
           className="table  align-items-center table-flush accordion table-hover"
@@ -35,6 +44,7 @@ class TableList extends Component {
             {element}
           </tbody>
         </table>
+      </div>
       </div>
     );
   }

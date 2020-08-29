@@ -2,14 +2,17 @@ package com.example.demo.controller;
 
 import javax.validation.Valid;
 
+import java.sql.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.http.HttpStatus;
 
@@ -21,7 +24,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.service.LoaiMonAnService;
 
+import ch.qos.logback.classic.Logger;
+
 import com.example.demo.model.LoaiMonAn;
+import com.example.demo.model.ThongKeDTO;
 
 @RestController
 @RequestMapping("/api")
@@ -104,5 +110,17 @@ public class FoodTypeController {
 		}
 		repositoryLoaiMonAn.delete(lma);// delete trong database
 		return 1;
+	}
+	
+	//LOC LOAI MON AN THEO HIEN TRANG
+	@RequestMapping(path = "/filterTypeFood", method = RequestMethod.GET)
+	@PreAuthorize("@appAuthorizer.authorize(authentication, 'VIEW', this)")
+	@ResponseBody
+	public List<LoaiMonAn> listTypeFoodFliter(@RequestParam(value = "is_active", required = false) List<String> isActive){
+		// This returns a JSON or XML with the users 
+		if(isActive.size() == 0) {
+			return repositoryLoaiMonAn.findAll();
+		}
+		return repositoryLoaiMonAn.listTypeFoodFliter(isActive);
 	}
 }

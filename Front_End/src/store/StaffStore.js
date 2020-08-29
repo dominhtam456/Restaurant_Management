@@ -103,6 +103,17 @@ export default class StaffStore {
     await UserService.updateStaff(staff);
     // console.log(staff);
   };
+
+  filterStaffs = async (act, deact, pv, tn, db, ad) =>{
+    let list1 = [act,deact];
+    let list2 = [pv,tn,db,ad];
+    if(act === "-1" && deact ==="-1") list1 = ["1", "0"]
+    if(pv==="-1" && tn==="-1" && db==="-1" && ad==="-1") list2 = ["1","2","3","4"]
+    
+    this.listStaff=[];
+    const data = await UserService.filterStaff(list1,list2);
+    this.listStaff = data.result;
+}
 }
 
 decorate(StaffStore, {
@@ -118,4 +129,5 @@ decorate(StaffStore, {
   getStaffByName: action,
   getLogedStaff:action,
   updatePassStaff: action,
+  filterStaffs: action,
 });

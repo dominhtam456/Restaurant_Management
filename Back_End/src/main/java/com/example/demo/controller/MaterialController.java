@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.security.access.prepost.PreAuthorize;
 
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -19,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.service.NguyenLieuService;
 import com.example.demo.service.LoaiNguyenLieuService;
-
+import com.example.demo.model.MonAn;
 import com.example.demo.model.NguyenLieu;
 
 @RestController
@@ -125,5 +126,17 @@ public class MaterialController {
 			// TODO: handle exception
 			return null;
 		}
+	}
+	
+	// LOC NGUYEN LIEU THEO HIEN TRANG
+	@RequestMapping(path = "/filterResource", method = RequestMethod.GET)
+	@PreAuthorize("@appAuthorizer.authorize(authentication, 'VIEW', this)")
+	@ResponseBody
+	public List<NguyenLieu> filterNL (@RequestParam(value = "is_active", required = false) List<String> isActive){
+		// This returns a JSON or XML with the users 
+		if(isActive.size() == 0) {
+			return repositoryNguyenLieu.findAll();
+		}
+		return repositoryNguyenLieu.filterNL(isActive);
 	}
 }

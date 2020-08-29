@@ -19,6 +19,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import com.example.demo.service.BanService;
 
 import com.example.demo.model.Ban;
+import com.example.demo.model.LoaiMonAn;
 
 @RestController
 @RequestMapping("/api")
@@ -113,5 +114,17 @@ public class TableController {
 		}catch(Exception e){
 			return false;
 		}
+	}
+	
+	//LOC DANH SACH BAN THEO HIEN TRANG
+	@RequestMapping(path = "/filterTable", method = RequestMethod.GET)
+	@PreAuthorize("@appAuthorizer.authorize(authentication, 'VIEW', this)")
+	@ResponseBody
+	public List<Ban> TableFliter(@RequestParam(value = "is_active", required = false) List<String> isActive){
+		// This returns a JSON or XML with the users 
+		if(isActive.size() == 0) {
+			return repositoryBan.findAll();
+		}
+		return repositoryBan.TableFliter(isActive);
 	}
 }

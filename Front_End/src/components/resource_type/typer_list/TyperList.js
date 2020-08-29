@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { inject , observer} from 'mobx-react'
 import TyperRow from './TyperRow'
+import FilterTypeRes from '../FilterTypeRes'
 
 class TyperList extends Component {
   componentDidMount() {
@@ -11,6 +12,18 @@ class TyperList extends Component {
             return <TyperRow resource={resource} key={resource.id} index={index}/>
         })
         return (
+          <div>
+        <div className="float-left">
+          <i
+            className="fas fa-filter"
+            aria-hidden="true"
+            data-toggle="collapse"
+            data-target="#ffilter"
+          ></i>
+          <div id="ffilter" className="collapse">
+            < FilterTypeRes/>
+          </div>
+        </div>
             <div className="table-responsive">
             <table
               className="table  align-items-center table-flush accordion table-hover"
@@ -28,6 +41,7 @@ class TyperList extends Component {
                 {element}
               </tbody>
             </table>
+          </div>
           </div>
         );
     }

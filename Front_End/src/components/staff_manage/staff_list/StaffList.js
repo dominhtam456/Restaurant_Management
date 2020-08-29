@@ -3,6 +3,7 @@ import StaffRow from "./StaffRow";
 import StaffDetail from "../staff_detail/StaffDetail"
 import { inject, observer } from "mobx-react";
 import { toJS } from "mobx";
+import StaffFilter from '../StaffFilter'
 
 class StaffList extends Component {
   componentDidMount() {
@@ -26,6 +27,18 @@ class StaffList extends Component {
     })
     const element2 = this.merge(element,element1);
     return (
+      <div>
+        <div className="float-left">
+          <i
+            className="fas fa-filter"
+            aria-hidden="true"
+            data-toggle="collapse"
+            data-target="#ffilter"
+          ></i>
+          <div id="ffilter" className="collapse">
+            < StaffFilter/>
+          </div>
+        </div>
       <div className="table-responsive">
         <table className="table  align-items-center table-flush accordion table-hover" id="accordionRow">
           <thead className="thead-light">
@@ -41,6 +54,7 @@ class StaffList extends Component {
                 {element2}
               </tbody>
               </table>
+              </div>
               </div>
     );
   }

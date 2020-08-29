@@ -56,6 +56,15 @@ export default class TableStore {
             }
         await TableService.deleteTables(table);
     }
+
+    filterTables = async (act, deact) =>{
+        let list = [act,deact];
+        if(act === "-1" && deact ==="-1") list = ["1", "0"]
+        
+        // console.log("aaaaa",list)
+        this.listTable = await TableService.filterTable(list);
+        // console.log("bbbbbbbbbbbb",toJS(this.listTable))
+    }
 }
 
 decorate(TableStore, {
@@ -68,4 +77,5 @@ decorate(TableStore, {
     setcurrenttable: action,
     getTable: action,
     check: action,
+    filterTables: action,
 })

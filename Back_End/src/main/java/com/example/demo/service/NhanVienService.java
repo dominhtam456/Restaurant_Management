@@ -20,4 +20,6 @@ public interface NhanVienService {
 	NhanVien findById(long id);
 
 	List<NhanVien> findByName(String fullname);
+	
+	List<NhanVien> filterStaff (List<String> isActive, List<String> loai);
 }

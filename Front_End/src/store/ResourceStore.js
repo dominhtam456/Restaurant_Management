@@ -54,7 +54,7 @@ export default class ResourceStore {
       "name": name.trim(),
       "price": price.replace(/\./g,"").trim(),
       "date": date,
-      "image2DRect": img,
+      "image": img,
       "loainguyenlieu_id": typeid,
       "isActive": 1,
       "tenloainguyenlieu": null,
@@ -101,6 +101,15 @@ export default class ResourceStore {
   //         }
   //     await TableService.deleteTables(table);
   // }
+
+  filterResources = async (act, deact) =>{
+    let list = [act,deact];
+    if(act === "-1" && deact ==="-1") list = ["1", "0"]
+    
+    // console.log("aaaaa",list)
+    this.listResources = await ResourceService.filterResource(list);
+    // console.log("bbbbbbbbbbbb",toJS(this.listTypeFood))
+}
 }
 
 decorate(ResourceStore, {
@@ -116,4 +125,5 @@ decorate(ResourceStore, {
   getCurrentListResource: action,
   getResourceByName: action,
   check: action,
+  filterResources: action,
 });

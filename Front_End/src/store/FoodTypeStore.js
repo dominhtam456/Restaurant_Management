@@ -4,6 +4,7 @@ import * as FoodTypeService from './../services/FoodTypeService';
 export default class FoodTypeStore {
     listTypeFood = [];
     currentTypeFood={};
+    currentList = [];
 
     setcurrenttypefood = async (food) => {
         this.currentTypeFood=food;
@@ -42,6 +43,14 @@ export default class FoodTypeStore {
         //  console.log(toJS(type))
     }
     
+    filterTypeFoods = async (act, deact) =>{
+        let list = [act,deact];
+        if(act === "-1" && deact ==="-1") list = ["1", "0"]
+        
+        // console.log("aaaaa",list)
+        this.listTypeFood = await FoodTypeService.filterTypeFood(list);
+        // console.log("bbbbbbbbbbbb",toJS(this.listTypeFood))
+    }
 }
 
 decorate(FoodTypeStore, {
@@ -52,4 +61,5 @@ decorate(FoodTypeStore, {
     getTypeFood: action,
     pushTypeFood: action,
     updateTypeFoods: action,
+    filterTypeFoods: action,
 })

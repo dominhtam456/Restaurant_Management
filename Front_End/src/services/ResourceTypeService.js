@@ -56,3 +56,18 @@ export const updateTypeResource = async (resource) => {
 //   });
 //   return await response.json();
 // }
+
+export const filterTypeRes = async (isActive) => {
+  const url = new URL(`${URL_API}/filterTypeRes?is_active=${isActive}`),
+  params = {isActive}
+  Object.keys(params).forEach(key => url.searchParams.append(key, params[key]))
+
+  const response = await fetch(url, {
+      method: 'GET', // *GET, POST, PUT, DELETE, etc.
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      }      
+  });
+  return await response.json();
+}

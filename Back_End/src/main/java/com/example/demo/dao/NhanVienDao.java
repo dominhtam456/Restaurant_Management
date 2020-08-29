@@ -17,4 +17,7 @@ public interface NhanVienDao extends CrudRepository<NhanVien, Integer>{
 	//TIM MON AN THEO TEN
 	@Query("FROM NhanVien WHERE name LIKE %:keyword%")
 	public List<NhanVien> TimNhanVienTheoTen(@Param("keyword") String keyword);
+	
+	@Query(value = "SELECT * FROM NhanVien WHERE is_active in (:isActive) and loai in (:loai) order by loai,is_active desc", nativeQuery = true)
+	public List<NhanVien> filterNV (@Param("isActive") List<String> isActive, @Param("loai") List<String> loai);
 }

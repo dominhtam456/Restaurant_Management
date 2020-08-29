@@ -99,3 +99,18 @@ export const getTableByActive = async (isActive) => {
   });
   return await response.json();
 }
+
+export const filterTable = async (isActive) => {
+  const url = new URL(`${URL_API}/filterTable?is_active=${isActive}`),
+  params = {isActive}
+  Object.keys(params).forEach(key => url.searchParams.append(key, params[key]))
+
+  const response = await fetch(url, {
+      method: 'GET', // *GET, POST, PUT, DELETE, etc.
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      }      
+  });
+  return await response.json();
+}

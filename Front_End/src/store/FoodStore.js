@@ -95,6 +95,15 @@ export default class FoodStore {
     await FoodService.updateFoods(food);
     //  console.log(toJS(food))
   };
+
+  filterFoods = async (act, deact) =>{
+    let list = [act,deact];
+    if(act === "-1" && deact ==="-1") list = ["1", "0"]
+    
+    // console.log("aaaaa",list)
+    this.listFoods = await FoodService.filterFood(list);
+    // console.log("bbbbbbbbbbbb",toJS(this.listTypeFood))
+}
 }
 
 decorate(FoodStore, {
@@ -110,4 +119,5 @@ decorate(FoodStore, {
   updateFood: action,
   getFoodByName: action,
   check: action,
+  filterFoods: action,
 });

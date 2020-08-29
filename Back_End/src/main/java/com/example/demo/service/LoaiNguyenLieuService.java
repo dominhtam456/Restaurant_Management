@@ -14,4 +14,7 @@ import org.springframework.stereotype.Repository;
 public interface LoaiNguyenLieuService extends JpaRepository<LoaiNguyenLieu, Long>{
 	@Query(value = "select * FROM loainguyenlieu WHERE is_active = :isActive", nativeQuery = true)
 	public List<LoaiNguyenLieu> listAllByStatus(@Param("isActive") int isActive);
+	
+	@Query(value = "select * FROM loainguyenlieu WHERE is_active in (:isActive) order by is_active desc", nativeQuery = true)
+	public List<LoaiNguyenLieu> filterLNL(@Param("isActive") List<String> isActive);
 }

@@ -36,6 +36,7 @@ class InsertStatis extends Component {
   }
 
   onSearch(){
+    this.props.getChartStore.getFoodTrendChart();
     this.props.getChartStore.getDataCharts();
     this.props.statisticStore.getListTrendingFood();
     this.props.statisticStore.getListInvoiceByDate();

@@ -42,6 +42,15 @@ export default class ResourceTypeStore {
         await ResourceTypeService.updateTypeResource(resource);
         //  console.log(toJS(resource))
     }
+
+    filterTypeR = async (act, deact) =>{
+        let list = [act,deact];
+        if(act === "-1" && deact ==="-1") list = ["1", "0"]
+        
+        // console.log("aaaaa",list)
+        this.listTypeResource = await ResourceTypeService.filterTypeRes(list);
+        // console.log("bbbbbbbbbbbb",toJS(this.listTypeFood))
+    }
     
 }
 
@@ -53,4 +62,5 @@ decorate(ResourceTypeStore, {
     getTypeResource: action,
     pushTypeResource: action,
     updateTypeResources: action,
+    filterTypeR: action,
 })

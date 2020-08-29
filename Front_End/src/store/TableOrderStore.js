@@ -451,7 +451,6 @@ export default class Table {
         for(let i=0; i<list.length; i++)
             list[i].checked = false;
         
-        
         //console.log(toJS(this.listTable))
     }
 }

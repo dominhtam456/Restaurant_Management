@@ -31,7 +31,7 @@ class Info extends Component {
         if (files[0].size.split(" ",1) > 1024) {
           alert("Vui lòng upload các file có dung lượng < 1MB");
         } else {
-          this.image = files.base64;
+          this.image = files[0].base64;
           this.setState({
             img: files[0].base64,
           });
@@ -43,8 +43,7 @@ class Info extends Component {
   }
 
   async onCreate() {
-    let today = Date.parse((new Date()).toISOString().slice(0,10));
-    let hsd = Date.parse((this.date.current.value));
+    
 
     if((this.no.current.value).trim() === ""){
       alert("Mã nguyên liệu không được để trống!")
@@ -63,9 +62,6 @@ class Info extends Component {
     }
     else if(this.price.current.value < 0){
       alert("Giá tiền không được âm!")
-    }
-    else if (hsd < today){
-      alert("Ngày không hợp lệ!")
     }
     else{
     await this.props.resourceStore.pushResource(
@@ -116,9 +112,12 @@ class Info extends Component {
     if (this.price.current.value === "") this.setState({isAlertPrice: true});
     else this.setState({ isAlertPrice: false });
   }
-  onBlurRDate(){
-    if (this.unit.current.value === "") this.setState({ isAlertUnit: true});
-    else this.setState({ isAlertUnit: false });
+  onChangeDate(){
+    let today = Date.parse((new Date()).toISOString().slice(0,10));
+    let hsd = Date.parse((this.date.current.value));
+    if (hsd < today){
+      alert("Ngày không hợp lệ!")
+    }
   }
 
   render() {
@@ -248,6 +247,7 @@ class Info extends Component {
                   id="inputNum"
                   placeholder="dd/MM/yyyy"
                   ref={this.date}
+                  onChange={() => this.onChangeDate()}
                 />
               </div>
             </div>

@@ -119,7 +119,7 @@ public interface HoaDonChiTietService extends JpaRepository<HoaDonChiTiet, HoaDo
 				int i= 0;
 				this.DeleteHDCTByHoadonId(hdct.get(0).getHoadonchitiet_id().getHoadon_id());
 				for (HoaDonChiTiet hd : hdct) {
-					HoaDonChiTietID hdctId = new HoaDonChiTietID(i ,hdct.get(0).getHoadonchitiet_id().getHoadon_id(), hd.getHoadonchitiet_id().getMonan_id());
+					HoaDonChiTietID hdctId = new HoaDonChiTietID(hdct.get(0).getHoadonchitiet_id().getHoadon_id(), hd.getHoadonchitiet_id().getMonan_id());
 					hd.setHoadonchitiet_id(hdctId);
 					this.InSertHDCT(hd);
 					i++;

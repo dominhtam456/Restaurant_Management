@@ -2,6 +2,7 @@ import React, { Component } from "react"
 import TrendFoodDetail from "../detailstatis/TrendFoodDetail"
 import { inject , observer } from 'mobx-react'
 import { toJS } from 'mobx'
+import TrendFoodChart from "../Chart/TrendFoodChart"
 
 class TrendFood extends Component {
   render() {
@@ -11,6 +12,7 @@ class TrendFood extends Component {
     console.log(toJS(this.props.statisticStore.listTrendingFood));
     return (
       <div>
+        <TrendFoodChart/>
         <table
           className="table align-items-center table-flush accordion"
           id="accordionRow"

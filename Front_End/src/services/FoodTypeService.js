@@ -27,9 +27,6 @@ export const addTypeFood = async (type) => {
 
 export const updateTypeFood = async (type) => {
   var url = new URL(`${URL_API}/UpdateLoaiMonAn`);
-  // params = {id, name, isActive}
-  // Object.keys(params).forEach(key => url.searchParams.append(key, params[key]))
-
   const response = await fetch(url, {
       method: 'POST', // *GET, POST, PUT, DELETE, etc.
       headers: {
@@ -37,6 +34,21 @@ export const updateTypeFood = async (type) => {
         'Authorization': `Bearer ${localStorage.getItem('token')}`
       },
       body: JSON.stringify(type)
+  });
+  return await response.json();
+}
+
+export const filterTypeFood = async (isActive) => {
+  const url = new URL(`${URL_API}/filterTypeFood?is_active=${isActive}`),
+  params = {isActive}
+  Object.keys(params).forEach(key => url.searchParams.append(key, params[key]))
+
+  const response = await fetch(url, {
+      method: 'GET', // *GET, POST, PUT, DELETE, etc.
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      }      
   });
   return await response.json();
 }

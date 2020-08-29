@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.http.HttpStatus;
 
@@ -22,6 +23,7 @@ import com.example.demo.service.LoaiNguyenLieuService;
 
 
 import com.example.demo.model.LoaiNguyenLieu;
+import com.example.demo.model.NguyenLieu;
 
 @RestController
 @RequestMapping("/api")
@@ -108,6 +110,18 @@ public class MaterialTypeController {
 		}
 		repositoryLoaiNguyenLieu.delete(lnl);// delete trong database
 		return 1;
+	}
+	
+	// LOC LOAI NGUYEN LIEU THEO HIEN TRANG
+	@RequestMapping(path = "/filterTypeRes", method = RequestMethod.GET)
+	@PreAuthorize("@appAuthorizer.authorize(authentication, 'VIEW', this)")
+	@ResponseBody
+	public List<LoaiNguyenLieu> filterLNL (@RequestParam(value = "is_active", required = false) List<String> isActive){
+		// This returns a JSON or XML with the users 
+		if(isActive.size() == 0) {
+			return repositoryLoaiNguyenLieu.findAll();
+		}
+		return repositoryLoaiNguyenLieu.filterLNL(isActive);
 	}
 
 }
